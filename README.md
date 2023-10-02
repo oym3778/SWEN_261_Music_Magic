@@ -5,10 +5,11 @@ An online U-Fund system built in Java 17=> and ___ _replace with other platform 
   
 ## Team
 
-- MEMBER1
-- MEMBER2
-- MEMBER3
-- MEMBER4
+- Sean Gaines
+- Teddy Davies
+- Aaliyah Dalhouse
+- Omar Morales-Saez
+- Daniel Tsouri
 
 
 ## Prerequisites
