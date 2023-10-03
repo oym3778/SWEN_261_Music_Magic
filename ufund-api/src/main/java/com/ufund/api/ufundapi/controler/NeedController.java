@@ -186,8 +186,8 @@ public class NeedController {
         LOG.info("DELETE /needs/" + id);
 
         try {
-            Need need = needDAO.getNeed(id);
-            boolean done = needDAO.deleteNeed(id);
+            Need need = needDao.getNeed(id);
+            boolean done = needDao.deleteNeed(id);
             
             if (done != false) 
                 return new ResponseEntity<Need>(need,HttpStatus.OK);
