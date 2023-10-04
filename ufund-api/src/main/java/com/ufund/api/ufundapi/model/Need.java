@@ -20,6 +20,7 @@ public class Need {
      * @param id The id of the need
      * @param name The name of the need
      * @param price The price of the need
+     * @param quanity The quanity of items of the specific need
      * 
      * {@literal @}JsonProperty is used in serialization and deserialization
      * of the JSON object to the Java object in mapping the fields.  If a field
