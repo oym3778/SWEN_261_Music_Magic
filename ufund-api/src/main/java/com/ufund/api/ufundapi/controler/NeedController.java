@@ -171,6 +171,26 @@ public class NeedController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Need> updateNeedCost(@PathVariable int id, @RequestBody double cost){
+        LOG.info("PUT /needs " + id);
+
+        try {
+            Need target = needDao.getNeed(id);
+            Need updated = new Need(target.getId(), target.getName(), cost, target.getQuanity());
+            updated = needDao.updateNeed(updated);
+            if(updated != null)
+                return new ResponseEntity<Need>(updated, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
     /**
      * Deletes a {@linkplain Need need} with the given id
      * 
