@@ -171,7 +171,7 @@ public class NeedController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update-cost")
     public ResponseEntity<Need> updateNeedCost(@PathVariable int id, @RequestBody double cost){
         LOG.info("PUT /needs " + id);
 
@@ -189,6 +189,45 @@ public class NeedController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @PutMapping("/{id}/update-quanity")
+    public ResponseEntity<Need> updateNeedQuanity(@PathVariable int id, @RequestBody int quanity){
+        LOG.info("PUT /needs " + id);
+
+        try {
+            Need target = needDao.getNeed(id);
+            Need updated = new Need(target.getId(), target.getName(), target.getPrice(), quanity);
+            updated = needDao.updateNeed(updated);
+            if(updated != null)
+                return new ResponseEntity<Need>(updated, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @PutMapping("/{id}/update-name")
+    public ResponseEntity<Need> updateNeedName(@PathVariable int id, @RequestBody String name){
+        LOG.info("PUT /needs " + id);
+
+        try {
+            Need target = needDao.getNeed(id);
+            Need updated = new Need(target.getId(), name, target.getPrice(), target.getQuanity());
+            updated = needDao.updateNeed(updated);
+            if(updated != null)
+                return new ResponseEntity<Need>(updated, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
