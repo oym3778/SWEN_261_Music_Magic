@@ -171,13 +171,23 @@ public class NeedController {
         }
     }
 
+    /**
+     * Updates the {@linkplain Need need} with the provided cost, if the need exists. 
+     * 
+     * @param need The {@link Need need} to update
+     * @param cost The new cost of the need
+     * 
+     * @return ResponseEntity with updated {@link Need need} object and HTTP status of OK if updated<br>
+     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
     @PutMapping("/{id}/update-cost")
     public ResponseEntity<Need> updateNeedCost(@PathVariable int id, @RequestBody double cost){
         LOG.info("PUT /needs " + id);
 
         try {
             Need target = needDao.getNeed(id);
-            Need updated = new Need(target.getId(), target.getName(), cost, target.getQuanity());
+            Need updated = new Need(target.getId(), target.getName(), cost, target.getquantity());
             updated = needDao.updateNeed(updated);
             if(updated != null)
                 return new ResponseEntity<Need>(updated, HttpStatus.OK);
@@ -191,13 +201,24 @@ public class NeedController {
 
     }
 
-    @PutMapping("/{id}/update-quanity")
-    public ResponseEntity<Need> updateNeedQuanity(@PathVariable int id, @RequestBody int quanity){
+    
+    /**
+     * Updates the {@linkplain Need need} with the provided quantity, if the need exists. 
+     * 
+     * @param need The {@link Need need} to update
+     * @param quantity The new quantity of the need
+     * 
+     * @return ResponseEntity with updated {@link Need need} object and HTTP status of OK if updated<br>
+     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @PutMapping("/{id}/update-quantity")
+    public ResponseEntity<Need> updateNeedquantity(@PathVariable int id, @RequestBody int quantity){
         LOG.info("PUT /needs " + id);
 
         try {
             Need target = needDao.getNeed(id);
-            Need updated = new Need(target.getId(), target.getName(), target.getPrice(), quanity);
+            Need updated = new Need(target.getId(), target.getName(), target.getPrice(), quantity);
             updated = needDao.updateNeed(updated);
             if(updated != null)
                 return new ResponseEntity<Need>(updated, HttpStatus.OK);
@@ -211,13 +232,24 @@ public class NeedController {
 
     }
 
+
+    /**
+     * Updates the {@linkplain Need need} with the provided name, if the need exists. 
+     * 
+     * @param need The {@link Need need} to update
+     * @param name The new name of the need
+     * 
+     * @return ResponseEntity with updated {@link Need need} object and HTTP status of OK if updated<br>
+     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
     @PutMapping("/{id}/update-name")
     public ResponseEntity<Need> updateNeedName(@PathVariable int id, @RequestBody String name){
         LOG.info("PUT /needs " + id);
 
         try {
             Need target = needDao.getNeed(id);
-            Need updated = new Need(target.getId(), name, target.getPrice(), target.getQuanity());
+            Need updated = new Need(target.getId(), name, target.getPrice(), target.getquantity());
             updated = needDao.updateNeed(updated);
             if(updated != null)
                 return new ResponseEntity<Need>(updated, HttpStatus.OK);

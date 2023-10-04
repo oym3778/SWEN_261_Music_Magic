@@ -13,7 +13,7 @@ public class Need {
     @JsonProperty("id") private int id;
     @JsonProperty("price") private double price;
     @JsonProperty("name") private String name;
-    @JsonProperty("quanity") private int quanity;
+    @JsonProperty("quantity") private int quantity;
 
     /**
      * Create a need with the given id, name and price
@@ -26,11 +26,11 @@ public class Need {
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
-    public Need(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("price") double price, @JsonProperty("quanity") int quanity) {
+    public Need(@JsonProperty("id") int id, @JsonProperty("name") String name, @JsonProperty("price") double price, @JsonProperty("quantity") int quantity) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.quanity = quanity; 
+        this.quantity = quantity; 
     }
 
     /**
@@ -64,16 +64,16 @@ public class Need {
     public String getName() {return name;}
 
     /**
-     * Retrieves the quanity of items needed
-     * @return the quanity of items needed
+     * Retrieves the quantity of items needed
+     * @return the quantity of items needed
      */
-    public int getQuanity() {return quanity;}
+    public int getquantity() {return quantity;}
 
     /**
-     * Sets the quanity of items needed
-     * @param quanity The quanity of items needed
+     * Sets the quantity of items needed
+     * @param quantity The quantity of items needed
      */
-    public void setQuanity(int quanity) {this.quanity = quanity;}
+    public void setquantity(int quantity) {this.quantity = quantity;}
 
     /**
      * {@inheritDoc}
