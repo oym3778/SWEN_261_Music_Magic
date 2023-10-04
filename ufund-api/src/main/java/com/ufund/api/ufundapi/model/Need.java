@@ -13,7 +13,7 @@ public class Need {
     @JsonProperty("id") private int id;
     @JsonProperty("price") private double price;
     @JsonProperty("name") private String name;
-    @JsonProperty("quanitiy") private int quanitiy;
+    @JsonProperty("quanity") private int quanity;
 
     /**
      * Create a need with the given id, name and price
@@ -66,13 +66,13 @@ public class Need {
      * Retrieves the quanity of items needed
      * @return the quanity of items needed
      */
-    public int getQuanity() {return quanitiy;}
+    public int getQuanity() {return quanity;}
 
     /**
      * Sets the quanity of items needed
      * @param quanity The quanity of items needed
      */
-    public void setQuanity(int quanitiy) {this.quanitiy = quanitiy;}
+    public void setQuanity(int quanity) {this.quanity = quanity;}
 
     /**
      * {@inheritDoc}
