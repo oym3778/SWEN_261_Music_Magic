@@ -108,7 +108,6 @@ public class NeedController {
     @GetMapping("/name")
     public ResponseEntity<Need[]> searchNeeds(@RequestParam String name) {
         LOG.info("GET /needs/?name="+name);
-        
         try {
             Need[] needs = needDao.findNeeds(name);
             return new ResponseEntity<Need[]>(needs,HttpStatus.OK);
