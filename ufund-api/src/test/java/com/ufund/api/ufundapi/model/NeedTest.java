@@ -26,6 +26,24 @@ public class NeedTest {
         assertEquals(expected, actual);
     }
 
+    /**
+     * @author Sean Gaines
+     */
+    @Test
+    public void testGetId(){
+        int id = 333; 
+        String name = "Piano"; 
+        double price = 20.3; 
+        int quanity = 99; 
+
+        Need need = new Need(id, name, price, quanity); 
+
+        assertEquals(id, need.getId());
+    }
+
+    /**
+     * @author Sean Gaines
+     */
     @Test 
     public void testConstructor(){
         int id = 23; 
