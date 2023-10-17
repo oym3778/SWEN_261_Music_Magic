@@ -24,8 +24,21 @@ public class NeedTest {
         String actual = need.toString(); 
 
         assertEquals(expected, actual);
+    }
 
+    @Test 
+    public void testConstructor(){
+        int id = 23; 
+        String name = "Keyboard";
+        double price = 20.34; 
+        int quanity = 103; 
 
+        Need need = new Need(id, name, price, quanity); 
+
+        assertEquals(id, need.getId());
+        assertEquals(name, need.getName());
+        assertEquals(price, need.getPrice()); 
+        assertEquals(quanity, need.getquantity()); 
     }
 
 }
