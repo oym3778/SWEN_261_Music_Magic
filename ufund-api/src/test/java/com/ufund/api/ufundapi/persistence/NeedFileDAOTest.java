@@ -95,7 +95,7 @@ public class NeedFileDAOTest {
         controlNeeds[0] = testNeeds[0]; 
         controlNeeds[1] = testNeeds[2]; 
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 2; i++){
             assertEquals(controlNeeds[i], needs[i]);
         }
 
