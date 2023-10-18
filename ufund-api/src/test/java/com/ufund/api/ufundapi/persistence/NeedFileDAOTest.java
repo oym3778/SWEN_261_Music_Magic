@@ -80,7 +80,7 @@ public class NeedFileDAOTest {
         Need[] needs = test.getNeeds(); 
 
         for(int i = 0; i < 4; i++){
-            assertEquals(testNeeds, needs);
+            assertEquals(testNeeds[i], needs[i]);
         }
     }
 
@@ -96,7 +96,7 @@ public class NeedFileDAOTest {
         controlNeeds[1] = testNeeds[2]; 
 
         for(int i = 0; i < 4; i++){
-            assertEquals(controlNeeds, needs);
+            assertEquals(controlNeeds[i], needs[i]);
         }
 
     }
