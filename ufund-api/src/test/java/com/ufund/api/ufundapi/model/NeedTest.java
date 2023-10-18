@@ -59,4 +59,36 @@ public class NeedTest {
         assertEquals(quanity, need.getquantity()); 
     }
 
+    /**
+     * @author Omar Morales-Saez
+     */
+    @Test
+    public void testGetQuantity(){
+        int id = 333; 
+        String name = "Harmonica"; 
+        double price = 20.3; 
+        int quanity = 99; 
+
+        Need need = new Need(id, name, price, quanity); 
+
+        assertEquals(quanity, need.getquantity());
+    }
+
+    /**
+     * @author Omar Morales-Saez
+     */
+    @Test
+    public void testSetQuantity(){
+        int id = 333; 
+        String name = "Harmonica"; 
+        double price = 20.3; 
+        int quanity = 99; 
+        int changedQuantity = 104;
+
+        Need need = new Need(id, name, price, quanity); 
+        // if quanity is changed correctly the test is done correctly
+        need.setquantity(changedQuantity);
+
+        assertEquals(changedQuantity, need.getquantity());
+    }
 }
