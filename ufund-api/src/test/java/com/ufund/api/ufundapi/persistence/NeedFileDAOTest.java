@@ -60,14 +60,20 @@ public class NeedFileDAOTest {
      * @throws IOException
      */
     @Test 
-    public void testConstructor() throws IOException{
-        NeedFileDAO test = new NeedFileDAO("dummy.txt", mockObjectMapper);
+    public void testConstructor() { 
+        try{
+            NeedFileDAO test = new NeedFileDAO("dummy.txt", mockObjectMapper);
 
-        //Testing that each need is loaded correctly.
-        assertEquals(needFileDAO.getNeed(43), test.getNeed(43)); 
-        assertEquals(needFileDAO.getNeed(234), test.getNeed(234)); 
-        assertEquals(needFileDAO.getNeed(928), test.getNeed(928)); 
-        assertEquals(needFileDAO.getNeed(3001), test.getNeed(3001)); 
+             //Testing that each need is loaded correctly.
+            assertEquals(needFileDAO.getNeed(43), test.getNeed(43)); 
+            assertEquals(needFileDAO.getNeed(234), test.getNeed(234)); 
+            assertEquals(needFileDAO.getNeed(928), test.getNeed(928)); 
+            assertEquals(needFileDAO.getNeed(3001), test.getNeed(3001)); 
+        }
+        catch (IOException e){
+            fail("IOException thrown", e); 
+        }
+       
 
     }
 
