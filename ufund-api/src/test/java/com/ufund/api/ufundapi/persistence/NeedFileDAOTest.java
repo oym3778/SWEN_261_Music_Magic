@@ -78,7 +78,10 @@ public class NeedFileDAOTest {
     public void testGetNeeds() throws IOException{
         NeedFileDAO test = new NeedFileDAO("dummy.txt", mockObjectMapper);
         Need[] needs = test.getNeeds(); 
-        assertEquals(testNeeds, needs);
+
+        for(int i = 0; i < 4; i++){
+            assertEquals(testNeeds, needs);
+        }
     }
 
     /**
@@ -92,7 +95,9 @@ public class NeedFileDAOTest {
         controlNeeds[0] = testNeeds[0]; 
         controlNeeds[1] = testNeeds[2]; 
 
-        assertEquals(controlNeeds, needs);
+        for(int i = 0; i < 4; i++){
+            assertEquals(controlNeeds, needs);
+        }
 
     }
 
