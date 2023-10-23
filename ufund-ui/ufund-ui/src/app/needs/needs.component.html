@@ -1,0 +1,13 @@
+<h2>Needs</h2>
+<ul class="needs">
+    <li *ngFor="let need of needs">
+        <button type="button">
+            <span class="id">{{need.id}}</span>
+            <div class="data">
+                <span class="name">{{need.name}}</span>
+                <span class="cost">{{need.cost | currency}}</span>
+                <span class="quanity">{{need.quanity}}</span>
+            </div>
+        </button>
+    </li>
+</ul>
