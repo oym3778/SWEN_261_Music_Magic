@@ -1,6 +1,7 @@
 package com.ufund.api.ufundapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -276,5 +277,43 @@ public class NeedControllerTest {
         
     }
 
+    private NeedDAO needDAO;
 
+    /**
+     * Tests the deleteNeed function
+     * 
+     * @author Daniel Tsouri
+     * @throws IOException
+     */
+   @Test
+    public void testDeleteNeed() throws IOException{
+        //Set up testRecorderNeed
+        int id = 1000; 
+        String name = "Recorder"; 
+        double price = 4.50; 
+        int quanity = 4; 
+        NeedController testRecorderNeed = new NeedController(needDAO);
+
+        //Set up ontainsDeleted boolean
+        boolean containsDeleted = false;
+
+        //Make the need
+        Need recorderNeed = new Need(id, name, price, quanity); 
+    
+        //Delete recorderNeed
+        testRecorderNeed.deleteNeed(1000);
+
+        //Get array after delete
+        Need[] needsAfterDelete = needDAO.getNeeds();
+        
+        //Loop through array to see if the 'testRecorderNeed' need was deleted
+        for(Need x : needsAfterDelete){
+            if(x.getId()==1000){
+                containsDeleted = true;
+            }
+        }
+        //Assert statement
+        assertFalse(containsDeleted);
+    }
+    
 }
