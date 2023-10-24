@@ -24,7 +24,7 @@
   }
 
   .needs .data {
-    align-self: center;
+    justify-self: stretch;
     display: flex; 
     flex-direction: column;
   }

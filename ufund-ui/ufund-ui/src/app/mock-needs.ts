@@ -1,11 +1,11 @@
 import { Need } from  './need';
 
 export const NEEDS: Need[] = [
-    {id: 1, name: "Piano", cost: 20000.30, quanity: 2},
-    {id: 1, name: "Saxophone", cost: 1100.30, quanity: 1},
-    {id: 1, name: "Chairs", cost: 21.50, quanity: 20},
-    {id: 1, name: "The Rolling Giant", cost: 999999999, quanity: 1},
-    {id: 1, name: "Lesser Key of Solomon", cost: 7.99, quanity: 1},
-    {id: 1, name: "Him", cost: -1, quanity: 1},
-    {id: 1, name: "Saxophone Reeds", cost: 11.30, quanity: 8},
+    {id: 1, name: "Piano", price: 20000.30, quantity: 2},
+    {id: 2, name: "Saxophone", price: 1100.30, quantity: 1},
+    {id: 3, name: "Chairs", price: 21.50, quantity: 20},
+    {id: 4, name: "The Rolling Giant", price: 999999999, quantity: 1},
+    {id: 5, name: "Lesser Key of Solomon", price: 7.99, quantity: 1},
+    {id: 6, name: "Him", price: -1, quantity: 1},
+    {id: 7, name: "Saxophone Reeds", price: 11.30, quantity: 8},
 ]
