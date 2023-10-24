@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Need } from '../need'
-import { NEEDS } from '../mock-needs';
 import { NeedService } from '../need.service';
 
+/**
+ * Give the name to the associated html tag for this component and connect
+ * the html and style sheets */
 @Component({
   selector: 'app-needs',
   templateUrl: './needs.component.html',
