@@ -28,6 +28,8 @@ public class NeedControllerTest {
     private NeedController needController;
     private NeedDAO mockNeedDAO;
 
+    private Need[] testNeeds = new Need[3];
+
     /**
      * Before each test, create a new HeroController object and inject
      * a mock Hero DAO
@@ -162,4 +164,117 @@ public class NeedControllerTest {
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
+
+     /**
+     * @author Aaliyah Dalhouse
+     * @throws IOException
+     */
+    @Test
+    public void testGetNeed() throws IOException {
+        int id = 27;
+        String name = "Flute";
+        double price = 1000;
+        int quantity = 1;
+
+        Need testNeed = new Need(id, name, price, quantity);
+
+
+        when(mockNeedDAO.getNeed(id)).thenReturn(testNeed);
+        ResponseEntity<Need> testResponse = needController.getNeed(id);
+
+        assertEquals(HttpStatus.OK, testResponse.getStatusCode());
+        assertEquals(testNeed, testResponse.getBody());
+        
+    }
+
+    @Test
+    public void testGetNeedFail() throws IOException {
+        when(mockNeedDAO.getNeed(0)).thenReturn(null);
+        ResponseEntity<Need> testResponse = needController.getNeed(0);
+
+        assertEquals(HttpStatus.NOT_FOUND, testResponse.getStatusCode());
+    }
+
+
+
+    /**
+     * @author Aaliyah Dalhouse
+     * @throws IOException
+     */
+    @Test
+    public void testCreateNeed() throws IOException {
+        int id = 27;
+        String name = "Flute";
+        double price = 1000;
+        int quantity = 1;
+
+        Need testNeed = new Need(id, name, price, quantity);
+
+        when(mockNeedDAO.createNeed(testNeed)).thenReturn(testNeed);
+        ResponseEntity<Need> testResponse = needController.createNeed(testNeed);
+
+        assertEquals(HttpStatus.CREATED, testResponse.getStatusCode());
+        assertEquals(testNeed, testResponse.getBody());
+    }
+
+
+    /**
+     * @author Aaliyah Dalhouse
+     * @throws IOException
+     */
+    @Test
+    public void testCreateNeedFail() throws IOException {
+        int id = 27;
+        String name = "Flute";
+        double price = 1000;
+        int quantity = 1;
+
+        Need testNeed = new Need(id, name, price, quantity);
+
+        when(mockNeedDAO.createNeed(testNeed)).thenReturn(null);
+        ResponseEntity<Need> testResponse = needController.createNeed(testNeed);
+
+        assertEquals(HttpStatus.CONFLICT, testResponse.getStatusCode());
+    }
+
+
+    /**
+     * @author Aaliyah Dalhouse
+     * @throws IOException
+     */
+    @Test
+    public void testSearchNeed() throws IOException {
+        this.testNeeds[0] = new Need(11, "Violin", 700, 7);
+        this.testNeeds[1] = new Need(12, "Cello", 1000, 4);
+        this.testNeeds[2] = new Need(13, "Bass", 1500, 1);
+
+        when(mockNeedDAO.findNeeds("Vio")).thenReturn(testNeeds);
+        ResponseEntity<Need[]> testResponse = needController.searchNeeds("Vio");
+
+
+        assertEquals(HttpStatus.OK, testResponse.getStatusCode());
+        assertEquals(testNeeds, testResponse.getBody());
+    }
+
+
+    /**
+     * @author Aaliyah Dalhouse
+     * @throws IOException
+     */
+    @Test
+    public void testSearchNeedFail() throws IOException {
+        this.testNeeds[0] = new Need(11, "Violin", 700, 7);
+        this.testNeeds[1] = new Need(12, "Cello", 1000, 4);
+        this.testNeeds[2] = new Need(13, "Bass", 1500, 1);
+
+        when(mockNeedDAO.findNeeds("Vio")).thenReturn(null);
+
+        ResponseEntity<Need[]> testResponse = needController.searchNeeds("Vio");
+
+
+        assertEquals(HttpStatus.OK, testResponse.getStatusCode());
+        
+    }
+
+
 }

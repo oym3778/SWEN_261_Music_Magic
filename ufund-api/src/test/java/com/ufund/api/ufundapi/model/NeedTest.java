@@ -119,4 +119,40 @@ public class NeedTest {
 
         assertEquals(changedQuantity, need.getquantity());
     }
+
+    
+/**
+     * @author Aaliyah Dalhouse
+     */
+    @Test
+    public void testGetPrice() {
+        int id = 27;
+        String name = "Flute";
+        double price = 1000;
+        int quantity = 1;
+
+        Need testNeed = new Need(id, name, price, quantity);
+        
+        assertEquals(price, testNeed.getPrice());
+
+    }
+
+    /**
+     * @author Aaliyah Dalhouse
+     */
+    @Test
+    public void testSetPrice() {
+        int id = 27;
+        String name = "Flute";
+        double price = 1000;
+        int quantity = 1;
+        double newPrice = 1500;
+
+        Need testNeed = new Need(id, name, price, quantity);
+
+        testNeed.setPrice(newPrice);
+
+        assertEquals(newPrice, testNeed.getPrice());
+
+    }
 }
