@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NeedsComponent } from './needs.component';
 
+//Auto generated code from angular. 
 describe('NeedsComponent', () => {
   let component: NeedsComponent;
   let fixture: ComponentFixture<NeedsComponent>;

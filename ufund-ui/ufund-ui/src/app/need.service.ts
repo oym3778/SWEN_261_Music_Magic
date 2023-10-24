@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Need } from './need';
-import { NEEDS } from './mock-needs';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs';
 
+//Makes this class an injectable dependecy which can be injected into any class
+//in the program. 
 @Injectable({
   providedIn: 'root'
 })
+//Service which gets the needs from our backend server. 
 export class NeedService {
 
-  private needsUrl = "http://localhost:8080/needs"
+  private needsUrl = "http://localhost:8080/needs" //url of REST tomcat server
 
   constructor(
     private http: HttpClient) { }
