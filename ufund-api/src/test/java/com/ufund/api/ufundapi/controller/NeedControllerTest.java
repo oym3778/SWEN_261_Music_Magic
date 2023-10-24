@@ -123,4 +123,43 @@ public class NeedControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(need, response.getBody());
     }
+
+    /**
+     * @author Teddy Davies
+     * @throws IOException
+     */
+    @Test 
+    public void testGetNeeds() throws IOException {
+        // Setup
+        Need[] mockNeeds = new Need[2];
+        mockNeeds[0] = new Need(67, "Oboe", 3999.95, 2);
+        mockNeeds[1] = new Need(76, "Bass drum", 123.45, 3);
+        
+        when(mockNeedDAO.getNeeds()).thenReturn(mockNeeds);
+        
+        ResponseEntity<Need[]> response = needController.getNeeds();
+
+        // Invoke
+        response = needController.getNeeds();
+
+        // Analyze
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(mockNeeds, response.getBody());
+    }
+
+    /**
+     * @author Teddy Davies
+     * @throws IOException
+     */
+    @Test
+    public void testGetNeedsHandleException() throws IOException {
+        // Setup
+        doThrow(new IOException()).when(mockNeedDAO).getNeeds();
+
+        // Invoke
+        ResponseEntity<Need[]> response = needController.getNeeds();
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
 }
