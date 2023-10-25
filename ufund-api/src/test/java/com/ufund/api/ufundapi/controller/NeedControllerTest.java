@@ -166,10 +166,10 @@ public class NeedControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
 
-     /**
-     * @author Aaliyah Dalhouse
-     * @throws IOException
-     */
+    /**
+    * @author Aaliyah Dalhouse
+    * @throws IOException
+    */
     @Test
     public void testGetNeed() throws IOException {
         int id = 27;
@@ -277,43 +277,23 @@ public class NeedControllerTest {
         
     }
 
-    private NeedDAO needDAO;
-
     /**
-     * Tests the deleteNeed function
+     * Tests the deleteNeed Function
      * 
      * @author Daniel Tsouri
+     * @author Teddy Davies
      * @throws IOException
      */
-   @Test
+    @Test
     public void testDeleteNeed() throws IOException{
-        //Set up testRecorderNeed
-        int id = 1000; 
-        String name = "Recorder"; 
-        double price = 4.50; 
-        int quanity = 4; 
-        NeedController testRecorderNeed = new NeedController(needDAO);
-
-        //Set up ontainsDeleted boolean
-        boolean containsDeleted = false;
-
-        //Make the need
-        Need recorderNeed = new Need(id, name, price, quanity); 
-    
-        //Delete recorderNeed
-        testRecorderNeed.deleteNeed(1000);
-
-        //Get array after delete
-        Need[] needsAfterDelete = needDAO.getNeeds();
-        
-        //Loop through array to see if the 'testRecorderNeed' need was deleted
-        for(Need x : needsAfterDelete){
-            if(x.getId()==1000){
-                containsDeleted = true;
-            }
-        }
-        //Assert statement
-        assertFalse(containsDeleted);
+        // Setup
+        int needID = 0;
+        // when deleteNeed is called return true, simulating successful deletion
+        when(mockNeedDAO.deleteNeed(needID)).thenReturn(true);
+        // Invoke
+        ResponseEntity<Need> response = needController.deleteNeed(needID);
+        // Analyze
+        assertEquals(HttpStatus.OK,response.getStatusCode());
     }
     
 }

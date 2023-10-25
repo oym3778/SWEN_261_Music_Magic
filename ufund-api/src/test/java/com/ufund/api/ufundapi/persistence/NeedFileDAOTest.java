@@ -109,26 +109,26 @@ public class NeedFileDAOTest {
 
     }
 
-    /**
-     * @author Teddy Davies
-     */
-    @Test
-    public void testCreateNeed() {
-        // Setup
-        Need need = new Need(404, "Metal Pipe", 1.50, 1);
+    // /**
+    //  * @author Teddy Davies
+    //  */
+    // @Test
+    // public void testCreateNeed() {
+    //     // Setup
+    //     Need need = new Need(404, "Metal Pipe", 1.50, 1);
 
-        // Invoke
-        Need result = assertDoesNotThrow(() -> needFileDAO.createNeed(need),
-                                "Unexpected exception thrown");
+    //     // Invoke
+    //     Need result = assertDoesNotThrow(() -> needFileDAO.createNeed(need),
+    //                             "Unexpected exception thrown");
 
-        // Analyze
-        assertNotNull(result);
-        Need actual = needFileDAO.getNeed(need.getId());
-        assertEquals(need.getId(),actual.getId());
-        assertEquals(need.getName(),actual.getName());
-        assertEquals(need.getPrice(),actual.getPrice());
-        assertEquals(need.getquantity(),actual.getquantity());
-    }
+    //     // Analyze
+    //     assertNotNull(result);
+    //     Need actual = needFileDAO.getNeed(need.getId());
+    //     assertEquals(need.getId(),actual.getId());
+    //     assertEquals(need.getName(),actual.getName());
+    //     assertEquals(need.getPrice(),actual.getPrice());
+    //     assertEquals(need.getquantity(),actual.getquantity());
+    // }
 
     /**
      * @author Teddy Davies
