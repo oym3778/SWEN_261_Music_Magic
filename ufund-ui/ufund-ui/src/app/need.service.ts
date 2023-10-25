@@ -17,6 +17,7 @@ export class NeedService {
   constructor(
     private http: HttpClient) { }
 
+  //Print any encountered errors to the console
   private handleError<T>(operation = 'operation', result?: T)
   {
     return (error: any): Observable<T> => {
@@ -25,6 +26,7 @@ export class NeedService {
     }
   }
 
+  //return an observable containing the needs acquired from the server at needsUrl
   getNeeds(): Observable<Need[]> {
     return this.http.get<Need[]>(this.needsUrl)
       .pipe(

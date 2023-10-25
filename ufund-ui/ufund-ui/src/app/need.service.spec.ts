@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { NeedService } from './need.service';
 
+//auto generated code from angular
 describe('NeedService', () => {
   let service: NeedService;
 
