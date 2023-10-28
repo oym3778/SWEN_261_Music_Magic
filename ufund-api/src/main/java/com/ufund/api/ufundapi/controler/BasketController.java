@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufund.api.ufundapi.model.Need;
-import com.ufund.api.ufundapi.persistence.NeedDAO;
+import com.ufund.api.ufundapi.persistence.BasketDAO;
 
 /**
  * Handles the REST API requests for the Funding Basket
@@ -23,17 +23,17 @@ import com.ufund.api.ufundapi.persistence.NeedDAO;
 @RequestMapping("basket")
 public class BasketController {
     private static final Logger LOG = Logger.getLogger(BasketController.class.getName());
-    private NeedDAO needDao;
+    private BasketDAO basketDao;
 
     /**
-     * Creates a REST API controller to reponds to requests
+     * Creates a REST API controller to repond to requests
      * 
      * @param needDao The {@link NeedDAO Need Data Access Object} to perform CRUD operations
      * <br>
      * This dependency is injected by the Spring Framework
      */
-    public BasketController(NeedDAO needDAO) {
-        this.needDao = needDAO;
+    public BasketController(BasketDAO basketDAO) {
+        this.basketDao = basketDAO;
     }
 
     /**
@@ -47,14 +47,36 @@ public class BasketController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Need> getNeed(@PathVariable int id) {
-        LOG.info("GET /needs/" + id);
+        LOG.info("GET /basket/" + id);
         try {
-            Need need = needDao.getNeed(id);
+            Need need = basketDao.getNeed(id);
             if (need != null)
                 return new ResponseEntity<Need>(need,HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Respponds to the GEO requests for all {@linkplain Need needs}
+     * 
+     * @return ResponseEntity with array of {@link Need need} objects (may be empty) and 
+     * HTTP status of OK
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return
+     */
+    @GetMapping("")
+    public ResponseEntity<Need[]> getNeeds() {
+        LOG.info("GET /basket");
+
+        try {
+            Need[] needs = basketDao.getNeeds();
+            return new ResponseEntity<Need[]>(needs,HttpStatus.OK);
+        } 
         catch(IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
