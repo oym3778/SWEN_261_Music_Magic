@@ -10,5 +10,11 @@
         "name": "Baritone Saxophone",
         "price": 4000.0,
         "quantity": 1
+    },
+    {
+        "id": 5,
+        "name": "Triangle",
+        "price": 40.0,
+        "quantity": 6
     }
 ]

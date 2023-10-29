@@ -1,14 +1,1 @@
-[
-    {
-        "id": 0,
-        "name": "Broken Chair",
-        "price": 0.01,
-        "quantity": 35
-    },
-    {
-        "id": 4,
-        "name": "Golden Statue",
-        "price": 99999.99,
-        "quantity": 1
-    }
-]
+[{"id":10,"name":"Triangle","price":40.0,"quantity":6}]
