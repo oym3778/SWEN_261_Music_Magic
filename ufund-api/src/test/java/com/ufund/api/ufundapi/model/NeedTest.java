@@ -60,6 +60,34 @@ public class NeedTest {
     }
 
     /**
+     * @author Teddy Davies
+     */
+    @Test
+    public void testGetName(){
+        int id = 700;
+        String name = "Saxophone";
+        double price = 999.99;
+        int quantity = 7;
+        
+        Need need = new Need(id, name, price, quantity);
+        assertEquals(name, need.getName());
+    }
+
+    @Test
+    public void testSetName(){
+        int id = 701;
+        String name = "Guitar";
+        double price = 299.99;
+        int quantity = 1;
+        
+        Need need = new Need(id, name, price, quantity);
+        String newName = "Bass Guitar";
+        need.setName(newName);
+
+        assertEquals(newName, need.getName());
+    }
+
+    /**
      * @author Omar Morales-Saez
      */
     @Test
@@ -90,5 +118,41 @@ public class NeedTest {
         need.setquantity(changedQuantity);
 
         assertEquals(changedQuantity, need.getquantity());
+    }
+
+    
+/**
+     * @author Aaliyah Dalhouse
+     */
+    @Test
+    public void testGetPrice() {
+        int id = 27;
+        String name = "Flute";
+        double price = 1000;
+        int quantity = 1;
+
+        Need testNeed = new Need(id, name, price, quantity);
+        
+        assertEquals(price, testNeed.getPrice());
+
+    }
+
+    /**
+     * @author Aaliyah Dalhouse
+     */
+    @Test
+    public void testSetPrice() {
+        int id = 27;
+        String name = "Flute";
+        double price = 1000;
+        int quantity = 1;
+        double newPrice = 1500;
+
+        Need testNeed = new Need(id, name, price, quantity);
+
+        testNeed.setPrice(newPrice);
+
+        assertEquals(newPrice, testNeed.getPrice());
+
     }
 }

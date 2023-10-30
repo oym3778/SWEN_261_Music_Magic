@@ -91,7 +91,7 @@ export class NeedService {
 
   /** POST: add a new hero to the server */
   addNeed(need: Need): Observable<Need> {
-    return this.http.post<Need>(this.needsUrl, need, this.httpOptions).pipe(
+    return this.http.post<Need>(`${this.needsUrl}/add`, need, this.httpOptions).pipe(
       // tap((newHero: Need) => this.log(`added hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Need>('addNeed'))
     );

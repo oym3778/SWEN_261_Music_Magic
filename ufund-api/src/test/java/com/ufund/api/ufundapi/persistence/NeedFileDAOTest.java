@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.io.IOError;
 import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ufund.api.ufundapi.controler.NeedController;
 import com.ufund.api.ufundapi.model.Need; 
 
 @Tag("Persistence-Tier")
@@ -107,11 +109,126 @@ public class NeedFileDAOTest {
 
     }
 
+    /**
+     * @author Teddy Davies
+     */
+    @Test
+    public void testCreateNeed() {
+        // Setup
+        Need need = new Need(404, "Metal Pipe", 1.50, 1);
+
+        // Invoke
+        Need result = assertDoesNotThrow(() -> needFileDAO.createNeed(need),
+                                "Unexpected exception thrown");
+
+        // Analyze
+        assertNotNull(result);
+
+        Need test = needFileDAO.getNeed(result.getId());
+        assertEquals(result.getId(),test.getId()); //not testing against the original Need need because needFile DAO creates a new ID based on it's own state.
+        assertEquals(need.getName(),test.getName());
+        assertEquals(need.getPrice(),test.getPrice());
+        assertEquals(need.getquantity(),test.getquantity());
+    }
+
+    /**
+     * @author Teddy Davies
+     */
+    @Test
+    public void testGetNeed() {
+        // Invoke
+        Need need = needFileDAO.getNeed(43);
+
+        // Analzye
+        assertEquals(need,testNeeds[0]);
+    }
 
 
 
 
 
+    /**
+     * Tests the updateNeed function
+     * 
+     * @author Daniel Tsouri
+     * @throws IOException
+     */
+   @Test
+   public void testUpdateNeed() throws IOException{
+       //Set up testRecorderNeed
+       int id = 1000; 
+       String name = "Recorder"; 
+       double price = 4.50; 
+       int quanity = 4; 
+       NeedController testRecorderNeed = new NeedController(needFileDAO);
+       Need recorderNeed = new Need(id, name, price, quanity);
+       //Set up a copy
+       Need recorderNeedCopy = new Need(id, name, price, quanity); 
+       //Update the original need
+       testRecorderNeed.updateNeed(recorderNeed);
+       //Assert that they aren't the same anymore
+       assertFalse(recorderNeed.equals(recorderNeedCopy));
+   }
+
+   /**
+    * Tests the deleteNeed function in the DAO
+    * 
+    * @author Daniel Tsouri
+    * @throws IOException
+    */
+  @Test
+  public void testDeleteNeedDAO() throws IOException{
+      //Set up testRecorderNeed
+      int id = 1000; 
+      String name = "Recorder"; 
+      double price = 4.50; 
+      int quanity = 4; 
+      NeedController testRecorderNeed = new NeedController(needFileDAO);
+      //Set up containsDeleted bool
+      boolean containsDeleted = false;
+      //Make the Need
+      Need recorderNeed = new Need(id, name, price, quanity); 
+      //Delete recorderNeed
+      testRecorderNeed.deleteNeed(1000);
+      //Get array after delete
+      Need[] needsAfterDelete = needFileDAO.getNeeds();
+      
+      //Loop through array to see if the 'testRecorderNeed' need was deleted
+      for(Need x : needsAfterDelete){
+          if(x.getId()==1000){
+              containsDeleted = true;
+          }
+      }
+      //Assert statement
+      assertFalse(containsDeleted);
+  }
+
+  /**
+    * Tests the save function in NeedFileDAO
+    * 
+    * @author Daniel Tsouri
+    * @throws IOException
+    */
+  @Test
+  public void testSaveDAO() throws IOException{
+      NeedFileDAO tempNeedFileDAO = new  NeedFileDAO("dummy.txt", mockObjectMapper);
+      //Assert statement
+     // assertTrue(tempNeedFileDAO.save());    SAVE FUNCTION DOESN'T EXIST??
+  }
+
+
+   /**
+    * Tests the load function in NeedFileDAO
+    * 
+    * @author Daniel Tsouri
+    * @throws IOException
+    */
+  @Test
+  public void testLoadDAO() throws IOException{
+       NeedFileDAO tempNeedFileDAO = new  NeedFileDAO("dummy.txt", mockObjectMapper);
+      //Assert statement
+      // assertTrue(tempNeedFileDAO.load());  LOAD FUNCTION DOESN'T EXIST??
+  }
 
 
 }
