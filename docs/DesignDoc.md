@@ -9,12 +9,13 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Music Magic
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Teddy Davies
+  * Aaliyah Dalhouse
+  * Daniel Tsouri
+  * Omar Morales-Saez
+  * Sean Gaines
 
 ## Executive Summary
 
