@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { Need } from '../need';
 import { NeedService } from '../need.service';
 
+
+
 @Component({
   selector: 'app-need-detail',
   templateUrl: './need-detail.component.html',

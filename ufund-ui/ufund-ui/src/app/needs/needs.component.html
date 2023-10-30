@@ -1,6 +1,7 @@
-<h2>Needs</h2>
+<h2>Needs (Admin view)</h2>
 
 <div>
+    <u><p>Add a need:</p></u>
     <label for="new-hero-name">Need name: </label>
     <input id="new-hero-name" #needName />
 
@@ -17,6 +18,8 @@
     </button>
 </div>
 
+
+<u><p>Current Cupboard:</p></u>
 <ul class="needs">
     <li *ngFor="let need of needs">
         <button type="button" routerLink="/detail/{{need.id}}">
@@ -33,4 +36,6 @@
 
 <!-- Search bar -->
 <app-need-search></app-need-search>
+
+<button type="button" (click)="goBack()">Back to Login Page</button>
 
