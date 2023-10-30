@@ -1,4 +1,4 @@
-/* HeroDetailComponent's private CSS styles */
+/*NeedDetailComponent's private CSS styles */
 label {
     color: #435960;
     font-weight: bold;
@@ -23,10 +23,7 @@ label {
     color: #ccc;
     cursor: auto;
   }
-  
-  
-  /*
-  Copyright Google LLC. All Rights Reserved.
-  Use of this source code is governed by an MIT-style license that
-  can be found in the LICENSE file at https://angular.io/license
-  */
+
+  ul {
+    list-style-type: none;
+  }
