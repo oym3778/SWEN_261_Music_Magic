@@ -1,0 +1,32 @@
+<h2>Needs</h2>
+
+<div>
+    <label for="new-hero-name">Need name: </label>
+    <input id="new-hero-name" #needName />
+
+    <label for="new-hero-quantity">Need Quanity: </label>
+    <input id="new-hero-quantity" #needQuantity />
+
+    <label for="new-hero-price">Need Price: </label>
+    <input id="new-hero-price" #needPrice />
+
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button type="button" class="add-button"
+        (click)="add(needName.value, needPrice.value, needQuantity.value); needName.value=''; needQuantity.value=''; needPrice.value=''">
+        Add need
+    </button>
+</div>
+
+<ul class="needs">
+    <li *ngFor="let need of needs">
+        <button type="button" routerLink="/detail/{{need.id}}">
+            <span class="id">{{need.id}}</span>
+            <div class="data">
+                <span class="name">{{need.name}}</span>
+                <span class="cost">{{need.price | currency}}</span>
+                <span class="quanity">Quanity: {{need.quantity}}</span>
+            </div>
+        </button>
+        <button type="button" class="delete" title="delete need" (click)="delete(need)">X</button>
+    </li>
+</ul>
