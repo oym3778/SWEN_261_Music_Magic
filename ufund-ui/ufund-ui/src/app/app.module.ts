@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NeedDetailComponent } from './need-detail/need-detail.component';
 import { NeedSearchComponent } from './need-search/need-search.component';
 import { MessagesComponent } from './messages/messages.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { MessagesComponent } from './messages/messages.component';
     NeedsComponent,
     NeedDetailComponent,
     NeedSearchComponent,
-    MessagesComponent
+    MessagesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
