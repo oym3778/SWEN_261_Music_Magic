@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Need } from './need';
 import { Observable, of } from 'rxjs';
+//import { HEROES } from './mock-needs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { MessageService } from './message.service';
 
 //Makes this class an injectable dependecy which can be injected into any class
 //in the program. 
@@ -15,7 +17,8 @@ export class NeedService {
   private needsUrl = "http://localhost:8080/needs" //url of REST tomcat server
 
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private messageService: MessageService) { }
 
 
   /**
@@ -38,6 +41,7 @@ export class NeedService {
 
   /** GET needs from the server */
   getNeeds(): Observable<Need[]> {
+    this.messageService.add('HeroService: fetched heroes'); //For search -Daniel Tsouri
     return this.http.get<Need[]>(this.needsUrl)
       .pipe(
         // tap(_ => this.log('fetched heroes')),
@@ -70,18 +74,18 @@ export class NeedService {
   }
 
   /* GET heroes whose name contains search term */
-  searchNeeds(term: string): Observable<Need[]> {
-    if (!term.trim()) {
+  //searchNeeds(term: string): Observable<Need[]> {
+    //if (!term.trim()) {
       // if not search term, return empty hero array.
-      return of([]);
-    }
-    return this.http.get<Need[]>(`${this.needsUrl}/?name=${term}`).pipe(
+    //  return of([]);
+   // }
+   // return this.http.get<Need[]>(`${this.needsUrl}/?name=${term}`).pipe(
       // tap(x => x.length ?
       //   this.log(`found heroes matching "${term}"`) :
       //   this.log(`no heroes matching "${term}"`)),
-      catchError(this.handleError<Need[]>('searchNeeds', []))
-    );
-  }
+    //  catchError(this.handleError<Need[]>('searchNeeds', []))
+    //);
+ // }
 
   //////// Save methods //////////
 
@@ -114,8 +118,32 @@ export class NeedService {
   // ------------------TO-DO------------------
   // Add this once you add the MessageService
   // /** Log a HeroService message with the MessageService */
-  // private log(message: string) {
-  //   this.messageService.add(`HeroService: ${message}`);
-  // }
+   private log(message: string) {
+    this.messageService.add(`HeroService: ${message}`);
+   }
+
+  /* GET heroes whose name contains search term */
+
+searchNeeds(term: string): Observable<Need[]> {
+  if (!term.trim()) {
+    // if not search term, return empty hero array.
+    return of([]);
+  }
+  return this.http.get<Need[]>(`${this.needsUrl}/?name=${term}`).pipe(
+    tap(x => x.length ?
+       this.log(`found heroes matching "${term}"`) :
+       this.log(`no heroes matching "${term}"`)),
+    catchError(this.handleError<Need[]>('searchHeroes', []))
+  );
+}
+
+
+
+
+
+
+
+
+
 
 }
