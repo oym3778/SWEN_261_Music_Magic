@@ -25,8 +25,7 @@ export class LoginComponent {
     } else {
       // TO-DO
       // CREATE A VIEW.ROUTE FOR THE NEEDS VIEW
-      this.username = "user_screen_appeared";
-      this.password = "user_screen_appeared";
+      this.router.navigate(['/helper']);
     }
 
   }

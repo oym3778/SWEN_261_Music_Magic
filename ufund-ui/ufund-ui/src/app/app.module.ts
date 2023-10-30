@@ -10,6 +10,7 @@ import { NeedDetailComponent } from './need-detail/need-detail.component';
 import { NeedSearchComponent } from './need-search/need-search.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
+import { HelperViewComponent } from './helper-view/helper-view.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LoginComponent } from './login/login.component';
     NeedDetailComponent,
     NeedSearchComponent,
     MessagesComponent,
-    LoginComponent
+    LoginComponent,
+    HelperViewComponent
   ],
   imports: [
     BrowserModule,
