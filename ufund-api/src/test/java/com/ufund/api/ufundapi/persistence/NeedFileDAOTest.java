@@ -136,8 +136,11 @@ public class NeedFileDAOTest {
      */
     @Test
     public void testGetNeed() {
+        // Setup
+        int needId = 43;
+        
         // Invoke
-        Need need = needFileDAO.getNeed(43);
+        Need need = needFileDAO.getNeed(needId);
 
         // Analzye
         assertEquals(need,testNeeds[0]);

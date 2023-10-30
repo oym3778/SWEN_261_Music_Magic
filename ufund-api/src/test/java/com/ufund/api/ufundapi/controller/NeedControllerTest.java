@@ -32,11 +32,11 @@ public class NeedControllerTest {
     private Need[] testNeeds = new Need[3];
 
     /**
-     * Before each test, create a new HeroController object and inject
-     * a mock Hero DAO
+     * Before each test, create a new NeedController object and inject
+     * a mock Need DAO
      */
     @BeforeEach
-    public void setupHeroController() {
+    public void setupNeedController() {
         mockNeedDAO = mock(NeedDAO.class);
         needController = new NeedController(mockNeedDAO);
     }

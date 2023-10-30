@@ -105,7 +105,7 @@ public class NeedController {
      * Example: Find all needs that contain the text "ma"
      * GET http://localhost:8080/needs/?name=ma
      */
-    @GetMapping("/name")
+    @GetMapping("/")
     public ResponseEntity<Need[]> searchNeeds(@RequestParam String name) {
         LOG.info("GET /needs/?name="+name);
         try {
