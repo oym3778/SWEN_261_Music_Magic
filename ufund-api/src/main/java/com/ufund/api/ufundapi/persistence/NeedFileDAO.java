@@ -27,7 +27,7 @@ public class NeedFileDAO implements NeedDAO {
     private static final Logger LOG = Logger.getLogger(NeedFileDAO.class.getName());
     Map<Integer,Need> needs;    // Provides a local cache of the Need objects
                                 // so that we don't need to read from the file
-                                // each time
+                                // each timeeeds
     private ObjectMapper objectMapper;  // Provides conversion between Need
                                         // objects and JSON text format written
                                         // to the file
