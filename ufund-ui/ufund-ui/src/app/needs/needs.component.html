@@ -1,19 +1,18 @@
 <h2>Needs</h2>
-<!-- <label for="new-need">Need name: </label>
-<input id="new-need" #needName />
-<button type="button" class="add-button" (click)="add(needName.value); needName.value=''">
-    Add need
-    </button> -->
+
 <div>
     <label for="new-hero-name">Need name: </label>
     <input id="new-hero-name" #needName />
+
     <label for="new-hero-quantity">Need Quanity: </label>
     <input id="new-hero-quantity" #needQuantity />
+
     <label for="new-hero-price">Need Price: </label>
     <input id="new-hero-price" #needPrice />
 
     <!-- (click) passes input value to add() and then clears the input -->
-    <button type="button" class="add-button" (click)="add(needName.value, needPrice.value, needQuantity.value); needName.value=''; needQuantity.value=''; needPrice.value=''">
+    <button type="button" class="add-button"
+        (click)="add(needName.value, needPrice.value, needQuantity.value); needName.value=''; needQuantity.value=''; needPrice.value=''">
         Add need
     </button>
 </div>
@@ -28,28 +27,6 @@
                 <span class="quanity">Quanity: {{need.quantity}}</span>
             </div>
         </button>
+        <button type="button" class="delete" title="delete need" (click)="delete(need)">X</button>
     </li>
 </ul>
-
-<!-- <h2>My Heroes</h2> -->
-
-<!-- <div> 
-  <label for="new-hero">Hero name: </label>
-  <input id="new-hero" #heroName />
-
-  // (click) passes input value to add() and then clears the input
-  <button type="button" class="add-button" (click)="add(heroName.value); heroName.value=''">
-    Add hero
-  </button>
-</div>
-
-<ul class="heroes">
-  <li *ngFor="let hero of heroes">
-    <a routerLink="/detail/{{hero.id}}">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </a>
-    <button type="button" class="delete" title="delete hero"
-      (click)="delete(hero)">x</button>
-  </li>
-</ul>
--->

@@ -17,23 +17,15 @@ import { NeedService } from '../need.service';
 export class NeedsComponent {
   needs: Need[] = []; //Array of all the needs to display.
 
-  // tempNeed: Need = {
-  //   id: 1,
-  //   name: 'testNeed',
-  //   price: 2,
-  //   quantity: 2,
-  // };
-
   //Inject NeedService dependency.
   constructor(private needService: NeedService) { }
-
-  // Overrides the genId method to ensure that a hero always has an id.
-  // If the heroes array is empty,
-  // the method below returns the initial number (11).
-  // if the heroes array is not empty, the method below returns the highest
-  // hero id + 1.
+  
+  // If the needs array is empty,
+  // the method below returns the initial number (0).
+  // if the needs array is not empty, the method below returns the highest
+  // need id + 1.
   genId(needs: Need[]): number {
-    return needs.length > 0 ? Math.max(...needs.map(need => need.id)) + 1 : 11;
+    return needs.length > 0 ? Math.max(...needs.map(need => need.id)) + 1 : 0;
   }
 
   //Update the stored needs array based on the values access by needService.
@@ -48,10 +40,9 @@ export class NeedsComponent {
 
   
   add(nameH: string, price: string, quantity: string): void {
-    // need to do other checks
     nameH = nameH.trim();
     const tempNeed: Need = {
-      id: 1,
+      id: this.genId(this.needs),
       name: nameH,
       price: Number(price),
       quantity: Number(quantity),
