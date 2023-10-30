@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { Need } from '../need'
 import { NeedService } from '../need.service';
+import { BasketService } from '../basket.service';
 
 @Component({
   selector: 'app-helper-view',
@@ -11,7 +12,8 @@ import { NeedService } from '../need.service';
 
 export class HelperViewComponent {
   needs: Need[] = []; //Array of all the needs to display.
-  constructor(private needService: NeedService,
+  constructor(private basketService: BasketService,
+              private needService: NeedService,
               private location: Location) { }
 
 
@@ -36,7 +38,7 @@ export class HelperViewComponent {
 
   addToBasket(need: Need): void {
     this.needs = this.needs.filter(n => n !== need);
-    this.needService.deleteNeed(need.id).subscribe();
+    this.basketService.addNeedToBasket(need).subscribe();
   }
 
 
