@@ -1,15 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NeedService } from './need.service';
+import { MessageService } from './message.service';
 
-//auto generated code from angular
-describe('NeedService', () => {
-  let service: NeedService;
+describe('MessageService', () => {
+  let service: MessageService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(NeedService);
-  }); 
+    service = TestBed.inject(MessageService);
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
