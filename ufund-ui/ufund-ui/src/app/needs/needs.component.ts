@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Need } from '../need'
 import { NeedService } from '../need.service';
+import { Location } from '@angular/common';
 
 /**
  * Give the name to the associated html tag for this component and connect
@@ -18,7 +19,8 @@ export class NeedsComponent {
   needs: Need[] = []; //Array of all the needs to display.
 
   //Inject NeedService dependency.
-  constructor(private needService: NeedService) { }
+  constructor(private needService: NeedService,
+              private location: Location) { }
   
   // If the needs array is empty,
   // the method below returns the initial number (0).
@@ -58,6 +60,10 @@ export class NeedsComponent {
   delete(need: Need): void {
     this.needs = this.needs.filter(n => n !== need);
     this.needService.deleteNeed(need.id).subscribe();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }
