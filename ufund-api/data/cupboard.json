@@ -1,14 +1,1 @@
-[
-    {
-        "id": 0,
-        "name": "Saxophone Reeds",
-        "price": 4.25,
-        "quantity": 35
-    },
-    {
-        "id": 4,
-        "name": "Baritone Saxophone",
-        "price": 4000.0,
-        "quantity": 1
-    }
-]
+[{"id":0,"name":"Harmonica","price":4.25,"quantity":35},{"id":4,"name":"Reeds","price":4000.0,"quantity":1},{"id":5,"name":"Piano","price":0.0,"quantity":0}]
