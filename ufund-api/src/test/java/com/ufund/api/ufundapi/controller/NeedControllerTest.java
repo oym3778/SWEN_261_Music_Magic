@@ -128,17 +128,82 @@ public class NeedControllerTest {
     @Test
     public void testUpdateNeedName() throws IOException { 
         
-        Need need = new Need(90, "Harp", 10.89, 99);
+        // Setup
+        int id = 67;
+        String name = "Harp";
+        double price = 10.89;
+        int quantity = 99;
+        String newName = "Chimes";
         
-        when(mockNeedDAO.updateNeed(need)).thenReturn(need);
-        ResponseEntity<Need> response = needController.updateNeed(need);
-        need.setName("Harmonica");
-        
-        response = needController.updateNeed(need);
+        Need testNeed = new Need(id, name, price, quantity);
 
+
+        when(mockNeedDAO.updateNeed(testNeed)).thenReturn(testNeed);
+        
+        ResponseEntity<Need> response = needController.updateNeed(testNeed);
+        
+        //Invoke
+        response = needController.updateNeedName(testNeed, newName);
+
+        // Analyze
+        assertEquals(newName, response.getBody().getName());
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(need, response.getBody());
     }
+
+    /**
+     * @author Aaliyah Dalhouse
+     */
+    @Test
+    public void testUpdateNeedNameFail() throws IOException { 
+        
+        // Setup
+        int id = 67;
+        String name = "Harp";
+        double price = 10.89;
+        int quantity = 99;
+        String newName = "Chimes";
+        
+        Need testNeed = new Need(id, name, price, quantity);
+
+
+        when(mockNeedDAO.updateNeed(testNeed)).thenReturn(null);
+        
+        ResponseEntity<Need> response = needController.updateNeed(testNeed);
+        
+        //Invoke
+        response = needController.updateNeedName(testNeed, newName);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    /**
+     * @author Aaliyah Dalhouse
+     */
+    @Test
+    public void testUpdateNeedNameException() throws IOException { 
+        
+        // Setup
+        int id = 67;
+        String name = "Harp";
+        double price = 10.89;
+        int quantity = 99;
+        String newName = "Chimes";
+        
+        Need testNeed = new Need(id, name, price, quantity);
+
+
+        doThrow(new IOException()).when(mockNeedDAO).updateNeed(testNeed);
+        
+        ResponseEntity<Need> response = needController.updateNeed(testNeed);
+        
+        //Invoke
+        response = needController.updateNeedName(testNeed, newName);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
 
     /**
      * @author Omar Morales-Saez
