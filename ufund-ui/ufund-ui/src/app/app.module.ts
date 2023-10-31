@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { HelperViewComponent } from './helper-view/helper-view.component';
 import { FundingBasketComponent } from './funding-basket/funding-basket.component';
 import { AddNeedComponent } from './add-need/add-need.component';
+import { AdminViewComponent } from './admin-view/admin-view.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AddNeedComponent } from './add-need/add-need.component';
     LoginComponent,
     HelperViewComponent,
     FundingBasketComponent,
-    AddNeedComponent
+    AddNeedComponent,
+    AdminViewComponent
   ],
   imports: [
     BrowserModule,

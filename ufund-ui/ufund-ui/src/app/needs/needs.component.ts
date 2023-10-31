@@ -3,6 +3,7 @@ import { Need } from '../need'
 import { NeedService } from '../need.service'
 import { BasketService } from '../basket.service';
 import { Subscribable, Subscription } from 'rxjs';
+import { UserSessionService } from '../user-session.service';
 
 export enum Operation {
   ADD, 
@@ -17,9 +18,6 @@ export enum Operation {
   templateUrl: './needs.component.html',
   styleUrls: ['./needs.component.css']
 })
-@Injectable({
-  providedIn: 'root'
-})
 /**
  * Defines the data and behavior of the NeedsComponent.
  */
@@ -27,14 +25,12 @@ export class NeedsComponent{
   needs: Need[] = []; //Array of all the needs to display.
   isHelper: boolean = true; 
   private isAdmin: boolean = false; 
-  private subscription: Subscription; 
   messageRecieved: any; 
 
   //Inject NeedService dependency.
   constructor(private needService: NeedService,
-              private basketService: BasketService) {
-                this.subscription = this.needService.getUpdate().subscribe(this.getNeeds);
-               }
+              private basketService: BasketService,
+              private userSession: UserSessionService ) { }
   
   
   // If the needs array is empty,
@@ -54,6 +50,11 @@ export class NeedsComponent{
     this.needService.getUpdate().subscribe(data => this.addNeedLocal(data.need, data.operation));
   }
 
+  getCurrentUser(): void {
+    this.isHelper = this.userSession.getIsHelper(); 
+    this.isAdmin = this.userSession.getIsAdmin(); 
+  }
+
   private addNeedLocal(need: Need, operation: Operation)
   {
     switch(operation){
@@ -67,6 +68,7 @@ export class NeedsComponent{
 
   //Update needs array when the component is initialized. 
   ngOnInit(): void {
+    this.getCurrentUser(); 
     this.getNeeds();
     this.getAddedNeed(); 
   }
@@ -93,12 +95,7 @@ export class NeedsComponent{
   }
 
   moveToBasket(need: Need): void {
-    this.basketService.addNeedToBasket(need).subscribe();
-    this.delete(need);
-  }
-
-  ngOnDestroy(){
-    this.subscription.unsubscribe(); 
+    this.basketService.addNeedToBasket(need).subscribe(need => this.basketService.addBasketSubjects(need));
   }
 }
 

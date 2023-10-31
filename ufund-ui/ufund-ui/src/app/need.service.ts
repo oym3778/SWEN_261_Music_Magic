@@ -52,10 +52,6 @@ export class NeedService {
     this.needsMessanger.next({operation: Operation.ADD, need: need});
   }
 
-  updateSubjects() : void {
-    this.needsMessanger.next({});
-  }
-
   /** GET needs from the server */
   getNeeds(): Observable<Need[]> {
     this.messageService.add('HeroService: fetched heroes'); //For search -Daniel Tsouri

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Need } from '../need';
 import { BasketService } from '../basket.service';
+import { Operation } from '../needs/needs.component';
 
 @Component({
   selector: 'app-funding-basket',
@@ -16,8 +17,25 @@ export class FundingBasketComponent {
     this.basketService.getNeeds().subscribe(needs => this.basket = needs);
   }
 
+  getBasketUpdates(): void {
+    this.basketService.getUpdate().subscribe(data => this.changeBasketLocal(data.operation, data.need));
+  }
+
+  changeBasketLocal(operation: Operation, need: Need) : void {
+    switch(operation){
+      case Operation.ADD:
+        if(need != null) this.basket.push(need);
+        break;
+      case Operation.DELETE:
+        this.basket.filter(n => n !== need);
+        break; 
+    }
+
+  }
+
   ngOnInit(): void {
     this.getBasket();
+    this.getBasketUpdates(); 
   }
 
   addToBasket(need: Need): void {
