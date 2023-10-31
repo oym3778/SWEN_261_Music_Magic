@@ -4,106 +4,69 @@
     list-style-type: none;
     padding: 0;
     width: 15em;
-  }
+}
   
-  .needs li {
-    display: flex;
-  }
-  
-  .needs button {
-    flex: 1;
-    cursor: pointer;
-    position: relative;
-    left: 0;
-    background-color: #EEE;
-    margin: .5em;
-    padding: 0;
-    border-radius: 4px;
-    display: flex;
-    align-items: stretch;
-  }
-
-  .needs .data {
-    justify-self: stretch;
-    display: flex; 
-    flex-direction: column;
-  }
-  
-  .needs button:hover {
-    color: #2c3a41;
-    background-color: #e6e6e6;
-    left: .1em;
-  }
-  
-  .needs button:active {
-    background-color: #525252;
-    color: #fafafa;
-  }
-  
-  .needs button.selected {
-    background-color: black;
-    color: white;
-  }
-  
-  .needs button.selected:hover {
-    background-color: #505050;
-    color: white;
-  }
-  
-  .needs button.selected:active {
-    background-color: black;
-    color: white;
-  }
-  
-  .needs .id {
-    display: inline-block;
-    font-size: small;
-    color: white;
-    padding: 0.8em 0.7em 0 0.7em;
-    background-color: #405061;
-    line-height: 1em;
-    margin-right: .8em;
-    border-radius: 4px 0 0 4px;
-  }
-  
-  .needs .name {
-    font-size: medium;
-    text-decoration: underline;
-  }
-
-  /* HeroesComponent's private CSS styles */
-
-input {
-  display: block;
-  width: 100%;
-  padding: .5rem;
-  margin: 1rem 0;
-  box-sizing: border-box;
+.needs li {
+  display: flex;
 }
 
-.add-button {
- padding: .5rem 1.5rem;
- font-size: 1rem;
- margin-bottom: 2rem;
+.needs button {
+  flex: 1;
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: .5em;
+  padding: 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: stretch;
 }
 
-.add-button:hover {
-  color: white;
-  background-color: #42545C;
+.needs .data {
+  justify-self: stretch;
+  display: flex; 
+  flex-direction: column;
 }
 
-button.delete {
-  position: absolute;
-  left: 210px;
-  top: 5px;
-  background-color: white;
-  color:  #525252;
-  font-size: 1.1rem;
-  margin: 0;
-  padding: 1px 10px 3px 10px;
+.needs button:hover {
+  color: #2c3a41;
+  background-color: #e6e6e6;
+  left: .1em;
 }
 
-button.delete:hover {
+.needs button:active {
   background-color: #525252;
+  color: #fafafa;
+}
+
+.needs button.selected {
+  background-color: black;
   color: white;
+}
+
+.needs button.selected:hover {
+  background-color: #505050;
+  color: white;
+}
+
+.needs button.selected:active {
+  background-color: black;
+  color: white;
+}
+
+.needs .id {
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 0.8em 0.7em 0 0.7em;
+  background-color: #405061;
+  line-height: 1em;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+}
+
+.needs .name {
+  font-size: medium;
+  text-decoration: underline;
 }

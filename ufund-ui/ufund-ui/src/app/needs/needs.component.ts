@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Injectable, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Need } from '../need'
 import { NeedService } from '../need.service';
 import { Location } from '@angular/common';
+import { BasketService } from '../basket.service';
+import { MessageService } from '../message.service';
+import { Subscribable, Subscription } from 'rxjs';
 
 /**
  * Give the name to the associated html tag for this component and connect
@@ -11,16 +14,25 @@ import { Location } from '@angular/common';
   templateUrl: './needs.component.html',
   styleUrls: ['./needs.component.css']
 })
-
+@Injectable({
+  providedIn: 'root'
+})
 /**
  * Defines the data and behavior of the NeedsComponent.
  */
-export class NeedsComponent {
+export class NeedsComponent implements OnChanges{
   needs: Need[] = []; //Array of all the needs to display.
+  isHelper: boolean = true; 
+  private isAdmin: boolean = false; 
+  private subscription: Subscription; 
+  messageRecieved: any; 
 
   //Inject NeedService dependency.
   constructor(private needService: NeedService,
-              private location: Location) { }
+              private basketService: BasketService) {
+                this.subscription = this.needService.getUpdate().subscribe(this.getNeeds);
+               }
+  
   
   // If the needs array is empty,
   // the method below returns the initial number (0).
@@ -35,9 +47,23 @@ export class NeedsComponent {
     this.needService.getNeeds().subscribe(needs => this.needs = needs);
   }
 
+  getAddedNeed(): void {
+    this.needService.getUpdate().subscribe(need => this.addNeedLocal(need));
+  }
+
+  private addNeedLocal(need: Need)
+  {
+    this.needs.push(need); 
+  }
+
   //Update needs array when the component is initialized. 
   ngOnInit(): void {
     this.getNeeds();
+    this.getAddedNeed(); 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getNeeds(); 
   }
 
   
@@ -62,10 +88,14 @@ export class NeedsComponent {
     this.needService.deleteNeed(need.id).subscribe();
   }
 
-  goBack(): void {
-    this.location.back();
+  moveToBasket(need: Need): void {
+    this.basketService.addNeedToBasket(need).subscribe();
+    this.delete(need);
   }
 
+  ngOnDestroy(){
+    this.subscription.unsubscribe(); 
+  }
 }
 
 
