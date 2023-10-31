@@ -2,6 +2,7 @@
 <u><p>Current Cupboard:</p></u>
 <ul class="needs">
     <li *ngFor="let need of needs">
+        <div class="item" *ngIf="checkFilter(need)">
         <button type="button" routerLink="/detail/{{need.id}}">
             <span class="id">{{need.id}}</span>
             <div class="data">
@@ -11,6 +12,7 @@
             </div>
         </button>
         <button type="button" *ngIf="isHelper" (click)="moveToBasket(need)">+</button>
+        </div>
     </li>
 </ul>
 

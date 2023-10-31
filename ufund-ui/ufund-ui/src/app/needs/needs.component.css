@@ -10,6 +10,12 @@
   display: flex;
 }
 
+.needs .item {
+  display: flex; 
+  align-items: stretch;
+  flex: 1;
+}
+
 .needs button {
   flex: 1;
   cursor: pointer;

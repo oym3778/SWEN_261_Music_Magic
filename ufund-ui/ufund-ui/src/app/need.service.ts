@@ -49,7 +49,11 @@ export class NeedService {
   }
 
   addNeedSubjects(need: Need): void {
-    this.needsMessanger.next({operation: Operation.ADD, need: need});
+    this.needsMessanger.next({operation: Operation.ADD, body: need});
+  }
+
+  updateNeedsFilter(filter: String) : void {
+    this.needsMessanger.next({operation: Operation.FILTER, body: filter}); 
   }
 
   /** GET needs from the server */
