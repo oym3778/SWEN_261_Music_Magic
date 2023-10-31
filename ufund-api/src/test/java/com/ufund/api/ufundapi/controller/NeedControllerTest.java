@@ -108,9 +108,7 @@ public class NeedControllerTest {
         
         Need testNeed = new Need(id, name, price, quantity);
 
-
         when(mockNeedDAO.updateNeed(testNeed)).thenReturn(testNeed);
-        
         ResponseEntity<Need> response = needController.updateNeed(testNeed);
         
         //Invoke
@@ -119,7 +117,56 @@ public class NeedControllerTest {
         // Analyze
         assertEquals(newPrice, response.getBody().getPrice());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    /**
+     * @author Aaliyah Dalhouse
+     * @throws IOException
+     */
+    @Test
+    public void testUpdateNeedCostFail() throws IOException {
+        // Setup
+        int id = 67;
+        String name = "Harp";
+        double price = 10.89;
+        int quantity = 99;
+        int newPrice = 11;
         
+        Need testNeed = new Need(id, name, price, quantity);
+
+        when(mockNeedDAO.updateNeed(testNeed)).thenReturn(null);
+        ResponseEntity<Need> response = needController.updateNeed(testNeed);
+        
+        //Invoke
+        response = needController.updateNeedCost(testNeed, newPrice);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    /**
+     * @author Aaliyah Dalhouse
+     * @throws IOException
+     */
+    @Test
+    public void testUpdateNeedCostException() throws IOException {
+        // Setup
+        int id = 67;
+        String name = "Harp";
+        double price = 10.89;
+        int quantity = 99;
+        int newPrice = 11;
+        
+        Need testNeed = new Need(id, name, price, quantity);
+
+        doThrow(new IOException()).when(mockNeedDAO).updateNeed(testNeed);
+        ResponseEntity<Need> response = needController.updateNeed(testNeed);
+        
+        //Invoke
+        response = needController.updateNeedCost(testNeed, newPrice);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     /**
@@ -273,9 +320,6 @@ public class NeedControllerTest {
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
-
-
-
 
 
     /**
