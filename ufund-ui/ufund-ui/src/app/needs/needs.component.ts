@@ -1,10 +1,13 @@
 import { Component, Injectable, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Need } from '../need'
-import { NeedService } from '../need.service';
-import { Location } from '@angular/common';
+import { NeedService } from '../need.service'
 import { BasketService } from '../basket.service';
-import { MessageService } from '../message.service';
 import { Subscribable, Subscription } from 'rxjs';
+
+export enum Operation {
+  ADD, 
+  DELETE
+}
 
 /**
  * Give the name to the associated html tag for this component and connect
@@ -20,7 +23,7 @@ import { Subscribable, Subscription } from 'rxjs';
 /**
  * Defines the data and behavior of the NeedsComponent.
  */
-export class NeedsComponent implements OnChanges{
+export class NeedsComponent{
   needs: Need[] = []; //Array of all the needs to display.
   isHelper: boolean = true; 
   private isAdmin: boolean = false; 
@@ -48,12 +51,18 @@ export class NeedsComponent implements OnChanges{
   }
 
   getAddedNeed(): void {
-    this.needService.getUpdate().subscribe(need => this.addNeedLocal(need));
+    this.needService.getUpdate().subscribe(data => this.addNeedLocal(data.need, data.operation));
   }
 
-  private addNeedLocal(need: Need)
+  private addNeedLocal(need: Need, operation: Operation)
   {
-    this.needs.push(need); 
+    switch(operation){
+    case Operation.ADD:
+      this.needs.push(need);
+      break; 
+    case Operation.DELETE:
+    
+    }
   }
 
   //Update needs array when the component is initialized. 
@@ -61,11 +70,6 @@ export class NeedsComponent implements OnChanges{
     this.getNeeds();
     this.getAddedNeed(); 
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.getNeeds(); 
-  }
-
   
   add(nameH: string, price: string, quantity: string): void {
     nameH = nameH.trim();

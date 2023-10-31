@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
+import { Operation } from './needs/needs.component';
 
 //Makes this class an injectable dependecy which can be injected into any class
 //in the program. 
@@ -15,7 +16,7 @@ import { MessageService } from './message.service';
 export class NeedService {
 
   private needsUrl = "http://localhost:8080/needs" //url of REST tomcat server
-  private subject = new Subject();
+  private needsMessanger = new Subject(); //used to send data to needs.component.ts from other components
 
   constructor(
     private http: HttpClient,
@@ -44,15 +45,15 @@ export class NeedService {
    * Return this class' subject as an observable so it can be subscribed to.
    */
   getUpdate(): Observable<any> {
-    return this.subject.asObservable(); 
+    return this.needsMessanger.asObservable(); 
   }
 
-  addNeedSubjects(need: Need): void { 
-    this.subject.next(need);
+  addNeedSubjects(need: Need): void {
+    this.needsMessanger.next({operation: Operation.ADD, need: need});
   }
 
   updateSubjects() : void {
-    this.subject.next({});
+    this.needsMessanger.next({});
   }
 
   /** GET needs from the server */
