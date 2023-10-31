@@ -24,11 +24,13 @@ export class LoginComponent {
 
     if (this.username == "admin") {
       this.userSession.setIsAdmin(true); 
+      this.userSession.setIsHelper(false); //user cannot be both an admin and a helper. 
       this.router.navigate(['/admin']);
     } else {
       // TO-DO
       // CREATE A VIEW.ROUTE FOR THE NEEDS VIEW
       this.userSession.setIsHelper(true); 
+      this.userSession.setIsAdmin(false); //user cannot be both an admin and a helper. 
       this.router.navigate(['/helper']);
     }
 

@@ -24,8 +24,8 @@ export enum Operation {
  */
 export class NeedsComponent{
   needs: Need[] = []; //Array of all the needs to display.
-  isHelper: boolean = true; 
-  private isAdmin: boolean = false; 
+  isHelper: boolean = false; 
+  isAdmin: boolean = false; 
   filter: string = '';
 
   //Inject NeedService dependency.

@@ -12,6 +12,7 @@
             </div>
         </button>
         <button type="button" *ngIf="isHelper" (click)="moveToBasket(need)">+</button>
+        <button type="button" *ngIf="isAdmin" (click)="delete(need)">-</button>
         </div>
     </li>
 </ul>
