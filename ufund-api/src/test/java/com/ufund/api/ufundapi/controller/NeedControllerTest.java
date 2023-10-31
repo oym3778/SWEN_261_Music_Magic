@@ -3,6 +3,7 @@ package com.ufund.api.ufundapi.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -62,6 +63,35 @@ public class NeedControllerTest {
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(need, response.getBody());
+    }
+
+    @Test
+    public void testUpdateNeedFailed() throws IOException {
+        //Setup
+        Need need = new Need(99, "Piano", 12034.00, 1);
+        // when updateNeed is called, return true simulating successful
+        // update and save
+        when(mockNeedDAO.updateNeed(need)).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<Need> response = needController.updateNeed(need);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateNeedHandleException() throws IOException {
+        // Setup
+        Need need = new Need(99, "Piano", 12034.00, 1);
+        // When updateNeed is called on the Mock Need DAO, throw an IOException
+        doThrow(new IOException()).when(mockNeedDAO).updateNeed(need);
+
+        // Invoke
+        ResponseEntity<Need> response = needController.updateNeed(need);
+        
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     /**
@@ -200,6 +230,21 @@ public class NeedControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, testResponse.getStatusCode());
     }
 
+    @Test
+    public void testGetNeedHandleException() throws Exception {
+        // Setup
+        int needId = 99;
+
+        // When getNeed is called on the Mock Need DAO, throw an IOException
+        doThrow(new IOException()).when(mockNeedDAO).getNeed(needId);
+
+        // Invoke
+        ResponseEntity<Need> response = needController.getNeed(needId);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
 
 
     /**
@@ -242,6 +287,21 @@ public class NeedControllerTest {
         assertEquals(HttpStatus.CONFLICT, testResponse.getStatusCode());
     }
 
+    @Test
+    public void testCreateNeedHandleException() throws IOException {
+        // Setup
+        Need need = new Need(99, "Piano", 12034.00, 1);
+
+        // When createNeed is called on the Mock Need DAO, throw an IOException
+        doThrow(new IOException()).when(mockNeedDAO).createNeed(need);
+
+        // Invoke
+        ResponseEntity<Need> response = needController.createNeed(need);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
 
     /**
      * @author Aaliyah Dalhouse
@@ -281,6 +341,20 @@ public class NeedControllerTest {
         
     }
 
+    @Test
+    public void testSearchNeedHandleException() throws IOException{
+        // Setup
+        String searchString = "Vio";
+        // When createNeed is called on the Mock Need DAO, throw an IOException
+        doThrow(new IOException()).when(mockNeedDAO).findNeeds(searchString);
+
+        // Invoke
+        ResponseEntity<Need[]> response = needController.searchNeeds(searchString);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
     /**
      * Tests the deleteNeed Function
      * 
@@ -298,6 +372,34 @@ public class NeedControllerTest {
         ResponseEntity<Need> response = needController.deleteNeed(needID);
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
+    }
+
+    @Test
+    public void testDeleteNeedNotFound() throws IOException {
+        // Setup
+        int needId = 99;
+        // when deleteNeed is called return false, simulating failed deletion
+        when(mockNeedDAO.deleteNeed(needId)).thenReturn(false);
+
+        // Invoke
+        ResponseEntity<Need> response = needController.deleteNeed(needId);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+    }
+
+    @Test
+    public void testDeleteNeedHandleEception() throws IOException {
+        // Setup
+        int needId = 99;
+        // When deleteNeed is called on the Mock Hero DAO, throw an IOException
+        doThrow(new IOException()).when(mockNeedDAO).deleteNeed(needId);
+
+        // Invoke
+        ResponseEntity<Need> response = needController.deleteNeed(needId);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
     
 }
