@@ -81,7 +81,7 @@ public class NeedFileDAO implements NeedDAO {
         ArrayList<Need> needArrayList = new ArrayList<>();
  
         for (Need need : needs.values()) {
-            if (containsText == null || need.getName().contains(containsText)) {
+            if ( need.getName().contains(containsText) || containsText == null) {
                 needArrayList.add(need);
             }
         }
