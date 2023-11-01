@@ -58,7 +58,7 @@ export class NeedsComponent{
 
   checkFilter(need: Need): boolean {
     if(this.filter == '') return true; 
-    return need.name.toLowerCase().includes(this.filter.toLowerCase()); 
+    return need.name.toLowerCase().startsWith(this.filter.toLowerCase()); 
   }
 
   private addNeedLocal(body: any, operation: Operation)
