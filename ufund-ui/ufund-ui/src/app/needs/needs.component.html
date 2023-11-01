@@ -1,8 +1,7 @@
 
 <u><p>Current Cupboard:</p></u>
 <ul class="needs">
-    <li *ngFor="let need of needs">
-        <div class="item" *ngIf="checkFilter(need)">
+    <li *ngFor="let need of needs | needFilter:filter">
         <button type="button" routerLink="/detail/{{need.id}}">
             <span class="id">{{need.id}}</span>
             <div class="data">
@@ -11,9 +10,8 @@
                 <span class="quanity">Quanity: {{need.quantity}}</span>
             </div>
         </button>
-        <button type="button" *ngIf="isHelper" (click)="moveToBasket(need)">+</button>
-        <button type="button" *ngIf="isAdmin" (click)="delete(need)">-</button>
-        </div>
+        <button type="button" class="modify" *ngIf="isHelper" (click)="moveToBasket(need)">+</button>
+        <button type="button" class="modify" *ngIf="isAdmin" (click)="delete(need)">-</button>
     </li>
 </ul>
 

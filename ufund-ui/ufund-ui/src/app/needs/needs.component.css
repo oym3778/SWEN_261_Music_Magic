@@ -3,17 +3,12 @@
     margin: 0 0 2em 0;
     list-style-type: none;
     padding: 0;
-    width: 15em;
+    width: 20em;
 }
   
 .needs li {
   display: flex;
-}
-
-.needs .item {
-  display: flex; 
-  align-items: stretch;
-  flex: 1;
+  margin: 0.5em;
 }
 
 .needs button {
@@ -22,11 +17,17 @@
   position: relative;
   left: 0;
   background-color: #EEE;
-  margin: .5em;
   padding: 0;
   border-radius: 4px;
   display: flex;
   align-items: stretch;
+}
+
+.needs .modify {
+  font-size: 40px;
+  text-align: center;
+  flex: 0;
+  margin-left: 0.1em;
 }
 
 .needs .data {
