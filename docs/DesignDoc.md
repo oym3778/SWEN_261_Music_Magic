@@ -19,7 +19,10 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This is a summary of the project.
+The Music Magic Ufund website allows organizers to maintain a list of needs 
+requested by various public school music departments. These needs can then be 
+viewed by potential helpers, who can choose to donate in order to buy these needs
+for the respective schools. 
 
 ### Purpose
 >  _**[Sprint 2 & 4]** Provide a very brief statement about the project and the most
