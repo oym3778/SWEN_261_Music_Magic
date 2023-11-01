@@ -55,6 +55,11 @@ This section describes the features of the application.
 
 ### Definition of MVP
 > _**[Sprint 2 & 4]** Provide a simple description of the Minimum Viable Product._
+For a minimum viable produce, a user must be able to: 
+ * login as either a helper or an admin
+ * If they are a helper, see a list of needs and add or remove needs to/from their funding basket.
+ * If they are an admin, see a list of needs and add or remove needs from the list. 
+ * Both should be able to search the list of needs. 
 
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
