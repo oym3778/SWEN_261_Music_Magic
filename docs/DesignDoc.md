@@ -27,6 +27,8 @@ for the respective schools.
 ### Purpose
 >  _**[Sprint 2 & 4]** Provide a very brief statement about the project and the most
 > important user group and user goals._
+Allows administrators to add needs to a cupboard of needs from which helpers can 
+add needs to their basket and fund them. 
 
 ### Glossary and Acronyms
 > _**[Sprint 2 & 4]** Provide a table of terms and acronyms._
