@@ -19,7 +19,7 @@ geometry: margin=1in
 
 ## Executive Summary
 
-The Music Magic Ufund website allows organizers to maintain a list of needs 
+The New Orleans Music Fund website allows organizers to maintain a list of needs 
 requested by various public school music departments. These needs can then be 
 viewed by potential helpers, who can choose to donate in order to buy these needs
 for the respective schools. 
@@ -79,6 +79,7 @@ This section describes the application domain.
 > to each other._
 
 
+
 ## Architecture and Design
 
 This section describes the application architecture.
@@ -104,6 +105,8 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts with the web application.
 
 > _Provide a summary of the application's user interface.  Describe, from the user's perspective, the flow of the pages in the web application._
+
+  Any new users is first directed to the login page where they can sign in as either a helper or an admin. If they login as an admin they are directed to the administrator view, where they are able to see a last of needs, a button next to each need which allows them to remove a need, a form which lets them add a need, and a search bar which lets them search the needs. 
 
 
 ### View Tier
