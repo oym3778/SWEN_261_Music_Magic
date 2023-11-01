@@ -106,7 +106,11 @@ This section describes the web interface flow; this is how the user views and in
 
 > _Provide a summary of the application's user interface.  Describe, from the user's perspective, the flow of the pages in the web application._
 
-  Any new users is first directed to the login page where they can sign in as either a helper or an admin. If they login as an admin they are directed to the administrator view, where they are able to see a last of needs, a button next to each need which allows them to remove a need, a form which lets them add a need, and a search bar which lets them search the needs. 
+  Any new users is first directed to the login page where they can sign in as either a helper or an admin. 
+  
+  If they login as an admin they are directed to the administrator view, where they are able to see a list of needs, a button next to each need which allows them to remove a need, a form which lets them add a need, and a search bar which lets them search the needs. 
+
+  If they login as a helper they ared directed to the helper view, where they are able to see a list of and a button next to each need which allows them to add a need to the funding basket. They can also see a funding basket, which they can remove needs from, and a search bar which lets them search the list of needs. 
 
 
 ### View Tier
