@@ -22,7 +22,7 @@ export class NeedSearchComponent implements OnInit {
 
   // Push a search term into the observable stream.
   search(term: string): void {
-    this.needService.updateNeedsFilter(term); 
+    this.needService.updateNeedsFilter(term.toLowerCase()); 
   }
 
   ngOnInit(): void {
