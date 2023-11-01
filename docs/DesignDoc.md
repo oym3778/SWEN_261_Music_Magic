@@ -31,6 +31,9 @@ This is a summary of the project.
 | Term | Definition |
 |------|------------|
 | SPA | Single Page |
+| HTTP | Hypertext Transfer Protocol |
+| API | Application Programming Interface |
+
 
 
 ## Requirements
