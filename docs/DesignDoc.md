@@ -38,6 +38,10 @@ add needs to their basket and fund them.
 | SPA | Single Page |
 | HTTP | Hypertext Transfer Protocol |
 | API | Application Programming Interface |
+| IDE | Integrated Development Environment |
+| CRUD | Create, read, update, and delete |
+| JSON |  JavaScript Object Notation |
+| OOP |  Object Oriented Proggraming |
 
 
 
