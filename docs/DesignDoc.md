@@ -155,6 +155,10 @@ Our api backend functions by maintaining two json files of needs, one representi
 
 ## OO Design Principles
 > _**[Sprint 2, 3 & 4]** Will eventually address upto **4 key OO Principles** in your final design. Follow guidance in augmenting those completed in previous Sprints as indicated to you by instructor. Be sure to include any diagrams (or clearly refer to ones elsewhere in your Tier sections above) to support your claims._
+### Sprint 2
+* We apply **Single Responsibility** in our project by having classes that are limited to one responsibility. For example we have multiple classes for the funding basket because we have one class that is responsible for the deserialization of the basket.json file and handling of objects, and another class that is responsible for responding to HTTP requests and returning the correct objects for the funding basket.
+* We apply **Open/Closed** in our project by extending interfaces such as NeedDAO and BasketDAO into the new classes NeedFileDAO and BasketFileDAO respectively. This allows us to make modifications to the child classes while keeping the parent class untouched.
+
 
 > _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
 
@@ -189,3 +193,21 @@ Our api backend functions by maintaining two json files of needs, one representi
 
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
+### Sprint 2
+* There is one large chunk of code that we are having trouble writing unit tests for, which includes updateNeedCost(), updateNeedquantity(), and updateNeedName. It is hard for us to write unit tests for this code because there was nothing like it in the Heroes api for us to base our code off of.
+* Apart from that chunk, we just have a few holes spotted around the place which should be no problem to patch up in Sprint 3.
+<img width="1089" alt="Screenshot 2023-11-01 at 10 02 41 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/132c39d6-faee-4525-b74c-435e240e156c">
+<img width="939" alt="Screenshot 2023-11-01 at 10 05 10 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/0932d461-1146-483f-80dd-54350bdf0b27">
+<img width="930" alt="Screenshot 2023-11-01 at 10 05 07 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/6b43a1df-7a59-429c-9128-755714f8ad5f">
+<img width="1017" alt="Screenshot 2023-11-01 at 10 04 59 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/33a7c467-e2dd-4f26-a2cf-9f5f2415d753">
+<img width="1029" alt="Screenshot 2023-11-01 at 10 04 55 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/56de840a-7308-4afe-8fa9-b31077240a72">
+<img width="1028" alt="Screenshot 2023-11-01 at 10 04 52 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/8335653a-731e-499a-8b2a-fc49efbc6b4e">
+<img width="1022" alt="Screenshot 2023-11-01 at 10 04 47 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/23c19081-02cf-40f1-938f-732888afa21f">
+<img width="1014" alt="Screenshot 2023-11-01 at 10 04 42 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/81e05700-547e-4ba4-9c9b-7b8cf5bdcd23">
+<img width="1021" alt="Screenshot 2023-11-01 at 10 04 37 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/11e7bb78-26d3-43d8-a54b-d7e29a5bb81f">
+<img width="1032" alt="Screenshot 2023-11-01 at 10 03 32 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/70d1d67d-a929-4131-81f5-3beedbc1e6e9">
+<img width="969" alt="Screenshot 2023-11-01 at 10 03 18 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/945c36e0-b242-4b5c-bc25-13ae7961e7bf">
+<img width="1065" alt="Screenshot 2023-11-01 at 10 03 06 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/bd14f8ef-cf55-4ebf-88d4-5b8ef50cb914">
+<img width="1041" alt="Screenshot 2023-11-01 at 10 02 59 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/dd0820d0-8e62-4dd8-99b3-c92b5191b602">
+<img width="1018" alt="Screenshot 2023-11-01 at 10 02 54 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/7a4dcfff-fe07-4dd1-8fe2-9bc1fcabe90d">
+<img width="1034" alt="Screenshot 2023-11-01 at 10 02 49 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/9ea1faaf-44a4-4f4d-a36c-53954853af62">
