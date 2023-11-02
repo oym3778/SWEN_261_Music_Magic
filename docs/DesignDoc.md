@@ -174,6 +174,10 @@ This section describes the web interface flow; this is how the user views and in
 > criteria tests failing, and the number of user stories that
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
+* So far, the team has been able to keep up with Acceptance Testing. The entirety of stories in both Sprint 1
+  and Sprint 2 have passed all of their acceptance criteria tests. The stories in Sprint 3 do not have
+  any tests yet. They wil be assigned tests during the Sprint 3 planning.
+  There has not been found any issues with the acceptance tests.
 
 ### Unit Testing and Code Coverage
 > _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
