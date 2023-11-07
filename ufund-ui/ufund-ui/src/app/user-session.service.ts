@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,27 +10,18 @@ import { Injectable } from '@angular/core';
 //it doesn't property store the state, and so resets both to false if the page is refreshed
 //will have to be changed later but works for testing perposes now.
 export class UserSessionService {
-  private isAdmin : boolean = false;
-  private isHelper: boolean = false;  
+  private user = ""; 
+  private password = ""; 
+  private loginUrl = "http://localhost:8080/auth/login"
 
-  constructor() { }
+  constructor(
+    private http: HttpClient) { }
 
-  getIsAdmin() : boolean {
-    return this.isAdmin; 
+  getIsAdmin() : Observable<boolean> {
+    return this.http.post<boolean>(this.loginUrl, "dummy"); 
   }
 
-  getIsHelper(): boolean {
-    return this.isHelper; 
-  }
-
-  //Temporary functions for now, very insecure, data should be gotten from backend server not assigned locally. 
-  //Will have to fix later when proper session management is figured out
-  
-  setIsAdmin(isAdmin: boolean) : void {
-    this.isAdmin = isAdmin; 
-  }
-
-  setIsHelper(isHelper: boolean) : void {
-    this.isHelper = isHelper; 
+  getIsHelper(): Observable<boolean> {
+    return this.http.post<boolean>(this.loginUrl, "dummy"); 
   }
 }

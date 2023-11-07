@@ -52,8 +52,8 @@ export class NeedsComponent{
   }
 
   getCurrentUser(): void {
-    this.isHelper = this.userSession.getIsHelper(); 
-    this.isAdmin = this.userSession.getIsAdmin(); 
+    //this.isHelper = this.userSession.getIsHelper(); 
+    this.userSession.getIsAdmin().subscribe(data => this.isAdmin = data); 
   }
 
   checkFilter(need: Need): boolean {
