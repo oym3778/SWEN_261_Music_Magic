@@ -11,17 +11,22 @@ import { Observable } from 'rxjs';
 //will have to be changed later but works for testing perposes now.
 export class UserSessionService {
   private user = ""; 
-  private password = ""; 
+  private password = localStorage.getItem("password"); 
   private loginUrl = "http://localhost:8080/auth/login"
 
   constructor(
     private http: HttpClient) { }
 
   getIsAdmin() : Observable<boolean> {
-    return this.http.post<boolean>(this.loginUrl, "dummy"); 
+    return this.http.post<boolean>(this.loginUrl, ["admin", this.password]); 
   }
 
   getIsHelper(): Observable<boolean> {
-    return this.http.post<boolean>(this.loginUrl, "dummy"); 
+    return this.http.post<boolean>(this.loginUrl, ["helper", this.password]); 
+  }
+
+  setPassword(password : string): void {
+    localStorage.setItem("password", password); 
+    this.password = password; 
   }
 }
