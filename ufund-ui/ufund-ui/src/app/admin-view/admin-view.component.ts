@@ -9,12 +9,15 @@ import { Router } from '@angular/router';
 })
 export class AdminViewComponent {
 
+  protected validated = false; 
+
   constructor(
     private userSession: UserSessionService,
     private router: Router
   ){
     this.userSession.getIsAdmin().subscribe(val => {
      if(!val) this.router.navigate(['/login']);   
+     this.validated = val; 
     })
   }
 
