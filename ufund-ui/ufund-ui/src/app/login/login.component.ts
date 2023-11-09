@@ -24,6 +24,7 @@ export class LoginComponent {
       return;
     }
     this.userSession.setPassword(this.password); 
+    this.userSession.setUser(this.username); 
 
     if (this.username == "admin") {
       this.userSession.getIsAdmin().subscribe(val => {
@@ -31,8 +32,11 @@ export class LoginComponent {
         this.displayError = true; 
       });
     } 
-    else if(this.username == "helper" && this.userSession.getIsHelper()){ 
-      this.router.navigate(['/helper']);
+    else if(this.username == "helper"){ 
+      this.userSession.getIsHelper().subscribe(val => {
+        if(val) this.router.navigate(['/helper']);
+        this.displayError=true; 
+      })
     }
   }
 }
