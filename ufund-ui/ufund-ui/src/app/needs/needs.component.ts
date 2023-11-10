@@ -52,7 +52,7 @@ export class NeedsComponent{
   }
 
   getCurrentUser(): void {
-    //this.isHelper = this.userSession.getIsHelper(); 
+    this.userSession.getIsHelper().subscribe(data => this.isHelper = data); 
     this.userSession.getIsAdmin().subscribe(data => this.isAdmin = data); 
   }
 

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AdminViewComponent {
 
-  protected validated = false; 
+  private validated = false; 
 
   constructor(
     private userSession: UserSessionService,
@@ -19,6 +19,10 @@ export class AdminViewComponent {
      if(!val) this.router.navigate(['/login']);   
      this.validated = val; 
     })
+  }
+
+  getValidated() : boolean {
+    return this.validated; 
   }
 
 }
