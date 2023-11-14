@@ -7,7 +7,8 @@ import { UserSessionService } from '../user-session.service';
 
 export enum Operation {
   ADD, 
-  DELETE
+  DELETE,
+  FILTER
 }
 
 /**
@@ -23,9 +24,9 @@ export enum Operation {
  */
 export class NeedsComponent{
   needs: Need[] = []; //Array of all the needs to display.
-  isHelper: boolean = true; 
-  private isAdmin: boolean = false; 
-  messageRecieved: any; 
+  isHelper: boolean = false; 
+  isAdmin: boolean = false; 
+  filter: string = '';
 
   //Inject NeedService dependency.
   constructor(private needService: NeedService,
@@ -47,22 +48,29 @@ export class NeedsComponent{
   }
 
   getAddedNeed(): void {
-    this.needService.getUpdate().subscribe(data => this.addNeedLocal(data.need, data.operation));
+    this.needService.getUpdate().subscribe(data => this.addNeedLocal(data.body, data.operation));
   }
 
   getCurrentUser(): void {
     this.isHelper = this.userSession.getIsHelper(); 
     this.isAdmin = this.userSession.getIsAdmin(); 
   }
+  
+  checkFilter(need: Need): boolean {
+    if(this.filter == '') return true; 
+    return need.name.toLowerCase().startsWith(this.filter.toLowerCase()); 
+  }
 
-  private addNeedLocal(need: Need, operation: Operation)
+  private addNeedLocal(body: any, operation: Operation)
   {
     switch(operation){
     case Operation.ADD:
-      this.needs.push(need);
+      this.needs.push(body);
       break; 
     case Operation.DELETE:
-    
+  
+    case Operation.FILTER:
+      this.filter = body;
     }
   }
 

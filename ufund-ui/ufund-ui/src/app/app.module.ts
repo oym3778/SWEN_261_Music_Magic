@@ -14,6 +14,8 @@ import { HelperViewComponent } from './helper-view/helper-view.component';
 import { FundingBasketComponent } from './funding-basket/funding-basket.component';
 import { AddNeedComponent } from './add-need/add-need.component';
 import { AdminViewComponent } from './admin-view/admin-view.component';
+import { NeedFilterPipe } from './need-filter.pipe';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { AdminViewComponent } from './admin-view/admin-view.component';
     HelperViewComponent,
     FundingBasketComponent,
     AddNeedComponent,
-    AdminViewComponent
+    AdminViewComponent,
+    NeedFilterPipe
+
   ],
   imports: [
     BrowserModule,
