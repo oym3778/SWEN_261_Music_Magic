@@ -24,9 +24,6 @@ public class LoginController {
 
     //Parameters for Argon2PasswordEncoder constructor, effects how the password hash will be created.
 
-    private final String admin_password = "$argon2id$v=19$m=6000,t=10,p=1$zOSAEg0tLviHjoKt0LEOrw$eNtj1oWXKB4NfgiNHWmzLUyWnbmrKbyqxv4/FQDq/gM"; 
-    private final String helper_password = "$argon2id$v=19$m=6000,t=10,p=1$KfJE9FkoiyT9zE1tpVRUoQ$Dvgt1tr1hXJP5UsTrI9mxHHeA0d8pKWeieKxM+yi+yI";
-
     private UserDAO userDAO; 
 
     public LoginController(UserDAO userDao) {
