@@ -26,6 +26,7 @@ export class HelperViewComponent {
     })
   }
 
+
   //Go to login page
   goBack(): void {
     this.location.back();
