@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserSessionService } from '../user-session.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ export class LoginComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private userSession: UserSessionService) { }
 
   username: string | undefined;
   password: string | undefined;
@@ -21,10 +23,12 @@ export class LoginComponent {
     }
 
     if (this.username == "admin") {
-      this.router.navigate(['/needs']);
+      this.userSession.setIsAdmin(true); 
+      this.router.navigate(['/admin']);
     } else {
       // TO-DO
       // CREATE A VIEW.ROUTE FOR THE NEEDS VIEW
+      this.userSession.setIsHelper(true); 
       this.router.navigate(['/helper']);
     }
 

@@ -1,7 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Injectable, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Need } from '../need'
-import { NeedService } from '../need.service';
-import { Location } from '@angular/common';
+import { NeedService } from '../need.service'
+import { BasketService } from '../basket.service';
+import { Subscribable, Subscription } from 'rxjs';
+import { UserSessionService } from '../user-session.service';
+
+export enum Operation {
+  ADD, 
+  DELETE
+}
 
 /**
  * Give the name to the associated html tag for this component and connect
@@ -11,16 +18,20 @@ import { Location } from '@angular/common';
   templateUrl: './needs.component.html',
   styleUrls: ['./needs.component.css']
 })
-
 /**
  * Defines the data and behavior of the NeedsComponent.
  */
-export class NeedsComponent {
+export class NeedsComponent{
   needs: Need[] = []; //Array of all the needs to display.
+  isHelper: boolean = true; 
+  private isAdmin: boolean = false; 
+  messageRecieved: any; 
 
   //Inject NeedService dependency.
   constructor(private needService: NeedService,
-              private location: Location) { }
+              private basketService: BasketService,
+              private userSession: UserSessionService ) { }
+  
   
   // If the needs array is empty,
   // the method below returns the initial number (0).
@@ -35,11 +46,32 @@ export class NeedsComponent {
     this.needService.getNeeds().subscribe(needs => this.needs = needs);
   }
 
-  //Update needs array when the component is initialized. 
-  ngOnInit(): void {
-    this.getNeeds();
+  getAddedNeed(): void {
+    this.needService.getUpdate().subscribe(data => this.addNeedLocal(data.need, data.operation));
   }
 
+  getCurrentUser(): void {
+    this.isHelper = this.userSession.getIsHelper(); 
+    this.isAdmin = this.userSession.getIsAdmin(); 
+  }
+
+  private addNeedLocal(need: Need, operation: Operation)
+  {
+    switch(operation){
+    case Operation.ADD:
+      this.needs.push(need);
+      break; 
+    case Operation.DELETE:
+    
+    }
+  }
+
+  //Update needs array when the component is initialized. 
+  ngOnInit(): void {
+    this.getCurrentUser(); 
+    this.getNeeds();
+    this.getAddedNeed(); 
+  }
   
   add(nameH: string, price: string, quantity: string): void {
     nameH = nameH.trim();
@@ -62,10 +94,9 @@ export class NeedsComponent {
     this.needService.deleteNeed(need.id).subscribe();
   }
 
-  goBack(): void {
-    this.location.back();
+  moveToBasket(need: Need): void {
+    this.basketService.addNeedToBasket(need).subscribe(need => this.basketService.addBasketSubjects(need));
   }
-
 }
 
 

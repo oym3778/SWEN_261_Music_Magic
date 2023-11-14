@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Need } from './need';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 //import { HEROES } from './mock-needs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
+import { Operation } from './needs/needs.component';
 
 //Makes this class an injectable dependecy which can be injected into any class
 //in the program. 
@@ -15,6 +16,7 @@ import { MessageService } from './message.service';
 export class NeedService {
 
   private needsUrl = "http://localhost:8080/needs" //url of REST tomcat server
+  private needsMessanger = new Subject(); //used to send data to needs.component.ts from other components
 
   constructor(
     private http: HttpClient,
@@ -38,6 +40,17 @@ export class NeedService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+
+  /**
+   * Return this class' subject as an observable so it can be subscribed to.
+   */
+  getUpdate(): Observable<any> {
+    return this.needsMessanger.asObservable(); 
+  }
+
+  addNeedSubjects(need: Need): void {
+    this.needsMessanger.next({operation: Operation.ADD, need: need});
+  }
 
   /** GET needs from the server */
   getNeeds(): Observable<Need[]> {
@@ -107,7 +120,7 @@ export class NeedService {
     );
   }
 
-  /** PUT: update the hero on the server */
+  /** PUT: update the need on the server */
   updateNeed(need: Need): Observable<any> {
     return this.http.put(this.needsUrl, need, this.httpOptions).pipe(
       // tap(_ => this.log(`updated hero id=${hero.id}`)),

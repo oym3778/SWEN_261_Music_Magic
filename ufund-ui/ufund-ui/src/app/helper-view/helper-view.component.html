@@ -1,35 +1,8 @@
 <h2>THIS IS THE HELPER VIEW</h2>
 <p>WIP!</p>
 
-<u><p>Needs Cupboard:</p></u>
-<ul class="needs">
-    <li *ngFor="let need of needs">
-        <button type="button">
-            <span class="id">{{need.id}}</span>
-            <div class="data">
-                <span class="name">{{need.name}}</span>
-                <span class="cost">{{need.price | currency}}</span>
-                <span class="quanity">Quanity: {{need.quantity}}</span>
-            </div>
-        </button>
-        <button type="button" class="add" title="add need to basket" (click)="addToBasket(need)">+</button>
-    </li>
-</ul>
-
-<u><p>Funding Basket:</p></u>
-<ul class="needs">
-    <li *ngFor="let need of basket">
-        <button type="button">
-            <span class="id">{{need.id}}</span>
-            <div class="data">
-                <span class="name">{{need.name}}</span>
-                <span class="cost">{{need.price | currency}}</span>
-                <span class="quanity">Quanity: {{need.quantity}}</span>
-            </div>
-        </button>
-        <button type="button" class="add" title="remove from basket" (click)="removeFromBasket(need)">-</button>
-    </li>
-</ul>
+<app-needs></app-needs>
+<app-funding-basket></app-funding-basket>
 
 <!-- Search bar -->
 <app-need-search></app-need-search>

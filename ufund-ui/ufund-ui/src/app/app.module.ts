@@ -11,6 +11,9 @@ import { NeedSearchComponent } from './need-search/need-search.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
 import { HelperViewComponent } from './helper-view/helper-view.component';
+import { FundingBasketComponent } from './funding-basket/funding-basket.component';
+import { AddNeedComponent } from './add-need/add-need.component';
+import { AdminViewComponent } from './admin-view/admin-view.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { HelperViewComponent } from './helper-view/helper-view.component';
     NeedSearchComponent,
     MessagesComponent,
     LoginComponent,
-    HelperViewComponent
+    HelperViewComponent,
+    FundingBasketComponent,
+    AddNeedComponent,
+    AdminViewComponent
   ],
   imports: [
     BrowserModule,
