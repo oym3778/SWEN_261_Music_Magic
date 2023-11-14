@@ -25,6 +25,7 @@ export class LoginComponent {
     if (this.username == "admin") {
       this.userSession.setIsAdmin(true); 
       this.userSession.setIsHelper(false); //user cannot be both an admin and a helper. 
+
       this.router.navigate(['/admin']);
     } else {
       // TO-DO

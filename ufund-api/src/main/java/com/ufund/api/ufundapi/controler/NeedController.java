@@ -182,13 +182,13 @@ public class NeedController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("/{id}/update-cost")
-    public ResponseEntity<Need> updateNeedCost(@PathVariable int id, @RequestBody double cost){
-        LOG.info("PUT /needs " + id);
+    public ResponseEntity<Need> updateNeedCost(@RequestBody Need need, @RequestBody double cost){
+        LOG.info("PUT /needs " + need.getId());
 
         try {
-            Need target = needDao.getNeed(id);
-            Need updated = new Need(target.getId(), target.getName(), cost, target.getquantity());
-            updated = needDao.updateNeed(updated);
+            //Need target = needDao.getNeed(id);
+            need.setPrice(cost);
+            Need updated = needDao.updateNeed(need);
             if(updated != null)
                 return new ResponseEntity<Need>(updated, HttpStatus.OK);
             else
@@ -213,13 +213,12 @@ public class NeedController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("/{id}/update-quantity")
-    public ResponseEntity<Need> updateNeedquantity(@PathVariable int id, @RequestBody int quantity){
-        LOG.info("PUT /needs " + id);
+    public ResponseEntity<Need> updateNeedquantity(@RequestBody Need need, @RequestBody int quantity){
+        LOG.info("PUT /needs " + need.getId());
 
         try {
-            Need target = needDao.getNeed(id);
-            Need updated = new Need(target.getId(), target.getName(), target.getPrice(), quantity);
-            updated = needDao.updateNeed(updated);
+            need.setquantity(quantity);
+            Need updated = needDao.updateNeed(need);
             if(updated != null)
                 return new ResponseEntity<Need>(updated, HttpStatus.OK);
             else
@@ -244,13 +243,12 @@ public class NeedController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("/{id}/update-name")
-    public ResponseEntity<Need> updateNeedName(@PathVariable int id, @RequestBody String name){
-        LOG.info("PUT /needs " + id);
+    public ResponseEntity<Need> updateNeedName(@RequestBody Need need, @RequestBody String name){
+        LOG.info("PUT /needs " + need.getId());
 
         try {
-            Need target = needDao.getNeed(id);
-            Need updated = new Need(target.getId(), name, target.getPrice(), target.getquantity());
-            updated = needDao.updateNeed(updated);
+            need.setName(name);
+            Need updated = needDao.updateNeed(need);
             if(updated != null)
                 return new ResponseEntity<Need>(updated, HttpStatus.OK);
             else

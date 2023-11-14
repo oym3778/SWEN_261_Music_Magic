@@ -16,6 +16,7 @@ import { AddNeedComponent } from './add-need/add-need.component';
 import { AdminViewComponent } from './admin-view/admin-view.component';
 import { NeedFilterPipe } from './need-filter.pipe';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +30,7 @@ import { NeedFilterPipe } from './need-filter.pipe';
     AddNeedComponent,
     AdminViewComponent,
     NeedFilterPipe
+
   ],
   imports: [
     BrowserModule,

@@ -55,7 +55,7 @@ export class NeedsComponent{
     this.isHelper = this.userSession.getIsHelper(); 
     this.isAdmin = this.userSession.getIsAdmin(); 
   }
-
+  
   checkFilter(need: Need): boolean {
     if(this.filter == '') return true; 
     return need.name.toLowerCase().startsWith(this.filter.toLowerCase()); 
