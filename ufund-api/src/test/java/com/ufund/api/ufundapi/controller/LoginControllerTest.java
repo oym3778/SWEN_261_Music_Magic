@@ -40,7 +40,7 @@ public class LoginControllerTest {
         String passwordHash = argon2.encode("password");
         User user = new User("username", passwordHash);
         when(mockUserDAO.getUser("username")).thenReturn(user);
-        String[] correctLoginCredentials = {"username", passwordHash}; 
+        String[] correctLoginCredentials = {"username", "password"}; 
 
         //Check correct login credentials. 
         ResponseEntity<Boolean> response = loginController.checkLogin(correctLoginCredentials);
@@ -54,7 +54,7 @@ public class LoginControllerTest {
         assertEquals(response.getStatusCode(), HttpStatus.OK);
 
         //Check incorrect username. 
-        String[] incorrectUsername = {"notuser", passwordHash};
+        String[] incorrectUsername = {"notuser", "password"};
         response = loginController.checkLogin(incorrectUsername);
         assertEquals(response.getBody(), false);
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
