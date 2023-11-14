@@ -21,6 +21,9 @@ public class LoginControllerTest {
     private LoginController loginController; 
     private UserDAO mockUserDAO; 
 
+    /**
+     * Set up mock userDAO and loginController to be tested before each test.
+     */
     @BeforeEach
     public void setupLoginController() {
         mockUserDAO = mock(UserDAO.class); 

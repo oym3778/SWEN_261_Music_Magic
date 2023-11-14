@@ -52,5 +52,16 @@ public class User {
     public boolean validateUser(String username, String password){
         return username.equals(this.username) && argon2.matches(password, this.password);
     }
+
+    /**
+     * Retrieve the encoder object used to hash given passwords. 
+     * Only used by unit testing to confirm that login is being validated correctly.
+     * There may be a better way to do that, but this seemed preferrable to making
+     * the encoder or the encoder parameters public. 
+     * @return Argon2 password encoder object 
+     */
+    static public Argon2PasswordEncoder getEncoder() {
+        return argon2; 
+    }
     
 }
