@@ -1,0 +1,1 @@
+[{"username":"admin", "password":"$argon2id$v=19$m=6000,t=10,p=1$zOSAEg0tLviHjoKt0LEOrw$eNtj1oWXKB4NfgiNHWmzLUyWnbmrKbyqxv4/FQDq/gM"}, {"username":"helper", "password":"$argon2id$v=19$m=6000,t=10,p=1$KfJE9FkoiyT9zE1tpVRUoQ$Dvgt1tr1hXJP5UsTrI9mxHHeA0d8pKWeieKxM+yi+yI"}]

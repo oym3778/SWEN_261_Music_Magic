@@ -52,10 +52,10 @@ export class NeedsComponent{
   }
 
   getCurrentUser(): void {
-    this.isHelper = this.userSession.getIsHelper(); 
-    this.isAdmin = this.userSession.getIsAdmin(); 
+    this.userSession.getIsHelper().subscribe(data => this.isHelper = data); 
+    this.userSession.getIsAdmin().subscribe(data => this.isAdmin = data); 
   }
-  
+
   checkFilter(need: Need): boolean {
     if(this.filter == '') return true; 
     return need.name.toLowerCase().startsWith(this.filter.toLowerCase()); 

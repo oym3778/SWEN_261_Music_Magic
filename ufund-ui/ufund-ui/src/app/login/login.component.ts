@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserSessionService } from '../user-session.service';
+import { isFormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,7 @@ import { UserSessionService } from '../user-session.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  displayError : boolean = false; 
 
   constructor(
     private route: ActivatedRoute,
@@ -21,19 +23,21 @@ export class LoginComponent {
     if (!this.username || !this.password) {
       return;
     }
+    this.userSession.setPassword(this.password); 
+    this.userSession.setUser(this.username); 
 
     if (this.username == "admin") {
-      this.userSession.setIsAdmin(true); 
-      this.userSession.setIsHelper(false); //user cannot be both an admin and a helper. 
+      this.userSession.getIsAdmin().subscribe(val => {
+        if(val) this.router.navigate(['/admin']);
+        this.displayError = true; 
+      });
+    } 
+    else if(this.username == "helper"){ 
+      this.userSession.getIsHelper().subscribe(val => {
+        if(val) this.router.navigate(['/helper']);
+        this.displayError=true; 
+      })
 
-      this.router.navigate(['/admin']);
-    } else {
-      // TO-DO
-      // CREATE A VIEW.ROUTE FOR THE NEEDS VIEW
-      this.userSession.setIsHelper(true); 
-      this.userSession.setIsAdmin(false); //user cannot be both an admin and a helper. 
-      this.router.navigate(['/helper']);
     }
-
   }
 }
