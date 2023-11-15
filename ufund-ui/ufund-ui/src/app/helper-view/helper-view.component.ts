@@ -5,6 +5,7 @@ import { NeedService } from '../need.service';
 import { BasketService } from '../basket.service';
 import { UserSessionService } from '../user-session.service';
 import { Router } from '@angular/router';
+import { FundingBasketComponent } from '../funding-basket/funding-basket.component';
 
 @Component({
   selector: 'app-helper-view',
@@ -18,7 +19,8 @@ export class HelperViewComponent {
   constructor(
     private location: Location,
     private userSession: UserSessionService,
-    private router: Router
+    private router: Router,
+    private basket: FundingBasketComponent
   ){
     this.userSession.getIsHelper().subscribe(val => {
      if(!val) this.router.navigate(['/login']);   
@@ -35,4 +37,14 @@ export class HelperViewComponent {
   getValidated() : boolean {
     return this.validated; 
   }
+
+  // proceedToCheckout(): void{
+  //   // if there are needs in the funding basket, the helper may proceed to checkout
+  //   if(this.basket.getFundingBasket() != null){
+  //     this.router.navigate(['/checkout']);
+  //   }
+
+  //   // otherwise the button should be transparent and do nothing when clicked
+
+  // }
 }
