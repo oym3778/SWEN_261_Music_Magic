@@ -11,6 +11,7 @@ import { NeedSearchComponent } from './need-search/need-search.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
 import { HelperViewComponent } from './helper-view/helper-view.component';
+import { SlideshowComponent } from './slideshow/slideshow.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HelperViewComponent } from './helper-view/helper-view.component';
     NeedSearchComponent,
     MessagesComponent,
     LoginComponent,
-    HelperViewComponent
+    HelperViewComponent,
+    SlideshowComponent
   ],
   imports: [
     BrowserModule,
