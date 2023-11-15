@@ -5,12 +5,10 @@ import com.ufund.api.ufundapi.model.Need;
 
 public interface BasketDAO {
 
-    Need[] getNeeds() throws IOException;
+    int[] getNeeds() throws IOException;
 
-    Need getNeed(int id) throws IOException;
+    void addNeed(int id) throws IOException;
 
-    Need createNeed(Need need) throws IOException;
-
-    boolean deleteNeed(int id) throws IOException;
+    boolean removeNeed(int id) throws IOException;
 
 }
