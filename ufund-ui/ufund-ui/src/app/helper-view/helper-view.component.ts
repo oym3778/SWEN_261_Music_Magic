@@ -17,6 +17,7 @@ import { debounceTime } from 'rxjs/operators';
 export class HelperViewComponent {
   private validated: boolean = false; 
   basket: Need[] = [];
+  
 
   constructor(
     private location: Location,
@@ -46,6 +47,8 @@ export class HelperViewComponent {
 
   proceedToCheckout(): void {
     // if there are needs in the funding basket, the helper may proceed to checkout
+    // This is probably bad practice, calling the GET request again after its already been called. 
+    // TODO refactor this...
     this.getBasket();
     debounceTime(300);
 

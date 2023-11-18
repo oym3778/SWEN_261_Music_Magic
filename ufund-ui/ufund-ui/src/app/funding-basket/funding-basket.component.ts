@@ -13,11 +13,6 @@ export class FundingBasketComponent {
 
   constructor(private basketService: BasketService) { }
 
-  // // Used within checkout to determine if the helper can proceed to checkout
-  getFundingBasket(): Need[] {
-    return this.basket;
-  }
-
   getBasket(): void {
     this.basketService.getNeeds().subscribe(needs => this.basket = needs);
   }
