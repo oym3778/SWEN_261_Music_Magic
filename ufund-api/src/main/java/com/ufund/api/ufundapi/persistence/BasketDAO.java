@@ -7,7 +7,7 @@ public interface BasketDAO {
 
     int[] getNeeds() throws IOException;
 
-    void addNeed(int id) throws IOException;
+    boolean addNeed(int id) throws IOException;
 
     boolean removeNeed(int id) throws IOException;
 

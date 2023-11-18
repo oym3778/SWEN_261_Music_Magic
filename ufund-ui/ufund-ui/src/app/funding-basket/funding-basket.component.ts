@@ -24,13 +24,12 @@ export class FundingBasketComponent {
   changeBasketLocal(operation: Operation, need: Need) : void {
     switch(operation){
       case Operation.ADD:
-        if(need != null) this.basket.push(need);
+        if(need != null && !this.basket.includes(need)) this.basket.push(need);
         break;
       case Operation.DELETE:
         this.basket.filter(n => n !== need);
         break; 
     }
-
   }
 
   ngOnInit(): void {
@@ -39,8 +38,8 @@ export class FundingBasketComponent {
   }
 
   addToBasket(need: Need): void {
-    this.basketService.addNeedToBasket(need).subscribe();
-    this.getBasket(); 
+      this.basketService.addNeedToBasket(need).subscribe();
+      this.getBasket(); 
   }
 
   removeFromBasket(need: Need) : void {

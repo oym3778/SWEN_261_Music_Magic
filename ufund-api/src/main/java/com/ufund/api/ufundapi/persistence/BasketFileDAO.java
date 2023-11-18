@@ -54,9 +54,10 @@ public class BasketFileDAO implements BasketDAO{
     }
 
     @Override
-    public void addNeed(int id) throws IOException{
-        needs.add(id); 
+    public boolean addNeed(int id) throws IOException{
+        boolean out = needs.add(id); 
         save();
+        return out; 
     }
 
     @Override

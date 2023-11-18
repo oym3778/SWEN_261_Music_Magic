@@ -112,9 +112,9 @@ public class BasketController {
             if (needDao.getNeed(need.getId()) == null)
                 return new ResponseEntity<Need>(HttpStatus.NOT_FOUND);
 
-            basketDao.addNeed(need.getId());
+            boolean isNewNeed = basketDao.addNeed(need.getId());
 
-            if (need != null)
+            if (isNewNeed)
                 return new ResponseEntity<Need>(need,HttpStatus.CREATED);
             else
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
