@@ -23,7 +23,7 @@ import com.ufund.api.ufundapi.model.Need;
 @Component
 public class BasketFileDAO implements BasketDAO{
     public static final Logger LOG = Logger.getLogger(BasketFileDAO.class.getName());
-    Set<Integer> needs;
+    private Set<Integer> needs;
     private ObjectMapper objectMapper;
     private String filename;
     
@@ -41,13 +41,13 @@ public class BasketFileDAO implements BasketDAO{
     private boolean load() throws IOException {
         //get array of integers from json.
         int[] needsArray = objectMapper.readValue(new File(filename),int[].class);
-        //convert array to list of Integers. 
+        //convert array to set of Integers. 
         needs = Arrays.stream(needsArray).boxed().collect(Collectors.toSet());
         return true; 
     }
 
     @Override
-    public int[] getNeeds() throws IOException {
+    public int[] getNeeds() {
         //Get a stream of integer objects from needs, filter out any null values, and map those to an int[]
         int[] needsArray = needs.stream().filter(i -> i != null).mapToInt(i -> i).toArray(); 
         return needsArray; 
@@ -65,5 +65,9 @@ public class BasketFileDAO implements BasketDAO{
         boolean removed = needs.remove(Integer.valueOf(id));
         save();
         return removed; 
+    }
+
+    public Set<Integer> getNeedsSet() {
+        return needs; 
     }
 }
