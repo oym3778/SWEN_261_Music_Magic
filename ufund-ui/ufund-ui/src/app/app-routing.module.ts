@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: 'needs', component: NeedsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'helper', component: HelperViewComponent },
+  { path: 'admin', component: AdminViewComponent},
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'admin', component: AdminViewComponent}
 ];
 
 @NgModule({

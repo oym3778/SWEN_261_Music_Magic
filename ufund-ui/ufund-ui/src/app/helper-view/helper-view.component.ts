@@ -6,6 +6,7 @@ import { BasketService } from '../basket.service';
 import { UserSessionService } from '../user-session.service';
 import { Router } from '@angular/router';
 import { FundingBasketComponent } from '../funding-basket/funding-basket.component';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-helper-view',
@@ -15,19 +16,24 @@ import { FundingBasketComponent } from '../funding-basket/funding-basket.compone
 
 export class HelperViewComponent {
   private validated: boolean = false; 
+  basket: Need[] = [];
 
   constructor(
     private location: Location,
     private userSession: UserSessionService,
     private router: Router,
-    private basket: FundingBasketComponent
-  ){
+    private basketService: BasketService
+  )
+  {
     this.userSession.getIsHelper().subscribe(val => {
      if(!val) this.router.navigate(['/login']);   
      this.validated = val; 
     })
   }
 
+  getBasket(): void {
+    this.basketService.getNeeds().subscribe(needs => this.basket = needs);
+  }
 
   //Go to login page
   goBack(): void {
@@ -38,13 +44,16 @@ export class HelperViewComponent {
     return this.validated; 
   }
 
-  // proceedToCheckout(): void{
-  //   // if there are needs in the funding basket, the helper may proceed to checkout
-  //   if(this.basket.getFundingBasket() != null){
-  //     this.router.navigate(['/checkout']);
-  //   }
+  proceedToCheckout(): void {
+    // if there are needs in the funding basket, the helper may proceed to checkout
+    this.getBasket();
+    debounceTime(300);
 
-  //   // otherwise the button should be transparent and do nothing when clicked
+    if(this.basket.length != 0){
+      this.router.navigate(['/checkout']);
+    }
 
-  // }
+    // otherwise the button should be transparent and do nothing when clicked
+
+  }
 }
