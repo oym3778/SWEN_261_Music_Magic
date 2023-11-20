@@ -1,16 +1,28 @@
-<h1>Checkout</h1>
-<h2>Order Summary</h2>
-<div>
-    <p>Items: {{basket.length}}</p>
-    <p>Tax: $5.99</p>
-    <p>Music Fee: $4.99</p>
-
-    <h3>Order Total: {{ sum | currency}} 
-        <button type="button" *ngIf="!costCalculated" (click)="calcSum()">See Cost</button></h3>
-</div>
+<!-- Use this component once the funding basket has been refactored, as of 
+    now I can't seem to figure out how to seperate funding basket and checkout componennts -->
+    
+<!--
+ <div *ngIf="proceed">
+    <button type="button" (click)="proceedToCheckout()">Proceed To Checkout</button>
 
 
-<button type="button">Place Order</button>
-
-
-<!-- <app-funding-basket></app-funding-basket> -->
+ <div *ngIf="!proceed">
+    <h1>Checkout</h1>
+    <h2>Order Summary</h2>
+    <div>
+        <p>Items: {{basket.length}}</p>
+        <p>Tax: $5.99</p>
+        <p>Music Fee: $4.99</p>
+    
+        <h3>Order Total: {{ sum | currency}}
+            <button type="button" *ngIf="!costCalculated" (click)="calcSum()">See Cost</button>
+        </h3>
+    </div>
+    
+    
+    <button type="button">Place Order</button>
+    
+   
+     <app-funding-basket></app-funding-basket>
+ </div> 
+  -->
