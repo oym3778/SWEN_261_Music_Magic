@@ -11,7 +11,6 @@ import { NeedSearchComponent } from './need-search/need-search.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
 import { HelperViewComponent } from './helper-view/helper-view.component';
-import { SlideshowComponent } from './slideshow/slideshow.component';
 import { ImageSliderModule } from './imageSlider/imageSlider.module';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { ImageSliderModule } from './imageSlider/imageSlider.module';
     MessagesComponent,
     LoginComponent,
     HelperViewComponent,
-    SlideshowComponent,
 
   ],
   imports: [
