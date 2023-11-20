@@ -1,3 +1,55 @@
+.logout {
+  float: right;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color:  rgb(3, 202, 252, 0.25);
+}
+
+.footer .text {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.footer .material-icons {
+  position: relative;
+  left: 0;
+  animation-name: musicnote;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes musicnote {
+  from  {left:0%;}
+  to    {left:100%;}
+}
+
+
+.cupboard {
+  float: left;
+  margin-left: 100px;
+}
+
+.basket {
+  float: right;
+  margin-right: 100px;
+  overflow: auto;
+}
+
+/*NOT FINISHED*/
+.search {
+  position: relative;
+  bottom: 50px;
+  z-index: 1;
+}
+
+
+
 /* NeedsComponent's private CSS styles */
 .needs {
     margin: 0 0 2em 0;
@@ -71,7 +123,7 @@
     text-decoration: underline;
   }
 
-  /* HeroesComponent's private CSS styles */
+  /* NeedsComponent's private CSS styles */
 
 input {
   display: block;

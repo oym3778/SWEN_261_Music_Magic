@@ -1,4 +1,5 @@
 <u><p>Funding Basket:</p></u>
+<div class="flex-container">
 <ul class="needs">
     <li *ngFor="let need of currentBasket">
         <button type="button">
@@ -14,9 +15,10 @@
     </li>
 </ul>
 
+
 <button type="button" *ngIf="!proceed" (click)="proceedToCheckOut()">Proceed To Checkout</button>
 
-<div *ngIf="proceed" >
+<div *ngIf="proceed">
     <h1>Checkout</h1>
     <h2>Order Summary</h2>
     <div>
@@ -31,5 +33,6 @@
     
     <button type="button" (click)="calcSum()" (click)="itemsPurchased()">Place Order</button>
     <h1 *ngIf="itemsPurchasedBool">Thank you for your contributions!</h1>
+</div>
 </div>
 

@@ -1,4 +1,10 @@
 /* NeedSearch private styles */
+#search-component {
+  display: flex;
+  flex-direction: row;
+  height: 25px;
+  align-items: center;
+}
 
 label {
     display: block;
