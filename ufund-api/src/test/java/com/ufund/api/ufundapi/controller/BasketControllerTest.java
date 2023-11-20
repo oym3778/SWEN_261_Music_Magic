@@ -35,7 +35,7 @@ public class BasketControllerTest {
 
     /**
      * Before each test, create a new BasketController object and inject
-     * a mock Need DAO
+     * a mock Need DAO and basketDAO
      */
     @BeforeEach
     public void setupNeedController() throws IOException{
@@ -53,6 +53,10 @@ public class BasketControllerTest {
         }
     }
 
+    /**
+     * Test getting all needs in the basket. 
+     * @throws IOException
+     */
     @Test
     public void testGetNeeds() throws IOException{
         
@@ -62,6 +66,10 @@ public class BasketControllerTest {
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 
+    /**
+     * Test adding a need to the basket.
+     * @throws IOException
+     */
     @Test
     public void testAddNeed() throws IOException{
        
@@ -71,6 +79,10 @@ public class BasketControllerTest {
         assertEquals(response.getBody(), testNeed);
     }
 
+    /**
+     * Test removing a need from the basket. 
+     * @throws IOException
+     */
     @Test 
     public void testDeleteNeed() throws IOException{
         when(mockBasketDAO.removeNeed(32)).thenReturn(true);
