@@ -13,9 +13,5 @@ import { SlideInterface } from './imageSlider/types/slide.interface';
 //Basic AppComponent class
 export class AppComponent {
   title = 'ufund-ui'; //page title.
-  slides: SlideInterface[] = [
-    { url: '/assets/img/orchestra.webp', title: 'String Orchestra', body: 'Placeholder description of image 1'},
-    { url: '/assets/img/symphonic-band.jpg', title: 'Symphonic Band', body: 'Placeholder description of image 2' },
-    { url: '/assets/img/marching-band.jpeg', title: 'Marching Band', body: 'Placeholder description of image 3' },
-  ];
+  
 }
