@@ -32,7 +32,8 @@ export class FundingBasketComponent {
   }
 
   getBasket(): void {
-    this.basketService.getNeeds().subscribe(needs => this.currentBasket = needs);
+    this.basketService.getNeeds().subscribe(needs => {this.currentBasket = needs;
+                                                      this.calcSum();});
     this.itemsPurchasedBool = false;
   }
 
@@ -45,6 +46,7 @@ export class FundingBasketComponent {
     switch (operation) {
       case Operation.ADD:
         if (need != null) this.currentBasket.push(need);
+        this.calcSum();
         break;
       case Operation.DELETE:
         this.currentBasket.filter(n => n !== need);
@@ -63,7 +65,6 @@ export class FundingBasketComponent {
   addToBasket(need: Need): void {
     this.basketService.addNeedToBasket(need).subscribe();
     this.getBasket();
-    this.calcSum();
     this.itemsPurchasedBool = false;
   }
 
