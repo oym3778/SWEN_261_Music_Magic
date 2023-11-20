@@ -33,8 +33,9 @@ export class FundingBasketComponent {
       for(let i = 0; i < this.currentBasket.length; i++)
       {
         this.needService.deleteNeedSubjects(this.currentBasket[i]);
-        this.removeFromBasket(this.currentBasket[i]);
       }
+      this.currentBasket.forEach(need => this.removeFromBasket(need));
+      
     }
 
   }

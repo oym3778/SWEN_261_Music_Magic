@@ -102,7 +102,7 @@ export class NeedsComponent{
 
   delete(need: Need): void {
     this.needs = this.needs.filter(n => n !== need);
-    this.needService.deleteNeed(need.id).subscribe();
+    this.needService.deleteNeed(need.id).subscribe(need => this.ngOnInit());
   }
 
   moveToBasket(need: Need): void {
