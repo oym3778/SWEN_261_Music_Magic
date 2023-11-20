@@ -68,7 +68,10 @@ export class NeedsComponent{
       this.needs.push(body);
       break; 
     case Operation.DELETE:
-  
+      console.log(body);
+      this.delete(body);
+      this.ngOnInit();
+      break;
     case Operation.FILTER:
       this.filter = body;
     }
