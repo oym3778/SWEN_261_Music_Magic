@@ -1,14 +1,14 @@
 <h2>THIS IS THE HELPER VIEW</h2>
 <p>WIP!</p>
-
+<app-need-search></app-need-search>
 <div *ngIf="getValidated()">
 
-<app-needs></app-needs>
-<app-funding-basket></app-funding-basket>
+    <app-needs></app-needs>
+    <app-funding-basket></app-funding-basket>
 
-<!-- Search bar -->
-<app-need-search></app-need-search>
+    <br>
+    <br>
+    <button type="button" (click)="goBack()">go back</button>
 
-<button type="button" (click)="goBack()">go back</button>
 
 </div>
