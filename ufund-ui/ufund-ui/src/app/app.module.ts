@@ -11,12 +11,12 @@ import { NeedSearchComponent } from './need-search/need-search.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
 import { HelperViewComponent } from './helper-view/helper-view.component';
+import { ImageSliderModule } from './imageSlider/imageSlider.module';
 import { FundingBasketComponent } from './funding-basket/funding-basket.component';
 import { AddNeedComponent } from './add-need/add-need.component';
 import { AdminViewComponent } from './admin-view/admin-view.component';
 import { NeedFilterPipe } from './need-filter.pipe';
 import { CheckoutComponent } from './checkout/checkout.component';
-
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ImageSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

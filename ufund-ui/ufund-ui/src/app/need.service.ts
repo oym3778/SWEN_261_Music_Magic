@@ -52,6 +52,10 @@ export class NeedService {
     this.needsMessanger.next({operation: Operation.ADD, body: need});
   }
 
+  deleteNeedSubjects(need: Need): void {
+    this.needsMessanger.next({operation: Operation.DELETE, body: need});
+  }
+
   updateNeedsFilter(filter: String) : void {
     this.needsMessanger.next({operation: Operation.FILTER, body: filter}); 
   }
