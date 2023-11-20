@@ -11,5 +11,5 @@ import { Component } from '@angular/core';
 
 //Basic AppComponent class
 export class AppComponent {
-  title = 'ufund-ui'; //page title.
+  title = 'MusicMagic'; //page title.
 }

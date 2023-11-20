@@ -1,14 +1,39 @@
-<h2>THIS IS THE HELPER VIEW</h2>
-<p>WIP!</p>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<!--Logout Button-->
+<div class="logout">
+    <button type="button" class="logout" (click)="goBack()">Logout</button>
+    <i class="material-icons">logout</i>
+</div>
+
+
+<h2>Hello Helper!</h2>
+<p>Select needs to add to your funding basket</p>
 
 <div *ngIf="getValidated()">
 
-<app-needs></app-needs>
-<app-funding-basket></app-funding-basket>
 
-<!-- Search bar -->
-<app-need-search></app-need-search>
+<div class="cupboard">
+    <!-- Needs Cupboard -->
+    <app-needs></app-needs>
+</div>
 
-<button type="button" (click)="goBack()">go back</button>
+<div class="basket">
+    <!-- Funding Basket -->
+    <app-funding-basket></app-funding-basket>
+</div>
+
+<div class="search">
+    <!-- Search bar -->
+    <app-need-search></app-need-search>
+</div>
+
+<div class="footer">
+    <!--Footer-->
+    <p>Footer</p>
+    <i class="material-icons">music_note</i>
+</div>
+
+
 
 </div>
