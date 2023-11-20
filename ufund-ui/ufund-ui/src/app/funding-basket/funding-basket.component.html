@@ -14,9 +14,11 @@
     </li>
 </ul>
 
-<button type="button" *ngIf="!proceed" (click)="proceedToCheckOut()">Proceed To Checkout</button>
 
-<div *ngIf="proceed" >
+<button type="button" *ngIf="!proceed" id="checkoutbutton" (click)="proceedToCheckOut()">Proceed To Checkout</button>
+
+<div class="checkout">
+<div *ngIf="proceed">
     <h1>Checkout</h1>
     <h2>Order Summary</h2>
     <div>
@@ -31,5 +33,6 @@
     
     <button type="button" (click)="calcSum()" (click)="itemsPurchased()">Place Order</button>
     <h1 *ngIf="itemsPurchasedBool">Thank you, Items will be delivered soon!</h1>
+</div>
 </div>
 

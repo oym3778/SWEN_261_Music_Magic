@@ -2,23 +2,27 @@
   float: right;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color:  rgb(3, 202, 252, 0.3);
+}
+
 .footer .material-icons {
   position: relative;
-  left: 0px;
+  left: 0;
   animation-name: musicnote;
-  animation-duration: 6s;
+  animation-duration: 20s;
   animation-iteration-count: infinite;
 }
 
-/*
 @keyframes musicnote {
-  0%   {left:0%;}
-  25%  {left:25%;}
-  50%  {left:50%;}
-  75%  {left:75%;}
-  100% {left:100%;}
+  from  {left:0%;}
+  to    {left:100%;}
 }
-*/
+
 
 .cupboard {
   float: left;
@@ -33,16 +37,10 @@
 /*NOT FINISHED*/
 .search {
   float: bottom;
+  z-index: 1;
 }
 
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color:  rgb(3, 202, 252, 0.3);
-  text-align: center;
-}
+
 
 /* NeedsComponent's private CSS styles */
 .needs {

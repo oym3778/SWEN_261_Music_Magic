@@ -1,3 +1,13 @@
+.checkout {
+  position: relative;
+  bottom: 0px;
+}
+
+#checkoutbutton {
+  position: relative;
+  bottom: 0px;
+}
+
 
 /* NeedsComponent's private CSS styles */
 .needs {
