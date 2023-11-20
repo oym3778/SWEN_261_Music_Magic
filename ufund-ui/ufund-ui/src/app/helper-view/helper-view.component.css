@@ -3,19 +3,18 @@
 }
 
 .footer .material-icons {
-  float: left;
+  position: relative;
   animation-name: musicnote;
-  animation-duration: 4s;
-  animation-direction: alternate;
+  animation-duration: 6s;
   animation-iteration-count: infinite;
 }
 
 @keyframes musicnote {
-  0%   {background-color:red; left:0px;}
-  25%  {background-color:yellow; left:25%;}
-  50%  {background-color:blue; left:50%;}
-  75%  {background-color:green; left:75%;}
-  100% {background-color:red; left:100%;}
+  0%   {left:0%;}
+  25%  {left:25%;}
+  50%  {left:50%;}
+  75%  {left:75%;}
+  100% {left:100%;}
 }
 
 .cupboard {
