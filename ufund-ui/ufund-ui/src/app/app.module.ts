@@ -15,6 +15,7 @@ import { FundingBasketComponent } from './funding-basket/funding-basket.componen
 import { AddNeedComponent } from './add-need/add-need.component';
 import { AdminViewComponent } from './admin-view/admin-view.component';
 import { NeedFilterPipe } from './need-filter.pipe';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { NeedFilterPipe } from './need-filter.pipe';
     FundingBasketComponent,
     AddNeedComponent,
     AdminViewComponent,
-    NeedFilterPipe
+    NeedFilterPipe,
+    CheckoutComponent
 
   ],
   imports: [

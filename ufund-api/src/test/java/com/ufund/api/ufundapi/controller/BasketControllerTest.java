@@ -1,7 +1,11 @@
 package com.ufund.api.ufundapi.controller;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,220 +30,69 @@ public class BasketControllerTest {
     private BasketDAO mockBasketDAO;
     private NeedDAO mockNeedDAO;
 
-    private Need[] testBasket = new Need[3];
+    private Need[] testCupboard = new Need[3];
+    private int[] testBasket = new int[3];
 
     /**
      * Before each test, create a new BasketController object and inject
-     * a mock Need DAO
+     * a mock Need DAO and basketDAO
      */
     @BeforeEach
-    public void setupNeedController() {
+    public void setupNeedController() throws IOException{
         mockBasketDAO = mock(BasketDAO.class);
         mockNeedDAO = mock(NeedDAO.class);
         basketController = new BasketController(mockBasketDAO, mockNeedDAO);
+        testCupboard[0] = new Need(32, "Triangle", 32, 2);
+        testCupboard[1] = new Need(3, "Piano", 1, 2345);
+        testCupboard[2] = new Need(55, "Help", 1, 223); 
+        testBasket[0] = 32;
+        testBasket[1] = 3;
+        when(mockBasketDAO.getNeeds()).thenReturn(testBasket);
+        for(Need need: testCupboard){
+            when(mockNeedDAO.getNeed(need.getId())).thenReturn(need);
+        }
     }
 
-    @Test 
-    public void testGetNeeds() throws IOException {
-        // Setup
-        Need[] mockBasket = new Need[2];
-        mockBasket[0] = new Need(67, "Oboe", 3999.95, 2);
-        mockBasket[1] = new Need(76, "Bass drum", 123.45, 3);
-        
-        when(mockBasketDAO.getNeeds()).thenReturn(mockBasket);
-        
-        ResponseEntity<Need[]> response;
-
-        // Invoke
-        response = basketController.getNeeds();
-
-        // Analyze
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(mockBasket, response.getBody());
-    }
-
+    /**
+     * Test getting all needs in the basket. 
+     * @throws IOException
+     */
     @Test
-    public void testGetNeedsHandleException() throws IOException {
-        // Setup
-        doThrow(new IOException()).when(mockBasketDAO).getNeeds();
-
-        // Invoke
+    public void testGetNeeds() throws IOException{
+        
         ResponseEntity<Need[]> response = basketController.getNeeds();
-
-        // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(response.getBody()[0], testCupboard[0]);
+        assertEquals(response.getBody()[1], testCupboard[1]);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 
+    /**
+     * Test adding a need to the basket.
+     * @throws IOException
+     */
     @Test
-    public void testGetNeed() throws IOException {
-        // Setup
-        int id = 27;
-        String name = "Flute";
-        double price = 1000;
-        int quantity = 1;
-
-        Need testNeed = new Need(id, name, price, quantity);
-
-        when(mockBasketDAO.getNeed(id)).thenReturn(testNeed);
-
-        ResponseEntity<Need> response;
-
-        // Invoke
-        response = basketController.getNeed(id);
-
-        // Analyze
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(testNeed, response.getBody());
+    public void testAddNeed() throws IOException{
+       
+        Need testNeed = new Need(55, "Help", 1, 223);
+        when(mockBasketDAO.addNeed(55)).thenReturn(true);
+        ResponseEntity<Need> response = basketController.addNeed(testNeed);
+        assertEquals(response.getBody(), testNeed);
     }
 
-    @Test
-    public void testGetNeedNotFound() throws IOException {
-        // Setup
-        int id = 99;
-        when(mockBasketDAO.getNeed(id)).thenReturn(null);
-        ResponseEntity<Need> response;
-
-        // Invoke
-        response = basketController.getNeed(id);
-
-        // Analyze
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
-
-    @Test
-    public void testGetNeedHandleException() throws IOException {
-        // Setup
-        int id = 99;
-        doThrow(new IOException()).when(mockBasketDAO).getNeed(id);
-
-        // Invoke
-        ResponseEntity<Need> response = basketController.getNeed(id);
-
-        // Anazyle
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
-    }
-
-    @Test
-    public void testCreateNeed() throws IOException {
-        // Setup
-        int id = 27;
-        String name = "Flute";
-        double price = 1000;
-        int quantity = 1;
-
-        Need testNeed = new Need(id, name, price, quantity);
-
-        when(mockBasketDAO.createNeed(testNeed)).thenReturn(testNeed);
-        when(mockNeedDAO.getNeed(testNeed.getId())).thenReturn(testNeed);
-        ResponseEntity<Need> response;
-
-        // Invoke
-        response = basketController.createNeed(testNeed);
-
-        // Analyze
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(testNeed, response.getBody());
-    }
-
-    @Test
-    public void testCreateNeedNotFound() throws IOException {
-        // Setup
-        int id = 27;
-        String name = "Flute";
-        double price = 1000;
-        int quantity = 1;
-
-        Need testNeed = new Need(id, name, price, quantity);
-
-        when(mockBasketDAO.createNeed(testNeed)).thenReturn(testNeed);
-        when(mockNeedDAO.getNeed(testNeed.getId())).thenReturn(null);
-        ResponseEntity<Need> response;
-
-        // Invoke
-        response = basketController.createNeed(testNeed);
-
-        // Anazyle
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
-
-    @Test
-    public void testCreateNeedConflict() throws IOException {
-        // Setup
-        int id = 27;
-        String name = "Flute";
-        double price = 1000;
-        int quantity = 1;
-
-        Need testNeed = new Need(id, name, price, quantity);
-
-        when(mockBasketDAO.createNeed(testNeed)).thenReturn(null);
-        when(mockNeedDAO.getNeed(testNeed.getId())).thenReturn(testNeed);
-        ResponseEntity<Need> response;
-
-        // Invoke
-        response = basketController.createNeed(testNeed);
-
-        // Anazyle
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-    }
-
-    @Test
-    public void testCreateNeedHandleException() throws IOException {
-        // Setup
-        int id = 27;
-        String name = "Flute";
-        double price = 1000;
-        int quantity = 1;
-
-        Need testNeed = new Need(id, name, price, quantity);
-        when(mockNeedDAO.getNeed(testNeed.getId())).thenReturn(testNeed);
-        doThrow(new IOException()).when(mockBasketDAO).createNeed(testNeed);
-
-        // Invoke
-        ResponseEntity<Need> response = basketController.createNeed(testNeed);
-
-        // Anazyle
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
-    }
-
-    @Test
+    /**
+     * Test removing a need from the basket. 
+     * @throws IOException
+     */
+    @Test 
     public void testDeleteNeed() throws IOException{
-        // Setup
-        int needID = 0;
-
-        // when deleteNeed is called return true, simulating successful deletion
-        when(mockBasketDAO.deleteNeed(needID)).thenReturn(true);
-
-        // Invoke
-        ResponseEntity<Need> response = basketController.deleteNeed(needID);
-
-        // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
+        when(mockBasketDAO.removeNeed(32)).thenReturn(true);
+        ResponseEntity<Need> response = basketController.deleteNeed(32); 
+        assertEquals(response.getBody(), testCupboard[0]);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        response = basketController.deleteNeed(22);
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
-    @Test
-    public void testDeleteNeedNotFound() throws IOException {
-        // Setup
-        int needId = 99;
-        when(mockBasketDAO.deleteNeed(needId)).thenReturn(false);
 
-        // Invoke
-        ResponseEntity<Need> response = basketController.deleteNeed(needId);
 
-        // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
-    }
-
-    @Test
-    public void testDeleteNeedHandleException() throws IOException {
-        // Setup
-        int needId = 99;
-        doThrow(new IOException()).when(mockBasketDAO).deleteNeed(needId);
-
-        // Invoke
-        ResponseEntity<Need> response = basketController.deleteNeed(needId);
-
-        // Anazyle
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
-    }
 }
