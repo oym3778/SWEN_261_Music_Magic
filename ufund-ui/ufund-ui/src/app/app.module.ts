@@ -12,6 +12,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
 import { HelperViewComponent } from './helper-view/helper-view.component';
 import { SlideshowComponent } from './slideshow/slideshow.component';
+import { ImageSliderModule } from './imageSlider/imageSlider.module';
 
 @NgModule({
   declarations: [
@@ -22,13 +23,15 @@ import { SlideshowComponent } from './slideshow/slideshow.component';
     MessagesComponent,
     LoginComponent,
     HelperViewComponent,
-    SlideshowComponent
+    SlideshowComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ImageSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
