@@ -7,7 +7,13 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color:  rgb(3, 202, 252, 0.3);
+  background-color:  rgb(3, 202, 252, 0.25);
+}
+
+.footer .text {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .footer .material-icons {
@@ -26,17 +32,19 @@
 
 .cupboard {
   float: left;
-  margin-left: 50px;
+  margin-left: 100px;
 }
 
 .basket {
   float: right;
   margin-right: 100px;
+  overflow: auto;
 }
 
 /*NOT FINISHED*/
 .search {
-  float: bottom;
+  position: relative;
+  bottom: 50px;
   z-index: 1;
 }
 

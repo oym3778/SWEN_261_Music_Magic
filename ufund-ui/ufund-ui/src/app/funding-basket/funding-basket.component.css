@@ -1,12 +1,11 @@
-.checkout {
-  position: relative;
-  bottom: 0px;
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  overflow: auto;
 }
 
-#checkoutbutton {
-  position: relative;
-  bottom: 0px;
-}
+
 
 
 /* NeedsComponent's private CSS styles */
@@ -15,6 +14,7 @@
   list-style-type: none;
   padding: 0;
   width: 20em;
+  overflow: auto;
 }
 
 .needs li {
