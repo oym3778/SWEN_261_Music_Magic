@@ -1,0 +1,15 @@
+<u><p>Add a need:</p></u>
+<label for="new-hero-name">Need name: </label>
+<input id="new-hero-name" #needName />
+
+<label for="new-hero-quantity">Need Quanity: </label>
+<input id="new-hero-quantity" #needQuantity />
+
+<label for="new-hero-price">Need Price: </label>
+<input id="new-hero-price" #needPrice />
+
+<!-- (click) passes input value to add() and then clears the input -->
+<button type="button" class="add-button"
+(click)="add(needName.value, needPrice.value, needQuantity.value)">
+Add need
+</button>

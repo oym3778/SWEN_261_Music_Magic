@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Need } from './need';
-import { Observable, of } from 'rxjs';
-//import { HEROES } from './mock-needs';
+import { Observable, Subject, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
+import { Operation } from './needs/needs.component';
 
 //Makes this class an injectable dependecy which can be injected into any class
 //in the program. 
@@ -15,6 +15,7 @@ import { MessageService } from './message.service';
 export class BasketService {
 
   private needsUrl = "http://localhost:8080/basket" //url of REST tomcat server
+  private basketMessanger = new Subject(); //used to send data to funding-basket.component.ts from other components
 
   constructor(
     private http: HttpClient,
@@ -38,6 +39,14 @@ export class BasketService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+
+  getUpdate(): Observable<any> {
+    return this.basketMessanger.asObservable(); 
+  }
+
+  addBasketSubjects(need: Need): void {
+    this.basketMessanger.next({operation: Operation.ADD, need: need});
+  }
 
   /** GET needs from the server */
   getNeeds(): Observable<Need[]> {

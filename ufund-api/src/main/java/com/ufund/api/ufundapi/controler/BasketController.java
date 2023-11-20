@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufund.api.ufundapi.model.Need;
@@ -44,31 +43,6 @@ public class BasketController {
     }
 
     /**
-     * Responds to the GET request for a {@linkplain Need need} for the given id
-     * 
-     * @param id The id used to locate the {@link Need need}
-     * 
-     * @return ResponseEntity with {@link Need need} object and HTTP status of OK if found<br>
-     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<Need> getNeed(@PathVariable int id) {
-        LOG.info("GET /basket/" + id);
-        try {
-            Need need = basketDao.getNeed(id);
-            if (need != null)
-                return new ResponseEntity<Need>(need,HttpStatus.OK);
-            else
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    /**
      * Respponds to the GET requests for all {@linkplain Need needs}
      * 
      * @return ResponseEntity with array of {@link Need need} objects (may be empty) and 
@@ -81,8 +55,12 @@ public class BasketController {
         LOG.info("GET /basket");
 
         try {
-            Need[] needs = basketDao.getNeeds();
-            return new ResponseEntity<Need[]>(needs,HttpStatus.OK);
+            int[] needs = basketDao.getNeeds();
+            Need[] realNeeds = new Need[needs.length];
+            for(int i = 0; i < needs.length; i++){
+                realNeeds[i] = needDao.getNeed(needs[i]);
+            }
+            return new ResponseEntity<Need[]>(realNeeds,HttpStatus.OK);
         } 
         catch(IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
@@ -102,17 +80,17 @@ public class BasketController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("/add")
-    public ResponseEntity<Need> createNeed(@RequestBody Need need) {
+    public ResponseEntity<Need> addNeed(@RequestBody Need need) {
         LOG.info("POST /basket " + need);
 
         try {
             if (needDao.getNeed(need.getId()) == null)
                 return new ResponseEntity<Need>(HttpStatus.NOT_FOUND);
 
-            Need newNeed = basketDao.createNeed(need);
+            boolean isNewNeed = basketDao.addNeed(need.getId());
 
-            if (newNeed != null)
-                return new ResponseEntity<Need>(newNeed,HttpStatus.CREATED);
+            if (isNewNeed)
+                return new ResponseEntity<Need>(need,HttpStatus.CREATED);
             else
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -136,8 +114,8 @@ public class BasketController {
         LOG.info("DELETE /needs/" + id);
 
         try {
-            Need need = basketDao.getNeed(id);
-            boolean success = basketDao.deleteNeed(id);
+            Need need = needDao.getNeed(id);
+            boolean success = basketDao.removeNeed(id);
             
             if (success) 
                 return new ResponseEntity<Need>(need,HttpStatus.OK);

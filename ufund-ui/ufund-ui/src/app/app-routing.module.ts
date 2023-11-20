@@ -5,6 +5,8 @@ import { NeedDetailComponent } from './need-detail/need-detail.component'
 import { NeedsComponent } from './needs/needs.component'
 import { LoginComponent } from './login/login.component';
 import { HelperViewComponent } from './helper-view/helper-view.component';
+import { AdminViewComponent } from './admin-view/admin-view.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'needs', component: NeedsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'helper', component: HelperViewComponent },
+  { path: 'admin', component: AdminViewComponent},
+  { path: 'checkout', component: CheckoutComponent },
 ];
 
 @NgModule({

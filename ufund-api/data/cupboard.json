@@ -1,20 +1,3 @@
-[
-    {
-        "id": 0,
-        "name": "Saxophone Reeds",
-        "price": 4.25,
-        "quantity": 35
-    },
-    {
-        "id": 4,
-        "name": "Baritone Saxophone",
-        "price": 4000.0,
-        "quantity": 1
-    },
-    {
-        "id": 5,
-        "name": "Triangle",
-        "price": 40.0,
-        "quantity": 6
-    }
-]
+
+[{"id":93,"name":"The Rolling Giant","price":1.0E8,"quantity":1},{"id":94,"name":"Piano","price":2500.0,"quantity":1},{"id":95,"name":"The Lesser Key of Solomon","price":7.5,"quantity":1},{"id":96,"name":"Baritone Saxophone","price":3500.0,"quantity":1},{"id":97,"name":"Clarinet","price":4500.0,"quantity":10}]
+

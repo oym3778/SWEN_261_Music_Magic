@@ -8,10 +8,12 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag; 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufund.api.ufundapi.controler.NeedController;
@@ -20,7 +22,7 @@ import com.ufund.api.ufundapi.model.Need;
 @Tag("Persistence-Tier")
 public class BasketFileDAOTest {
     BasketFileDAO basketFileDAO;
-    Need[] testBasket;
+    int[] testBasket;
     ObjectMapper mockObjectMapper;
 
     /**
@@ -31,120 +33,105 @@ public class BasketFileDAOTest {
     @BeforeEach
     public void setupHeroFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
-        testBasket = new Need[3];
-        testBasket[0] = new Need(99,"Violin",2000.00, 6);
-        testBasket[1] = new Need(100,"Viola",2250.00, 3);
-        testBasket[2] = new Need(101,"Cello",2500.00, 5);
+        testBasket = new int[3];
+        //We expect these to be sorted since the Set used by BasketFileDAO will naturally sort them.
+        testBasket[0] = 33;
+        testBasket[1] = 16;
+        testBasket[2] = 2;
 
         // When the object mapper is supposed to read fom the file
         // the mock object mapper will return the hero array above
         when(mockObjectMapper
-            .readValue(new File("doesnt_matter.txt"),Need[].class))
+            .readValue(new File("dummy.txt"),int[].class))
                 .thenReturn(testBasket);
-        basketFileDAO = new BasketFileDAO("doesnt_matter.txt",mockObjectMapper);
+        basketFileDAO = new BasketFileDAO("dummy.txt",mockObjectMapper);
     }
 
+    /**
+     * Test getting the array of need ideas from BasketFileDAO. 
+     */
     @Test
-    public void testGetNeeds() throws IOException {
-        // Invoke
-        Need[] needs = basketFileDAO.getNeeds();
-
-        // Analyze
-        assertEquals(needs.length,testBasket.length);
-        for (int i = 0; i < testBasket.length; i++)
-            assertEquals(needs[i],testBasket[i]);
+    public void testGetNeeds() {
+        int[] basketArray = basketFileDAO.getNeeds();
+        //Since basketFileDAO uses a Set, which does not maintian insertion order,
+        //we have to use a loop to ensure the values are correct. 
+        for(int i : basketArray)
+        {
+            assertTrue(i == 33 || i == 16 || i == 2);
+        }
     }
 
+    /**
+     * Test adding an id to BasketFileDAO.
+     * @throws IOException
+     */
     @Test
-    public void testGetNeed() {
-        // Invoke
-        Need need = basketFileDAO.getNeed(99);
-        
-        // Analyze
-        assertEquals(need, testBasket[0]);
+    public void testAddNeed() throws IOException{
+        //An id not in the set should return true
+        boolean result = basketFileDAO.addNeed(44);
+        assertTrue(result);
+        //an id in the set will return false.
+        result = basketFileDAO.addNeed(33); 
+        assertFalse(result);
     }
 
+    /**
+     * Test that BasketFileDAO.addNeed throws an IOException if there is an error
+     * reading the file. 
+     * @throws IOException
+     */
     @Test
-    public void testDeleteNeed() {
-        // Invoke
-        boolean result = assertDoesNotThrow(() -> basketFileDAO.deleteNeed(99),
-                            "Unexpected exception thrown");
-
-        // Analyze
-        assertEquals(result,true);
-        // We check the internal tree map size against the length
-        // of the test heroes array -1 (because of the delete)
-        // Because needs attribute of basketFileDAO is package private
-        // we can access it directly
-        assertEquals(basketFileDAO.needs.size(), testBasket.length-1);
-    }
-    
-    @Test
-    public void testCreateNeed() {
-        // Setup
-        Need need = new Need(102,"Bass",3000.00,2);
-
-        // Invoke
-        Need result = assertDoesNotThrow(() -> basketFileDAO.createNeed(need),
-                                "Unexpected exception thrown");
-        
-        // Analyze
-        assertNotNull(result);
-        Need actual = basketFileDAO.getNeed(need.getId());
-        assertEquals(actual.getId(),need.getId());
-        assertEquals(actual.getName(),need.getName());
-        assertEquals(actual.getPrice(),need.getPrice());
-        assertEquals(actual.getquantity(),need.getquantity());
-    }
-
-    @Test
-    public void testGetNeedNotFound() {
-        //Invoke
-        Need need = basketFileDAO.getNeed(98);
-
-        // Analyze
-        assertEquals(need,null);
-    }
-
-    @Test
-    public void testDeleteNeedNotFound() {
-        // Invoke
-        boolean result = assertDoesNotThrow(() -> basketFileDAO.deleteNeed(98),
-                                                "Unexpected exception thrown");
-
-        // Analyze
-        assertEquals(result,false);
-        assertEquals(basketFileDAO.needs.size(),testBasket.length);
-    }
-
-    @Test
-    public void testUpdateHeroNotFound() {
-        // Invoke
-        boolean result = assertDoesNotThrow(() -> basketFileDAO.deleteNeed(98),
-                                                "Unexpected exception thrown");
-
-        // Analyze
-        assertEquals(result,false);
-        assertEquals(basketFileDAO.needs.size(),testBasket.length);
-    }
-
-    @Test
-    public void testConstructorException() throws IOException {
-        // Setup
-        ObjectMapper mockObjectMapper = mock(ObjectMapper.class);
-        // We want to simulate with a Mock Object Mapper that an
-        // exception was raised during JSON obect deserialization
-        // into Java objects
-        // When the Mock Object Mapper readValue method is called
-        // from the BasketFileDAO load method, an IOException is
-        // raised
+    public void testAddNeedFailure() throws IOException{
         doThrow(new IOException())
             .when(mockObjectMapper)
-                .readValue(new File("doesnt_matter.txt"), Need[].class);
+                .writeValue(new File("dummy.txt"), basketFileDAO.getNeedsSet());
 
-        // Invole & Analyze
+        assertThrows(IOException.class, () -> basketFileDAO.addNeed(2), "IOException not thrown");
+    }
+
+    /**
+     * Test removing a need from the basket
+     * @throws IOException
+     */
+    @Test
+    public void testRemoveNeed() throws IOException {
+        boolean removed = basketFileDAO.removeNeed(33); 
+        assertTrue(removed);
+
+        removed = basketFileDAO.removeNeed(33); 
+        assertFalse(removed);
+    }
+
+    /**
+     * Test that BasketFileDAO.removeNeed throws an IOException if there is an error
+     * reading the file. 
+     * @throws IOException
+     */
+    @Test 
+    public void testRemoveNeedFailure() throws IOException{
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .writeValue(new File("dummy.txt"), basketFileDAO.getNeedsSet());
+
+        assertThrows(IOException.class, () -> basketFileDAO.removeNeed(2), "IOException not thrown");
+    }
+    
+
+    /**
+     * Test that the contructor throws an IOException if there is a failure reading
+     * the file. 
+     * @throws IOException
+     */
+    @Test
+    public void testConstructorException() throws IOException {
+        
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .readValue(new File("dummy.txt"), int[].class);
+
+        // Invoke & Analyze
         assertThrows(IOException.class,
-                        () -> new BasketFileDAO("doesnt_matter.txt",mockObjectMapper),
+                        () -> new BasketFileDAO("dummy.txt", mockObjectMapper),
                         "IOException not thrown");
     }
 }

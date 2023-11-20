@@ -20,7 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /**
- * Test the Hero Controller class
+ * Test the Need Controller class
  * 
  * @author SWEN Faculty
  */
