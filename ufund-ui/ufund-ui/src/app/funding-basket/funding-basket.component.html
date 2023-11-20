@@ -14,17 +14,17 @@
     </li>
 </ul>
 
-<div>
-    <!-- <app-checkout [basket]="currentBasket"></app-checkout> -->
+<button type="button" *ngIf="!proceed" (click)="proceedToCheckOut()">Proceed To Checkout</button>
+
+<div *ngIf="proceed" >
     <h1>Checkout</h1>
     <h2>Order Summary</h2>
     <div>
         <p>Items: {{currentBasket.length}}</p>
-        <p>Tax: $5.99</p>
-        <p>Music Fee: $4.99</p>
+        <!-- <p>Tax: $5.99</p>
+        <p>Music Fee: $4.99</p> -->
     
         <h3>Order Total: {{ sum | currency}}
-            <!-- <button type="button" *ngIf="!costCalculated" (click)="calcSum()">See Cost</button> -->
         </h3>
     </div>
     

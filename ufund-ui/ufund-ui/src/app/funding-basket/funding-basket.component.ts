@@ -11,9 +11,20 @@ import { Operation } from '../needs/needs.component';
 export class FundingBasketComponent {
   currentBasket: Need[] = [];
   sum: number = 0;
+
   itemsPurchasedBool: boolean = false;
+  proceed: boolean = false;
 
   constructor(private basketService: BasketService) { }
+
+  proceedToCheckOut(): void {
+    if(this.currentBasket.length != 0){
+      this.proceed = true;
+    }else{
+      this.proceed = false;
+    }
+    
+  }
   itemsPurchased() {
     if (this.currentBasket.length != 0) {
       this.itemsPurchasedBool = true;
@@ -24,16 +35,17 @@ export class FundingBasketComponent {
     this.sum = 0;
     for (let i = 0; i < this.currentBasket.length; i++) {
       this.sum += this.currentBasket[i].price;
-      this.sum += 4.99;
-      this.sum += 5.99;
+      // this.sum += 4.99;
+      // this.sum += 5.99;
     }
-
-    // this.costCalculated = true;
   }
 
   getBasket(): void {
-    this.basketService.getNeeds().subscribe(needs => {this.currentBasket = needs;
-                                                      this.calcSum();});
+    this.basketService.getNeeds().subscribe(needs => {
+      this.currentBasket = needs;
+      this.calcSum();
+      this.proceedToCheckOut();
+    });
     this.itemsPurchasedBool = false;
   }
 
@@ -60,6 +72,7 @@ export class FundingBasketComponent {
     this.getBasketUpdates();
     this.calcSum();
     this.itemsPurchasedBool = false;
+    this.proceed = false;
   }
 
   addToBasket(need: Need): void {
