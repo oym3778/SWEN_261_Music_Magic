@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Need } from '../need';
 import { BasketService } from '../basket.service';
 import { Operation } from '../needs/needs.component';
+import { NeedService } from '../need.service';
 
 @Component({
   selector: 'app-funding-basket',
@@ -15,7 +16,8 @@ export class FundingBasketComponent {
   itemsPurchasedBool: boolean = false;
   proceed: boolean = false;
 
-  constructor(private basketService: BasketService) { }
+  constructor(private basketService: BasketService,
+              private needService: NeedService) { }
 
   proceedToCheckOut(): void {
     if(this.currentBasket.length != 0){
@@ -28,6 +30,11 @@ export class FundingBasketComponent {
   itemsPurchased() {
     if (this.currentBasket.length != 0) {
       this.itemsPurchasedBool = true;
+      for(let i = 0; i < this.currentBasket.length; i++)
+      {
+        this.needService.deleteNeedSubjects(this.currentBasket[i]);
+        this.removeFromBasket(this.currentBasket[i]);
+      }
     }
 
   }
@@ -35,8 +42,6 @@ export class FundingBasketComponent {
     this.sum = 0;
     for (let i = 0; i < this.currentBasket.length; i++) {
       this.sum += this.currentBasket[i].price;
-      // this.sum += 4.99;
-      // this.sum += 5.99;
     }
   }
 
@@ -61,7 +66,7 @@ export class FundingBasketComponent {
         this.calcSum();
         break;
       case Operation.DELETE:
-        this.currentBasket.filter(n => n !== need);
+        this.currentBasket = this.currentBasket.filter(n => n !== need);
         break;
     }
     this.itemsPurchasedBool = false;
@@ -82,8 +87,7 @@ export class FundingBasketComponent {
   }
 
   removeFromBasket(need: Need): void {
-    this.currentBasket = this.currentBasket.filter(n => n !== need);
-    this.basketService.deleteNeed(need.id).subscribe();
+    this.basketService.deleteNeed(need).subscribe();
     this.calcSum();
     this.itemsPurchasedBool = false;
   }
