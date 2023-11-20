@@ -86,7 +86,7 @@ public class BasketControllerTest {
     @Test 
     public void testDeleteNeed() throws IOException{
         when(mockBasketDAO.removeNeed(32)).thenReturn(true);
-        ResponseEntity response = basketController.deleteNeed(32); 
+        ResponseEntity<Need> response = basketController.deleteNeed(32); 
         assertEquals(response.getBody(), testCupboard[0]);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
         response = basketController.deleteNeed(22);
