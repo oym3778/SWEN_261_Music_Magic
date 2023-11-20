@@ -1,0 +1,81 @@
+
+/* NeedsComponent's private CSS styles */
+.needs {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 20em;
+}
+
+.needs li {
+display: flex;
+margin: 0.5em;
+}
+
+.needs button {
+flex: 1;
+cursor: pointer;
+position: relative;
+left: 0;
+background-color: #EEE;
+padding: 0;
+border-radius: 4px;
+display: flex;
+align-items: stretch;
+}
+
+.needs .modify {
+font-size: 40px;
+text-align: center;
+flex: 0;
+margin-left: 0.1em;
+}
+
+.needs .data {
+justify-self: stretch;
+display: flex; 
+flex-direction: column;
+}
+
+.needs button:hover {
+color: #2c3a41;
+background-color: #e6e6e6;
+left: .1em;
+}
+
+.needs button:active {
+background-color: #525252;
+color: #fafafa;
+}
+
+.needs button.selected {
+background-color: black;
+color: white;
+}
+
+.needs button.selected:hover {
+background-color: #505050;
+color: white;
+}
+
+.needs button.selected:active {
+background-color: black;
+color: white;
+}
+
+.needs .id {
+display: inline-block;
+font-size: small;
+color: white;
+padding: 0.8em 0.7em 0 0.7em;
+background-color: #405061;
+line-height: 1em;
+margin-right: .8em;
+border-radius: 4px 0 0 4px;
+}
+
+.needs .name {
+font-size: medium;
+text-decoration: underline;
+}
+

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Need } from './need';
-import { Observable, of } from 'rxjs';
-//import { HEROES } from './mock-needs';
+import { Observable, Subject, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
+import { Operation } from './needs/needs.component';
 
 //Makes this class an injectable dependecy which can be injected into any class
 //in the program. 
@@ -15,6 +15,7 @@ import { MessageService } from './message.service';
 export class BasketService {
 
   private needsUrl = "http://localhost:8080/basket" //url of REST tomcat server
+  private basketMessanger = new Subject(); //used to send data to funding-basket.component.ts from other components
 
   constructor(
     private http: HttpClient,
@@ -39,6 +40,14 @@ export class BasketService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
+  getUpdate(): Observable<any> {
+    return this.basketMessanger.asObservable(); 
+  }
+
+  addBasketSubjects(need: Need): void {
+    this.basketMessanger.next({operation: Operation.ADD, need: need});
+  }
+
   /** GET needs from the server */
   getNeeds(): Observable<Need[]> {
     this.messageService.add('HeroService: fetched heroes'); //For search -Daniel Tsouri
@@ -49,46 +58,6 @@ export class BasketService {
       );
   }
 
-  /** GET need by id. Return `undefined` when id not found */
-  // THIS IS NOT BEING USED BUT THOUGHT IT'D BE USEFUL
-  getNeedNo404<Data>(id: number): Observable<Need> {
-    const url = `${this.needsUrl}/?id=${id}`;
-    return this.http.get<Need[]>(url)
-      .pipe(
-        map(needs => needs[0]), // returns a {0|1} element array
-        tap(h => {
-          const outcome = h ? 'fetched' : 'did not find';
-          // this.log(`${outcome} need id=${id}`);
-        }),
-        catchError(this.handleError<Need>(`getNeed id=${id}`))
-      );
-  }
-
-  /** GET need by id. Will 404 if id not found */
-  getNeed(id: number): Observable<Need> {
-    const url = `${this.needsUrl}/${id}`;
-    return this.http.get<Need>(url).pipe(
-      // tap(_ => this.log(`fetched need id=${id}`)),
-      catchError(this.handleError<Need>(`getNeed id=${id}`))
-    );
-  }
-
-  /* GET heroes whose name contains search term */
-  //searchNeeds(term: string): Observable<Need[]> {
-    //if (!term.trim()) {
-      // if not search term, return empty hero array.
-    //  return of([]);
-   // }
-   // return this.http.get<Need[]>(`${this.needsUrl}/?name=${term}`).pipe(
-      // tap(x => x.length ?
-      //   this.log(`found heroes matching "${term}"`) :
-      //   this.log(`no heroes matching "${term}"`)),
-    //  catchError(this.handleError<Need[]>('searchNeeds', []))
-    //);
- // }
-
-  //////// Save methods //////////
-
   /** POST: add a new hero to the server */
   addNeedToBasket(need: Need): Observable<Need> {
     return this.http.post<Need>(`${this.needsUrl}/add`, need, this.httpOptions).pipe(
@@ -97,8 +66,13 @@ export class BasketService {
     );
   }
 
-  /** DELETE: delete the hero from the server */
-  deleteNeed(id: number): Observable<Need> {
+  deleteNeed(need: Need) : Observable<Need> {
+    this.basketMessanger.next({operation: Operation.DELETE, need: need});
+    return this.deleteNeedServer(need.id);
+  }
+
+  /** DELETE: delete a need from the funding basket */
+  private deleteNeedServer(id: number): Observable<Need> {
     const url = `${this.needsUrl}/${id}`;
 
     return this.http.delete<Need>(url, this.httpOptions).pipe(
@@ -106,28 +80,6 @@ export class BasketService {
       catchError(this.handleError<Need>('deleteNeed'))
     );
   }
-
-  // ------------------TO-DO------------------
-  // Add this once you add the MessageService
-  // /** Log a HeroService message with the MessageService */
-   private log(message: string) {
-    this.messageService.add(`HeroService: ${message}`);
-   }
-
-  /* GET heroes whose name contains search term */
-
-searchNeeds(term: string): Observable<Need[]> {
-  if (!term.trim()) {
-    // if not search term, return empty hero array.
-    return of([]);
-  }
-  return this.http.get<Need[]>(`${this.needsUrl}/?name=${term}`).pipe(
-    tap(x => x.length ?
-       this.log(`found heroes matching "${term}"`) :
-       this.log(`no heroes matching "${term}"`)),
-    catchError(this.handleError<Need[]>('searchHeroes', []))
-  );
-}
 
 
 

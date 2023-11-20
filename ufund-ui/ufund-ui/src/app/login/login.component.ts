@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SlideInterface } from '../imageSlider/types/slide.interface';
+import { UserSessionService } from '../user-session.service';
+import { isFormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +10,12 @@ import { SlideInterface } from '../imageSlider/types/slide.interface';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  displayError : boolean = false; 
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private userSession: UserSessionService) { }
 
   username: string | undefined;
   password: string | undefined;
@@ -20,15 +24,22 @@ export class LoginComponent {
     if (!this.username || !this.password) {
       return;
     }
+    this.userSession.setPassword(this.password); 
+    this.userSession.setUser(this.username); 
 
     if (this.username == "admin") {
-      this.router.navigate(['/needs']);
-    } else {
-      // TO-DO
-      // CREATE A VIEW.ROUTE FOR THE NEEDS VIEW
-      this.router.navigate(['/helper']);
-    }
+      this.userSession.getIsAdmin().subscribe(val => {
+        if(val) this.router.navigate(['/admin']);
+        this.displayError = true; 
+      });
+    } 
+    else if(this.username == "helper"){ 
+      this.userSession.getIsHelper().subscribe(val => {
+        if(val) this.router.navigate(['/helper']);
+        this.displayError=true; 
+      })
 
+    }
   }
 
   slides: SlideInterface[] = [

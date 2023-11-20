@@ -1,0 +1,35 @@
+<u><p>Funding Basket:</p></u>
+<ul class="needs">
+    <li *ngFor="let need of currentBasket">
+        <button type="button">
+            <span class="id">{{need.id}}</span>
+            <div class="data">
+                <span class="name">{{need.name}}</span>
+                <span class="cost">{{need.price | currency}}</span>
+                <span class="quanity">Quanity: {{need.quantity}}</span>
+            </div>
+        </button>
+        <button type="button" class="modify" title="remove from basket" (click)="removeFromBasket(need)" (click)="calcSum()">-</button>
+
+    </li>
+</ul>
+
+<button type="button" *ngIf="!proceed" (click)="proceedToCheckOut()">Proceed To Checkout</button>
+
+<div *ngIf="proceed" >
+    <h1>Checkout</h1>
+    <h2>Order Summary</h2>
+    <div>
+        <p>Items: {{currentBasket.length}}</p>
+        <!-- <p>Tax: $5.99</p>
+        <p>Music Fee: $4.99</p> -->
+    
+        <h3>Order Total: {{ sum | currency}}
+        </h3>
+    </div>
+    
+    
+    <button type="button" (click)="calcSum()" (click)="itemsPurchased()">Place Order</button>
+    <h1 *ngIf="itemsPurchasedBool">Thank you for your contributions!</h1>
+</div>
+
