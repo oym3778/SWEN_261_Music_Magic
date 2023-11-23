@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Need } from './need';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
-//import { HEROES } from './mock-needs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
@@ -16,11 +15,13 @@ import { Operation } from './needs/needs.component';
 export class NeedService {
 
   private needsUrl = "http://localhost:8080/needs" //url of REST tomcat server
-  private needsMessanger = new Subject(); //used to send data to needs.component.ts from other components
+  private needsMessanger = new BehaviorSubject<Need[]>([]); //used to send data to needs.component.ts from other components
+  private filterMessanger = new BehaviorSubject<String>('');
 
   constructor(
-    private http: HttpClient,
-    private messageService: MessageService) { }
+    private http: HttpClient) {
+      this.getNeeds().subscribe(needs => this.needsMessanger = new BehaviorSubject<Need[]>(needs));
+    }
 
 
   /**
@@ -48,24 +49,34 @@ export class NeedService {
     return this.needsMessanger.asObservable(); 
   }
 
-  addNeedSubjects(need: Need): void {
-    this.needsMessanger.next({operation: Operation.ADD, body: need});
+  getFilterMessanger(): Observable<any> {
+    return this.filterMessanger.asObservable(); 
   }
 
-  deleteNeedSubjects(need: Need): void {
-    this.needsMessanger.next({operation: Operation.DELETE, body: need});
+  addNeed(need: Need): void {
+    const needs = this.needsMessanger.value; 
+    this.addNeedServer(need).subscribe(needResponse => {
+      console.log(needResponse);
+      if (needResponse != null) this.needsMessanger.next([... needs.filter(n => n != needResponse), needResponse]);
+      });
+
+  }
+
+  deleteNeed(need: Need): void {
+    const needs = this.needsMessanger.value; 
+    this.needsMessanger.next(needs.filter(n => n.id != need.id));
+
+    this.deleteNeedServer(need.id).subscribe();
   }
 
   updateNeedsFilter(filter: String) : void {
-    this.needsMessanger.next({operation: Operation.FILTER, body: filter}); 
+    this.filterMessanger.next(filter); 
   }
 
   /** GET needs from the server */
   getNeeds(): Observable<Need[]> {
-    this.messageService.add('HeroService: fetched heroes'); //For search -Daniel Tsouri
-    return this.http.get<Need[]>(this.needsUrl)
+       return this.http.get<Need[]>(this.needsUrl)
       .pipe(
-        // tap(_ => this.log('fetched heroes')),
         catchError(this.handleError<Need[]>('getNeeds', []))
       );
   }
@@ -89,41 +100,24 @@ export class NeedService {
   getNeed(id: number): Observable<Need> {
     const url = `${this.needsUrl}/${id}`;
     return this.http.get<Need>(url).pipe(
-      // tap(_ => this.log(`fetched need id=${id}`)),
       catchError(this.handleError<Need>(`getNeed id=${id}`))
     );
   }
 
-  /* GET heroes whose name contains search term */
-  //searchNeeds(term: string): Observable<Need[]> {
-    //if (!term.trim()) {
-      // if not search term, return empty hero array.
-    //  return of([]);
-   // }
-   // return this.http.get<Need[]>(`${this.needsUrl}/?name=${term}`).pipe(
-      // tap(x => x.length ?
-      //   this.log(`found heroes matching "${term}"`) :
-      //   this.log(`no heroes matching "${term}"`)),
-    //  catchError(this.handleError<Need[]>('searchNeeds', []))
-    //);
- // }
-
   //////// Save methods //////////
 
   /** POST: add a new hero to the server */
-  addNeed(need: Need): Observable<Need> {
+  addNeedServer(need: Need): Observable<Need> {
     return this.http.post<Need>(`${this.needsUrl}/add`, need, this.httpOptions).pipe(
-      // tap((newHero: Need) => this.log(`added hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Need>('addNeed'))
     );
   }
 
   /** DELETE: delete the hero from the server */
-  deleteNeed(id: number): Observable<Need> {
+  deleteNeedServer(id: number): Observable<Need> {
     const url = `${this.needsUrl}/${id}`;
 
     return this.http.delete<Need>(url, this.httpOptions).pipe(
-      // tap(_ => this.log(`deleted hero id=${id}`)),
       catchError(this.handleError<Need>('deleteNeed'))
     );
   }
@@ -131,40 +125,8 @@ export class NeedService {
   /** PUT: update the need on the server */
   updateNeed(need: Need): Observable<any> {
     return this.http.put(this.needsUrl, need, this.httpOptions).pipe(
-      // tap(_ => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updateNeed'))
     );
   }
-
-  // ------------------TO-DO------------------
-  // Add this once you add the MessageService
-  // /** Log a HeroService message with the MessageService */
-   private log(message: string) {
-    this.messageService.add(`HeroService: ${message}`);
-   }
-
-  /* GET heroes whose name contains search term */
-
-searchNeeds(term: string): Observable<Need[]> {
-  if (!term.trim()) {
-    // if not search term, return empty hero array.
-    return of([]);
-  }
-  return this.http.get<Need[]>(`${this.needsUrl}/?name=${term}`).pipe(
-    tap(x => x.length ?
-       this.log(`found heroes matching "${term}"`) :
-       this.log(`no heroes matching "${term}"`)),
-    catchError(this.handleError<Need[]>('searchHeroes', []))
-  );
-}
-
-
-
-
-
-
-
-
-
 
 }

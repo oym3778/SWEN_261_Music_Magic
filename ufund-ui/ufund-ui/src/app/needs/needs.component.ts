@@ -32,15 +32,6 @@ export class NeedsComponent{
   constructor(private needService: NeedService,
               private basketService: BasketService,
               private userSession: UserSessionService ) { }
-  
-  
-  // If the needs array is empty,
-  // the method below returns the initial number (0).
-  // if the needs array is not empty, the method below returns the highest
-  // need id + 1.
-  genId(needs: Need[]): number {
-    return needs.length > 0 ? Math.max(...needs.map(need => need.id)) + 1 : 0;
-  }
 
   //Update the stored needs array based on the values access by needService.
   getNeeds(): void {
@@ -48,7 +39,11 @@ export class NeedsComponent{
   }
 
   getAddedNeed(): void {
-    this.needService.getUpdate().subscribe(data => this.addNeedLocal(data.body, data.operation));
+    this.needService.getUpdate().subscribe(data => {
+      this.updateNeeds(data);
+      console.log(data);
+    });
+    this.needService.getFilterMessanger().subscribe(filter => this.filter = filter);
   }
 
   getCurrentUser(): void {
@@ -61,52 +56,24 @@ export class NeedsComponent{
     return need.name.toLowerCase().startsWith(this.filter.toLowerCase()); 
   }
 
-  private addNeedLocal(body: any, operation: Operation)
-  {
-    switch(operation){
-    case Operation.ADD:
-      this.needs.push(body);
-      break; 
-    case Operation.DELETE:
-      console.log(body);
-      this.delete(body);
-      this.ngOnInit();
-      break;
-    case Operation.FILTER:
-      this.filter = body;
-    }
+  updateNeeds(needs: Need[]) : void {
+    this.needs = needs; 
+    console.log(needs);
   }
 
   //Update needs array when the component is initialized. 
   ngOnInit(): void {
-    this.getCurrentUser(); 
     this.getNeeds();
+    this.getCurrentUser(); 
     this.getAddedNeed(); 
-  }
-  
-  add(nameH: string, price: string, quantity: string): void {
-    nameH = nameH.trim();
-    const tempNeed: Need = {
-      id: this.genId(this.needs),
-      name: nameH,
-      price: Number(price),
-      quantity: Number(quantity),
-    };
-    if (!nameH) { return; }
-
-    this.needService.addNeed(tempNeed)
-      .subscribe(need => {
-        this.needs.push(tempNeed);
-      });
   }
 
   delete(need: Need): void {
-    this.needs = this.needs.filter(n => n !== need);
-    this.needService.deleteNeed(need.id).subscribe(need => this.ngOnInit());
+    this.needService.deleteNeed(need); 
   }
 
   moveToBasket(need: Need): void {
-    this.basketService.addNeedToBasket(need).subscribe(need => this.basketService.addBasketSubjects(need));
+    this.basketService.addNeed(need);
   }
 }
 
