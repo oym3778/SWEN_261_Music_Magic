@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
-import { Operation } from './needs/needs.component';
 
 //Makes this class an injectable dependecy which can be injected into any class
 //in the program. 
@@ -16,11 +15,15 @@ export class NeedService {
 
   private needsUrl = "http://localhost:8080/needs" //url of REST tomcat server
   private needsMessanger = new BehaviorSubject<Need[]>([]); //used to send data to needs.component.ts from other components
-  private filterMessanger = new BehaviorSubject<String>('');
+  private filterMessanger = new BehaviorSubject<string>('');
+
+  needsMessanger$ = this.needsMessanger.asObservable(); 
+  filterMessanger$ = this.filterMessanger.asObservable(); 
 
   constructor(
     private http: HttpClient) {
-      this.getNeeds().subscribe(needs => this.needsMessanger = new BehaviorSubject<Need[]>(needs));
+      //establish default value for need[] stored by needsMessanger
+      this.getNeeds().subscribe(needs => this.needsMessanger.next(needs));
     }
 
 
@@ -42,21 +45,10 @@ export class NeedService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  /**
-   * Return this class' subject as an observable so it can be subscribed to.
-   */
-  getUpdate(): Observable<any> {
-    return this.needsMessanger.asObservable(); 
-  }
-
-  getFilterMessanger(): Observable<any> {
-    return this.filterMessanger.asObservable(); 
-  }
 
   addNeed(need: Need): void {
     const needs = this.needsMessanger.value; 
     this.addNeedServer(need).subscribe(needResponse => {
-      console.log(needResponse);
       if (needResponse != null) this.needsMessanger.next([... needs.filter(n => n != needResponse), needResponse]);
       });
 
@@ -64,12 +56,13 @@ export class NeedService {
 
   deleteNeed(need: Need): void {
     const needs = this.needsMessanger.value; 
-    this.needsMessanger.next(needs.filter(n => n.id != need.id));
+    var newNeeds = needs.filter(n => n.id != need.id); 
+    this.needsMessanger.next(newNeeds);
 
     this.deleteNeedServer(need.id).subscribe();
   }
 
-  updateNeedsFilter(filter: String) : void {
+  updateNeedsFilter(filter: string) : void {
     this.filterMessanger.next(filter); 
   }
 
@@ -78,21 +71,6 @@ export class NeedService {
        return this.http.get<Need[]>(this.needsUrl)
       .pipe(
         catchError(this.handleError<Need[]>('getNeeds', []))
-      );
-  }
-
-  /** GET need by id. Return `undefined` when id not found */
-  // THIS IS NOT BEING USED BUT THOUGHT IT'D BE USEFUL
-  getNeedNo404<Data>(id: number): Observable<Need> {
-    const url = `${this.needsUrl}/?id=${id}`;
-    return this.http.get<Need[]>(url)
-      .pipe(
-        map(needs => needs[0]), // returns a {0|1} element array
-        tap(h => {
-          const outcome = h ? 'fetched' : 'did not find';
-          // this.log(`${outcome} need id=${id}`);
-        }),
-        catchError(this.handleError<Need>(`getNeed id=${id}`))
       );
   }
 

@@ -5,11 +5,6 @@ import { BasketService } from '../basket.service';
 import { Subscribable, Subscription } from 'rxjs';
 import { UserSessionService } from '../user-session.service';
 
-export enum Operation {
-  ADD, 
-  DELETE,
-  FILTER
-}
 
 /**
  * Give the name to the associated html tag for this component and connect
@@ -31,19 +26,13 @@ export class NeedsComponent{
   //Inject NeedService dependency.
   constructor(private needService: NeedService,
               private basketService: BasketService,
-              private userSession: UserSessionService ) { }
+              private userSession: UserSessionService ) {
+
+              }
 
   //Update the stored needs array based on the values access by needService.
   getNeeds(): void {
     this.needService.getNeeds().subscribe(needs => this.needs = needs);
-  }
-
-  getAddedNeed(): void {
-    this.needService.getUpdate().subscribe(data => {
-      this.updateNeeds(data);
-      console.log(data);
-    });
-    this.needService.getFilterMessanger().subscribe(filter => this.filter = filter);
   }
 
   getCurrentUser(): void {
@@ -56,16 +45,20 @@ export class NeedsComponent{
     return need.name.toLowerCase().startsWith(this.filter.toLowerCase()); 
   }
 
-  updateNeeds(needs: Need[]) : void {
-    this.needs = needs; 
-    console.log(needs);
-  }
-
   //Update needs array when the component is initialized. 
   ngOnInit(): void {
+    this.needService.needsMessanger$.subscribe(
+      needs => {
+        console.log(needs, "Needs recieved");
+        this.needs = needs;
+      }
+    );
+    this.needService.filterMessanger$.subscribe(
+      filter => this.filter = filter
+    );
+
     this.getNeeds();
     this.getCurrentUser(); 
-    this.getAddedNeed(); 
   }
 
   delete(need: Need): void {

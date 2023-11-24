@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
-import { Operation } from './needs/needs.component';
 import { FundingBasketComponent } from './funding-basket/funding-basket.component';
 
 //Makes this class an injectable dependecy which can be injected into any class
@@ -22,7 +21,7 @@ export class BasketService {
     private http: HttpClient,
     private messageService: MessageService) {
       //make sure our BehaviorSubject starts with the correct list of needs.
-      this.getNeeds().subscribe(needs => this.basketMessanger = new BehaviorSubject<Need[]>(needs))
+      this.getNeeds().subscribe(needs => this.basketMessanger.next(needs));
      }
 
   httpOptions = {

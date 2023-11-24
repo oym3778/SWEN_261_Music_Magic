@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Need } from '../need';
 import { BasketService } from '../basket.service';
-import { Operation } from '../needs/needs.component';
 import { NeedService } from '../need.service';
 
 @Component({

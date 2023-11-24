@@ -15,9 +15,6 @@ import { NeedService } from '../need.service';
   styleUrls: [ './need-search.component.css' ]
 })
 export class NeedSearchComponent implements OnInit {
-  needs$!: Observable<Need[]>;
-  private searchTerms = new Subject<string>();
-
   constructor(private needService: NeedService) {}
 
   // Push a search term into the observable stream.
