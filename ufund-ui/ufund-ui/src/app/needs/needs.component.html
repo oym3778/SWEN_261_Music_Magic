@@ -1,8 +1,10 @@
 
+<div class="container">
+<div>
 <u><p>Current Cupboard:</p></u>
 <ul class="needs">
     <li *ngFor="let need of needs | needFilter:filter">
-        <button type="button" routerLink="/detail/{{need.id}}">
+        <button type="button" [class.selected]="need === selectedNeed" (click)="onSelect(need)">
             <span class="id">{{need.id}}</span>
             <div class="data">
                 <span class="name">{{need.name}}</span>
@@ -14,4 +16,7 @@
         <button type="button" class="modify" *ngIf="isAdmin" (click)="delete(need)">-</button>
     </li>
 </ul>
+</div>
+<app-need-detail [need]="selectedNeed"></app-need-detail>
 
+</div>

@@ -19,6 +19,7 @@ import { UserSessionService } from '../user-session.service';
  */
 export class NeedsComponent{
   needs: Need[] = []; //Array of all the needs to display.
+  selectedNeed: Need | undefined;
   isHelper: boolean = false; 
   isAdmin: boolean = false; 
   filter: string = '';
@@ -67,6 +68,10 @@ export class NeedsComponent{
 
   moveToBasket(need: Need): void {
     this.basketService.addNeed(need);
+  }
+
+  onSelect(need: Need): void {
+    this.selectedNeed = need; 
   }
 }
 
