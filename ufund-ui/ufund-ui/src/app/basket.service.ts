@@ -17,6 +17,8 @@ export class BasketService {
   private needsUrl = "http://localhost:8080/basket" //url of REST tomcat server
   private basketMessanger = new BehaviorSubject<Need[]>([]); //used to send data to funding-basket.component.ts from other components
 
+  basketMessanger$ = this.basketMessanger.asObservable(); 
+
   constructor(
     private http: HttpClient,
     private messageService: MessageService) {
@@ -41,10 +43,6 @@ export class BasketService {
       console.error(error);
       return of(result as T);
     }
-  }
-
-  getUpdate(): Observable<any> {
-    return this.basketMessanger.asObservable(); 
   }
 
   //Methods for interacting with the basket component from other components.

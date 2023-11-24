@@ -49,7 +49,7 @@ export class FundingBasketComponent {
   }
 
   getBasketUpdates(): void {
-    this.basketService.getUpdate().subscribe(data => this.updateBasket(data));
+    this.basketService.basketMessanger$.subscribe(data => this.updateBasket(data));
     this.itemsPurchasedBool = false;
   }
 
