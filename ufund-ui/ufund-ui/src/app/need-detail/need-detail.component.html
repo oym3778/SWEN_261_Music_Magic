@@ -3,16 +3,19 @@
     <div><span>id: </span>{{need.id}}</div>
     <div>
         <ul>
-            <li><label for="hero-name">Need name: </label>
-                <input id="hero-name" [(ngModel)]="need.name" placeholder="Need name" />
+            <li><label for="need-name">Need name: </label>
+                <input *ngIf="getIsAdmin()" id="need-name" [(ngModel)]="need.name" placeholder="Need name" />
+                <span *ngIf="!getIsAdmin()">{{need.name}}</span>
             </li>
-            <li><label for="hero-name">Need quantity: </label>
-                <input id="hero-quanity" [(ngModel)]="need.quantity" placeholder="Need quantity" />
+            <li><label for="need-name">Need quantity: </label>
+                <input *ngIf="getIsAdmin()" id="need-quanity" [(ngModel)]="need.quantity" placeholder="Need quantity" />
+                <span *ngIf="!getIsAdmin()">{{need.quantity}}</span>
             </li>
-            <li> <label for="hero-name">Need price: </label>
-                <input id="hero-price" [(ngModel)]="need.price" placeholder="Need price" />
+            <li> <label for="need-name">Need price: </label>
+                <input *ngIf="getIsAdmin()" id="need-price" [(ngModel)]="need.price" placeholder="Need price" />
+                <span *ngIf="!getIsAdmin()">{{need.price}}</span>
             </li>
         </ul>
     </div>
-    <button (click)="saveNeed()">Save</button>
+    <button *ngIf="getIsAdmin()" (click)="saveNeed()">Save</button>
 </div>
