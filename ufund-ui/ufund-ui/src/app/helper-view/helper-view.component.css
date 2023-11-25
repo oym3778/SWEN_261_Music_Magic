@@ -41,15 +41,6 @@
   overflow: auto;
 }
 
-/*NOT FINISHED*/
-.search {
-  position: relative;
-  bottom: 50px;
-  z-index: 1;
-}
-
-
-
 /* NeedsComponent's private CSS styles */
 .needs {
     margin: 0 0 2em 0;

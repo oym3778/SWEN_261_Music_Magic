@@ -14,4 +14,12 @@ import { NeedService } from '../need.service';
 })
 export class NeedDetailComponent {
   @Input() need?: Need; 
+
+  constructor(private needService: NeedService) {}
+
+  saveNeed(): void {
+    if(this.need){
+      this.needService.updateNeed(this.need).subscribe();
+    }
+  }
 }
