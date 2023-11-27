@@ -38,4 +38,8 @@ export class ImageSliderComponent {
     getCurrentSlideBody(): string {
         return `${this.slides[this.currentIndex].body}`;
     }
+
+    getCurrentAudio(): string {
+        return `${this.slides[this.currentIndex].audio}`;
+    }
 }
