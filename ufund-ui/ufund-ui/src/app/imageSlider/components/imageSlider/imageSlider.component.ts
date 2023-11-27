@@ -40,6 +40,6 @@ export class ImageSliderComponent {
     }
 
     getCurrentAudio(): string {
-        return `${this.slides[this.currentIndex].audio}`;
+        return this.slides[this.currentIndex].audio;
     }
 }
