@@ -67,6 +67,12 @@ For a minimum viable produce, a user must be able to:
 ### Enhancements
 > _**[Sprint 4]** Describe what enhancements you have implemented for the project._
 
+Our two enhancements were an interactive slideshow embedded in our login page, and a music player embedded in our login page.
+
+The slideshow displays an image with a caption underneath it with a description of the image. There are two buttons that allow the user to navigate to the previous or next image. There are also buttons underneath the image that allow the user to jump directly to the image. The number of buttons automatically adjusts when adding new images to the slideshow. However, adding a new image to the slideshow can only be done by editing the html.
+
+The music player is very simple, it is just an audio player element that plays a recording from one of the school music departments that we support.
+
 
 ## Application Domain
 
@@ -167,6 +173,8 @@ Our api backend functions by maintaining two json files of needs, one representi
 ### Sprint 2
 * We apply **Single Responsibility** in our project by having classes that are limited to one responsibility. For example we have multiple classes for the funding basket because we have one class that is responsible for the deserialization of the basket.json file and handling of objects, and another class that is responsible for responding to HTTP requests and returning the correct objects for the funding basket.
 * We apply **Open/Closed** in our project by extending interfaces such as NeedDAO and BasketDAO into the new classes NeedFileDAO and BasketFileDAO respectively. This allows us to make modifications to the child classes while keeping the parent class untouched.
+* We apply Pure Fabrication in our project by having classes like NeedFileDAO, which is not something that has a real-life representation. Pure Fabrication just means that some objects in our code do not exist in the real world.
+* We apply Law of Demeter in our project by restricting the scope of a class’s knowledge of other classes to only it’s direct neighbors. For example, the NeedController physically cannot reach into the need.json file, it needs to rely on other classes, NeedDAO and NeedFileDAO, in order to get what it needs.
 
 
 > _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
