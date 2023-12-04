@@ -217,6 +217,9 @@ Our api backend functions by maintaining two json files of needs, one representi
 ### Sprint 2
 * There is one large chunk of code that we are having trouble writing unit tests for, which includes updateNeedCost(), updateNeedquantity(), and updateNeedName. It is hard for us to write unit tests for this code because there was nothing like it in the Heroes api for us to base our code off of.
 * Apart from that chunk, we just have a few holes spotted around the place which should be no problem to patch up in Sprint 3.
+
+### Sprint 4
+* We did not have a set strategy for the Unit Tests. For the most part, after the JUnit tests assignment, all team members that added a new function also made the test at the same time. This worked for the most part. However, as seen in the pictures below, this strategy is not perfect. The persistence tier is lower than the rest because the UserFileDAO had no tests. Our team aimed for 90 percent coverage because this was the amount that allowed for confidence in the functions ability to perform their respective duties. We met this goal with all tiers except for the persistence for the reason mentioned above.
 <img width="1089" alt="Screenshot 2023-11-01 at 10 02 41 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/132c39d6-faee-4525-b74c-435e240e156c">
 <img width="939" alt="Screenshot 2023-11-01 at 10 05 10 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/0932d461-1146-483f-80dd-54350bdf0b27">
 <img width="930" alt="Screenshot 2023-11-01 at 10 05 07 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/6b43a1df-7a59-429c-9128-755714f8ad5f">
