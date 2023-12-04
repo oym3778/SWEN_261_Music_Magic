@@ -5,11 +5,6 @@ import { BasketService } from '../basket.service';
 import { Subscribable, Subscription } from 'rxjs';
 import { UserSessionService } from '../user-session.service';
 
-export enum Operation {
-  ADD, 
-  DELETE,
-  FILTER
-}
 
 /**
  * Give the name to the associated html tag for this component and connect
@@ -31,24 +26,13 @@ export class NeedsComponent{
   //Inject NeedService dependency.
   constructor(private needService: NeedService,
               private basketService: BasketService,
-              private userSession: UserSessionService ) { }
-  
-  
-  // If the needs array is empty,
-  // the method below returns the initial number (0).
-  // if the needs array is not empty, the method below returns the highest
-  // need id + 1.
-  genId(needs: Need[]): number {
-    return needs.length > 0 ? Math.max(...needs.map(need => need.id)) + 1 : 0;
-  }
+              private userSession: UserSessionService ) {
+
+              }
 
   //Update the stored needs array based on the values access by needService.
   getNeeds(): void {
     this.needService.getNeeds().subscribe(needs => this.needs = needs);
-  }
-
-  getAddedNeed(): void {
-    this.needService.getUpdate().subscribe(data => this.addNeedLocal(data.body, data.operation));
   }
 
   getCurrentUser(): void {
@@ -61,52 +45,28 @@ export class NeedsComponent{
     return need.name.toLowerCase().startsWith(this.filter.toLowerCase()); 
   }
 
-  private addNeedLocal(body: any, operation: Operation)
-  {
-    switch(operation){
-    case Operation.ADD:
-      this.needs.push(body);
-      break; 
-    case Operation.DELETE:
-      console.log(body);
-      this.delete(body);
-      this.ngOnInit();
-      break;
-    case Operation.FILTER:
-      this.filter = body;
-    }
-  }
-
   //Update needs array when the component is initialized. 
   ngOnInit(): void {
-    this.getCurrentUser(); 
-    this.getNeeds();
-    this.getAddedNeed(); 
-  }
-  
-  add(nameH: string, price: string, quantity: string): void {
-    nameH = nameH.trim();
-    const tempNeed: Need = {
-      id: this.genId(this.needs),
-      name: nameH,
-      price: Number(price),
-      quantity: Number(quantity),
-    };
-    if (!nameH) { return; }
+    this.needService.needsMessanger$.subscribe(
+      needs => {
+        console.log(needs, "Needs recieved");
+        this.needs = needs;
+      }
+    );
+    this.needService.filterMessanger$.subscribe(
+      filter => this.filter = filter
+    );
 
-    this.needService.addNeed(tempNeed)
-      .subscribe(need => {
-        this.needs.push(tempNeed);
-      });
+    this.getNeeds();
+    this.getCurrentUser(); 
   }
 
   delete(need: Need): void {
-    this.needs = this.needs.filter(n => n !== need);
-    this.needService.deleteNeed(need.id).subscribe(need => this.ngOnInit());
+    this.needService.deleteNeed(need); 
   }
 
   moveToBasket(need: Need): void {
-    this.basketService.addNeedToBasket(need).subscribe(need => this.basketService.addBasketSubjects(need));
+    this.basketService.addNeed(need);
   }
 }
 

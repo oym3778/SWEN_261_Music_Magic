@@ -21,7 +21,6 @@ export class AddNeedComponent {
     };
     //if (!nameH) { return; }
 
-    this.needService.addNeed(tempNeed).subscribe(need => this.needService.addNeedSubjects(need));
+    this.needService.addNeed(tempNeed);
   }
-
 }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Need } from '../need';
 import { BasketService } from '../basket.service';
-import { Operation } from '../needs/needs.component';
 import { NeedService } from '../need.service';
 
 @Component({
@@ -25,20 +24,14 @@ export class FundingBasketComponent {
     }else{
       this.proceed = false;
     }
-    
   }
+  
   itemsPurchased() {
-    if (this.currentBasket.length != 0) {
-      this.itemsPurchasedBool = true;
-      for(let i = 0; i < this.currentBasket.length; i++)
-      {
-        this.needService.deleteNeedSubjects(this.currentBasket[i]);
-      }
-      this.currentBasket.forEach(need => this.removeFromBasket(need));
-      
-    }
-
+    this.itemsPurchasedBool = true;
+    this.currentBasket.forEach(need => this.needService.deleteNeed(need));
+    this.currentBasket.forEach(need => this.removeFromBasket(need));
   }
+
   calcSum(): void {
     this.sum = 0;
     for (let i = 0; i < this.currentBasket.length; i++) {
@@ -56,21 +49,13 @@ export class FundingBasketComponent {
   }
 
   getBasketUpdates(): void {
-    this.basketService.getUpdate().subscribe(data => this.changeBasketLocal(data.operation, data.need));
+    this.basketService.getUpdate().subscribe(data => this.updateBasket(data));
     this.itemsPurchasedBool = false;
   }
 
-  changeBasketLocal(operation: Operation, need: Need): void {
-    switch (operation) {
-      case Operation.ADD:
-        if (need != null) this.currentBasket.push(need);
-        this.calcSum();
-        break;
-      case Operation.DELETE:
-        this.currentBasket = this.currentBasket.filter(n => n !== need);
-        break;
-    }
-    this.itemsPurchasedBool = false;
+  updateBasket(needs: Need[]): void {
+    this.currentBasket = needs; 
+    this.calcSum();
   }
 
   ngOnInit(): void {
@@ -81,15 +66,7 @@ export class FundingBasketComponent {
     this.proceed = false;
   }
 
-  addToBasket(need: Need): void {
-    this.basketService.addNeedToBasket(need).subscribe();
-    this.getBasket();
-    this.itemsPurchasedBool = false;
-  }
-
   removeFromBasket(need: Need): void {
-    this.basketService.deleteNeed(need).subscribe();
-    this.calcSum();
-    this.itemsPurchasedBool = false;
+    this.basketService.deleteNeed(need);
   }
 }

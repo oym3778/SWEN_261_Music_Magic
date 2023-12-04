@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Need } from './need';
-import { Observable, Subject, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
-import { Operation } from './needs/needs.component';
+import { FundingBasketComponent } from './funding-basket/funding-basket.component';
 
 //Makes this class an injectable dependecy which can be injected into any class
 //in the program. 
@@ -15,11 +15,18 @@ import { Operation } from './needs/needs.component';
 export class BasketService {
 
   private needsUrl = "http://localhost:8080/basket" //url of REST tomcat server
-  private basketMessanger = new Subject(); //used to send data to funding-basket.component.ts from other components
+  private basketMessanger = new BehaviorSubject<Need[]>([]); //used to send data to funding-basket.component.ts from other components
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService) {
+      //make sure our BehaviorSubject starts with the correct list of needs.
+      this.getNeeds().subscribe(needs => this.basketMessanger.next(needs));
+     }
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
 
   /**
@@ -36,17 +43,37 @@ export class BasketService {
     }
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
   getUpdate(): Observable<any> {
     return this.basketMessanger.asObservable(); 
   }
 
-  addBasketSubjects(need: Need): void {
-    this.basketMessanger.next({operation: Operation.ADD, need: need});
+  //Methods for interacting with the basket component from other components.
+
+  /**
+   * Add a need to the funding basket
+   * @param need - The need to be added
+   */
+  addNeed(need: Need): void {
+    const needs = this.basketMessanger.value;
+    this.basketMessanger.next([... needs.filter(n => n != need), need]);
+
+    this.addNeedServer(need).subscribe(); 
   }
+
+  /**
+   * Remove a need from the funding basket
+   * @param need - the need to be removed.
+   */
+  deleteNeed(need: Need) : void {
+    const needs = this.basketMessanger.value
+    this.basketMessanger.next(needs.filter(n => n != need));
+
+    this.deleteNeedServer(need.id).subscribe();
+  }
+
+
+
+  //Methods which interact directly with the backend server. 
 
   /** GET needs from the server */
   getNeeds(): Observable<Need[]> {
@@ -59,24 +86,17 @@ export class BasketService {
   }
 
   /** POST: add a new hero to the server */
-  addNeedToBasket(need: Need): Observable<Need> {
+  addNeedServer(need: Need): Observable<Need> {
     return this.http.post<Need>(`${this.needsUrl}/add`, need, this.httpOptions).pipe(
-      // tap((newHero: Need) => this.log(`added hero w/ id=${newHero.id}`)),
       catchError(this.handleError<Need>('addNeed'))
     );
   }
 
-  deleteNeed(need: Need) : Observable<Need> {
-    this.basketMessanger.next({operation: Operation.DELETE, need: need});
-    return this.deleteNeedServer(need.id);
-  }
-
   /** DELETE: delete a need from the funding basket */
-  private deleteNeedServer(id: number): Observable<Need> {
+  deleteNeedServer(id: number): Observable<Need> {
     const url = `${this.needsUrl}/${id}`;
 
     return this.http.delete<Need>(url, this.httpOptions).pipe(
-      // tap(_ => this.log(`deleted hero id=${id}`)),
       catchError(this.handleError<Need>('deleteNeed'))
     );
   }
