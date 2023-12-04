@@ -118,6 +118,7 @@ This section describes the web interface flow; this is how the user views and in
 > Describe the types of components in the tier and describe their
 > responsibilities.  This should be a narrative description, i.e. it has
 > a flow or "story line" that the reader can follow._
+
 Upon entering our site, users are greeted by the landing page, seamlessly integrated with the login component. The site offers the option to enter a username and password for login, accompanied by a captivating image slider component showcasing local events. To initiate the login process, users may choose between two credentials: helper or admin.
 
 For admin access, entering 'admin' as the username and 'password' as the password is required. Once authenticated, users are directed to the admin component, granting them the authority to add, delete, and update the needs of local school music departments in our database. Within the admin component, the add-need and needs components empower administrators to view current needs and add new requirements. The need component, with functions such as getNeeds, delete needs, and move needs to the basket, ensures a functional admin view. Meanwhile, the add-need component simplifies the process of adding new needs.
