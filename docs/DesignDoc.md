@@ -283,6 +283,8 @@ In addition to what was mentioned above, several further improvements could be m
 
 ### Sprint 4
 * We did not have a set strategy for the Unit Tests. For the most part, after the JUnit tests assignment, all team members that added a new function also made the test at the same time. This worked for the most part. However, as seen in the pictures below, this strategy is not perfect. The persistence tier is lower than the rest because the UserFileDAO had no tests. Our team aimed for 90 percent coverage because this was the amount that allowed for confidence in the functions ability to perform their respective duties. We met this goal with all tiers except for the persistence for the reason mentioned above.
+
+*SPRINT 2
 <img width="1089" alt="Screenshot 2023-11-01 at 10 02 41 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/132c39d6-faee-4525-b74c-435e240e156c">
 <img width="939" alt="Screenshot 2023-11-01 at 10 05 10 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/0932d461-1146-483f-80dd-54350bdf0b27">
 <img width="930" alt="Screenshot 2023-11-01 at 10 05 07 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/6b43a1df-7a59-429c-9128-755714f8ad5f">
@@ -298,3 +300,23 @@ In addition to what was mentioned above, several further improvements could be m
 <img width="1041" alt="Screenshot 2023-11-01 at 10 02 59 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/dd0820d0-8e62-4dd8-99b3-c92b5191b602">
 <img width="1018" alt="Screenshot 2023-11-01 at 10 02 54 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/7a4dcfff-fe07-4dd1-8fe2-9bc1fcabe90d">
 <img width="1034" alt="Screenshot 2023-11-01 at 10 02 49 PM" src="https://github.com/RIT-SWEN-261-01/team-project-2231-swen-261-01-06-musicmagic/assets/113476356/9ea1faaf-44a4-4f4d-a36c-53954853af62">
+
+
+*SPRINT 4
+
+
+
+![](model.png)
+![](model-user.png)
+![](model.png)
+![](persistance.png)
+![](persistance-userfiledao.png)
+![](persistance-basketfiledao.png)
+![](controller.png)
+![](controller-basketcontroller.png)
+![](controller-needcontroller.png)
+![](controller-logincontroller.png)
+
+*NOTE: All code coverage screenshots not shown in Sprint 4 were the same/have not changed from Sprint 2
+
+
