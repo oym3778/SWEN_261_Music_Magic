@@ -150,6 +150,9 @@ In addition to these user-facing components, various behind-the-scenes component
  >* _Correct labeling of relationships with proper notation for the relationship type, multiplicities, and navigation information will be important._
  >* _Include other details such as attributes and method signatures that you think are needed to support the level of detail in your discussion._
 
+![Admin Class Diagram](AdminClassDiagram.png)
+![Helper Class Diagram](HelperClassDiagram.png)
+
 ### ViewModel Tier
 > _**[Sprint 4]** Provide a summary of this tier of your architecture. This
 > section will follow the same instructions that are given for the View
