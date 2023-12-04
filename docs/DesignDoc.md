@@ -64,6 +64,14 @@ For a minimum viable produce, a user must be able to:
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
 
+EPIC: Helper Checkout
+
+EPIC: 10% Feature
+
+EPIC: Visual Aspect of the Website
+
+EPIC: Desing Document
+
 ### Enhancements
 > _**[Sprint 4]** Describe what enhancements you have implemented for the project._
 
@@ -204,10 +212,11 @@ Our api backend functions by maintaining two json files of needs, one representi
 > criteria tests failing, and the number of user stories that
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
-* So far, the team has been able to keep up with Acceptance Testing. The entirety of stories in both Sprint 1
+* SPRINT 2: So far, the team has been able to keep up with Acceptance Testing. The entirety of stories in both Sprint 1
   and Sprint 2 have passed all of their acceptance criteria tests. The stories in Sprint 3 do not have
   any tests yet. They wil be assigned tests during the Sprint 3 planning.
   There has not been found any issues with the acceptance tests.
+* SPRINT 4: All of the user stories have had testing and have passed them all excpet for "Add Landing Page". This story was not able to be implemented and therefore did not pass any of the acceptance criteria. Besides this story, there has been no problem with the story acceptance tests.
 
 ### Unit Testing and Code Coverage
 > _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
