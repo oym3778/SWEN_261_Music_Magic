@@ -200,7 +200,51 @@ Our api backend functions by maintaining two json files of needs, one representi
 > Analysis Tool (SonarQube) and provide your analysis and recommendations.  
 > Include any relevant screenshot(s) with each area._
 
+![Static Code Analysis Results Overview](static-code.png)
+
+Our static code analysis found 128 potential maintainability issues, with 7 marked as high severity.
+
+### Issue 1
+
+![Static Code Issue 1](static-code-issue-1.png)
+
+The first high-severity problem is our repeated use of the identical string literal "Put /needs" in several parts of our code. If we wanted to edit the output of our log messages, we would need to change every instance of "Put /needs" in our code, which is not only unnecessarily laborious, but could lead to future issues with the logger if one of the instances is missed. By replacing the literal with a constant variable, defined elsewhere, we could make our code more maintainable by allowing every instance of "Put /needs" in the code to be changed by only changing one value. 
+
+### Issue 2
+
+![Static Code Issue 2-1](code-issue-2-1.png)
+
+The next high-severity issue was flagged three times by sonar-qube, but is really the same problem repeated several times. 
+
+![Static Code Issue 2-2](code-issue-2-2.png)
+
+Whenever the static variable nextId is modified in NeedFileDAO, sonar-qube flagged the method saying it should also be static. The reason for this is that if a static value is modified from a non-static and non-synchronized method, it could cause problems if there are multiple instances of the class at once trying to access or modify the static variable, or multiple threads. 
+
+Despite sonar-qubes recommendation that the method be made static, NeedFileDAO is an injectable depedency that should only be instantiated once, so the method being static or not static shouldn't have any effect. However, the methods should be changed to synchronized, as there could be situations where multiple threads are trying to access NeedFileDAO, and therefore we need to avoid a race condintion or similar. 
+
+### Issue 3
+
+![Static Code Issue 3-1](code-issue-3-1.png)
+
+The next 3 issues marked are also fundimentally the same issue appearing in several places. In some of our unit testing there is a test class and two tests which have either no assertions or no tests. Investigating these tests, it seems that these were sections of code that were either made irrelevant or discarded at some point during development, but were not removed. If left in, these segments could confuse future developers, who are trying to understand what this extra code with seemingly no purpose is doing. Therefore, in order to improve the maintainability of our code, we should remove these segments to prevent future confusion. 
+
+### Issue 4
+
+![Static Code Issue 4-1](code-issue-4-1.png)
+
+This issue was flagged every time information was logged using the Logger in our code. 
+
+![Static Code Issue 4-2](code-issue-4-2.png)
+
+Whenever we pass a string concatination in as an argument to a Logger function, we potential take an unncessary performance hit. The logging level may not be high enough to justify displaying the information in the logger, but code will still process the concatination operation, despite it having no purpose. As a result our code may sometimes perform unnecessary operations during runtime. To fix this, we can simply use the Logger functions' built in formatting to avoid this issue, such as seen in the example provided by sonar-qube.
+
+[Static Code Issue 4-3](code-issue-4-3.png)
+
+
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
+
+
+
 
 ## Testing
 > _This section will provide information about the testing performed
