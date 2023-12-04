@@ -243,7 +243,14 @@ Whenever we pass a string concatination in as an argument to a Logger function, 
 
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 
+### Future Improvements
 
+In addition to what was mentioned above, several further improvements could be made to the project's design and architecture. 
+* As it stands there is no way to change the admin or user password without directly modifying the json file storing them. This especially problematic since the passwords are naturally stored as a hash, meaning in order to change a password someone with access to the backend server has to create a hash of the password, with the correct parameters outline, and put it into the json file storing user login information. This is a lot of work just to change someone's password, even for a developer. A future improvement would be to add a way on the website to change a user's password directly.
+
+* While the backend was modified so that the funding basket only stores a set of ids, each referring to a need in the cupboard, the frontend still has the funding basket store it's own full array of needs. While whether or not that same change to the frontend should be made is not as clear cut as it was for the backend. However, it is worth investigating to see if it would be better for the frontend server to store a set of ids which refer to needs in the cupboard, rather than it's own array of needs.
+
+* While our unit testing coverage is at an acceptable 82.5%, it could still be higher. Adding more unit tests or modifying our current ones in order to further increase our code coverage would be a worthwhile improvement our team could investigate in the future. 
 
 
 ## Testing
