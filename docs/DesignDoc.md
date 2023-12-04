@@ -238,7 +238,7 @@ This issue was flagged every time information was logged using the Logger in our
 
 Whenever we pass a string concatination in as an argument to a Logger function, we potential take an unncessary performance hit. The logging level may not be high enough to justify displaying the information in the logger, but code will still process the concatination operation, despite it having no purpose. As a result our code may sometimes perform unnecessary operations during runtime. To fix this, we can simply use the Logger functions' built in formatting to avoid this issue, such as seen in the example provided by sonar-qube.
 
-[Static Code Issue 4-3](code-issue-4-3.png)
+![Static Code Issue 4-3](code-issue-4-3.png)
 
 
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
