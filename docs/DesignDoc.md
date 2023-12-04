@@ -118,6 +118,14 @@ This section describes the web interface flow; this is how the user views and in
 > Describe the types of components in the tier and describe their
 > responsibilities.  This should be a narrative description, i.e. it has
 > a flow or "story line" that the reader can follow._
+Upon entering our site, users are greeted by the landing page, seamlessly integrated with the login component. The site offers the option to enter a username and password for login, accompanied by a captivating image slider component showcasing local events. To initiate the login process, users may choose between two credentials: helper or admin.
+
+For admin access, entering 'admin' as the username and 'password' as the password is required. Once authenticated, users are directed to the admin component, granting them the authority to add, delete, and update the needs of local school music departments in our database. Within the admin component, the add-need and needs components empower administrators to view current needs and add new requirements. The need component, with functions such as getNeeds, delete needs, and move needs to the basket, ensures a functional admin view. Meanwhile, the add-need component simplifies the process of adding new needs.
+
+To log in as a user/helper, input 'helper' for both username and password. The helper component provides access to the needs component, displaying the current cupboard of needs, the personal funding basket component for tracking selected needs, a need-search component facilitating cupboard exploration, and logout functionality. Progressing to checkout through the checkout component requires adding at least one item from the current cupboard to the funding basket. After this step, users can click the "proceed to checkout" button, review the summary of purchased items, and place an order for swift delivery.
+
+In addition to these user-facing components, various behind-the-scenes components contribute to the functionality. A routing component facilitates smooth transitions between different components, a message component displays error/success messages, and modules inject data into constructors within specific components. These collectively ensure a seamless and efficient user experience within our architecture.
+
 
 > _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects 
 > of the design that you are describing.  (**For example**, in a shopping experience application you might create a 
